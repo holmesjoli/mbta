@@ -1,0 +1,19 @@
+* {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+div#container {
+    height: 200vh;
+    max-height: 200vh;
+    /* overflow: hidden; */
+}
+
+figure#chart {
+    height: 100vh;
+    max-height: 100vh;
+    /* overflow: hidden; */
+    padding: 0px;
+    margin: 0px;
+}
