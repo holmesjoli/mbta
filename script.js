@@ -99,6 +99,36 @@ d3.json(pth + "beck_station_connections.json").then(function(links) {
                     .attr("r", 5);
 
 
+        let tooltip = d3.select("#chart")
+                    .append("div")
+                    .attr("class", "tooltip");
+
+            svg.selectAll("circle").on("mouseover", function(e, d) {
+
+                let cx = +d3.select(this).attr("cx")+20;
+                let cy = +d3.select(this).attr("cy")-10;
+
+                console.log([cx, cy]);
+
+                tooltip.style("visibility","visible") 
+                    .style("left", `${cx}px`)
+                    .style("top", `${cy}px`)
+                    .html(`<b>${d.name}</b><br>${d.id}`);
+
+                d3.select(this)
+                    .attr("stroke","#F6C900")
+                    .attr("stroke-width",2);
+
+            }).on("mouseout", function() {
+
+                tooltip.style("visibility","hidden");
+
+                d3.select(this)
+                    .attr("stroke","none")
+                    .attr("stroke-width",0);
+                    
+            });
+
         d3.select("#diagram").on("click", function() {
             xScale.domain([beck.xmin, beck.xmax]);
             yScale.domain([beck.ymin, beck.ymax]);
