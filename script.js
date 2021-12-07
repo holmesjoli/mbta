@@ -33,9 +33,7 @@ let pth = "./data/processed/";
 d3.json(pth + "beck_station_connections.json").then(function(links) {
     d3.json(pth + "stations.json").then(function(nodes) {
 
-        console.log("links", links);
-        console.log("nodes", nodes);
-
+        //Define constants
         const height = window.innerHeight;
         const width = 1000;
         const margin = {top: 100, left: 100, right: 200, bottom: 125};
@@ -54,19 +52,17 @@ d3.json(pth + "beck_station_connections.json").then(function(links) {
             ymin: d3.min(nodes, function(d) {return d.geo_y;})
         }
 
-        console.log(geo);
-
         const lines = unique_array(links, "line");
 
-        console.log(lines);
+        // Define SVG Canvas and attributes
 
         let svg = d3.select("#chart")
                     .append("svg")
                     .attr("height", height)
                     .attr("width", width);
 
-        let yScale = createYScale(beck, height, margin);
-        let xScale = createXScale(beck, width, margin);
+        let yScale = createYScale(geo, height, margin);
+        let xScale = createXScale(geo, width, margin);
 
         let colorScale = d3.scaleOrdinal()
         .domain(lines)
@@ -88,11 +84,9 @@ d3.json(pth + "beck_station_connections.json").then(function(links) {
                     .data(nodes)
                     .enter()
                     .append("circle")
-                    .attr("cx", function(d) {return xScale(d.beck_x);})
-                    .attr("cy", function(d) {return yScale(d.beck_y);})
+                    .attr("cx", function(d) {return xScale(d.geo_x);})
+                    .attr("cy", function(d) {return yScale(d.geo_y);})
                     .attr("r", 5);
-
-        console.log(nodes);
 
     });
 });
