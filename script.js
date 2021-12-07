@@ -19,7 +19,7 @@ let pth = "./data/processed/";
 // d3.json(path.join(pth, "geo_station_connections.json")).then(function(edges) {
 //     d3.json(path.join(pth, "geo_stations.json")).then(function(nodes) {
 d3.json(pth + "beck_station_connections.json").then(function(beck_links) {
-    d3.json(pth + "beck_stations.json").then(function(beck_nodes) {
+    d3.json(pth + "stations.json").then(function(beck_nodes) {
 
         console.log("beck_edges", beck_links);
         console.log("beck_nodes", beck_nodes);
@@ -28,17 +28,24 @@ d3.json(pth + "beck_station_connections.json").then(function(beck_links) {
         const height = window.innerHeight;
         const margin = {top: 100, left: 100, right: 200, bottom: 125};
 
-        const x = {
-            max: d3.max(beck_nodes, function(d) {return d.beck_x;}),
-            min: d3.min(beck_nodes, function(d) {return d.beck_x;})
-        };
+        const beck = {
+            xmax: d3.max(beck_nodes, function(d) {return d.beck_x;}),
+            xmin: d3.min(beck_nodes, function(d) {return d.beck_x;}),
+            ymax: d3.max(beck_nodes, function(d) {return d.beck_y;}),
+            ymin: d3.min(beck_nodes, function(d) {return d.beck_y;})
+        }
 
-        console.log(x);
+        // const x = {
+        //     beck_max: d3.max(beck_nodes, function(d) {return d.beck_x;}),
+        //     beck_min: d3.min(beck_nodes, function(d) {return d.beck_x;})
+        // };
 
-        const y = {
-            max: d3.max(beck_nodes, function(d) {return d.beck_y;}),
-            min: d3.min(beck_nodes, function(d) {return d.beck_y;})
-        };
+        // console.log(x);
+
+        // const y = {
+        //     beck_max: d3.max(beck_nodes, function(d) {return d.beck_y;}),
+        //     beck_min: d3.min(beck_nodes, function(d) {return d.beck_y;})
+        // };
 
         const lines = unique_array(beck_links, "line");
 
@@ -50,11 +57,11 @@ d3.json(pth + "beck_station_connections.json").then(function(beck_links) {
                     .attr("width", width);
 
         let yScale = d3.scaleLinear()
-                    .domain([y.min, y.max])
+                    .domain([beck.ymin, beck.ymax])
                     .range([margin.top, height-margin.bottom]);
 
         let xScale = d3.scaleLinear()
-                    .domain([x.min, x.max])
+                    .domain([beck.xmin, beck.xmax])
                     .range([margin.left, width - margin.right]);
 
         let colorScale = d3.scaleOrdinal()
