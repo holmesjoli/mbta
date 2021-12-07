@@ -17,7 +17,7 @@ function unique_array(data, variable) {
 function createYScale(obj, height, margin) {
     return d3.scaleLinear()
         .domain([obj.ymin, obj.ymax])
-        .range([margin.top, height-margin.bottom]);
+        .range([height-margin.bottom, margin.top]);
 };
 
 function createXScale(obj, width, margin) {
@@ -132,6 +132,7 @@ d3.json(pth + "beck_station_connections.json").then(function(links) {
         d3.select("#diagram").on("click", function() {
             xScale.domain([beck.xmin, beck.xmax]);
             yScale.domain([beck.ymin, beck.ymax]);
+            yScale.range([margin.top, height-margin.bottom])
 
             points
                 .transition()
