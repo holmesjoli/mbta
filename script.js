@@ -26,6 +26,16 @@ function createXScale(obj, width, margin) {
     .range([margin.left, width - margin.right]);
 };
 
+function pExit(points) {
+    points.exit()
+                .transition()
+                .duration(2000)
+                .delay(250)
+                .attr("r",0)
+                .remove();
+}
+
+
 let pth = "./data/processed/";
 
 // d3.json(path.join(pth, "geo_station_connections.json")).then(function(edges) {
@@ -103,12 +113,7 @@ d3.json(pth + "beck_station_connections.json").then(function(links) {
                 .attr("cx", function(d) { return xScale(d.beck_x); })
                 .attr("cy", function(d) { return yScale(d.beck_y); });
         
-                points.exit()
-                .transition()
-                .duration(2000)
-                .delay(250)
-                .attr("r",0)
-                .remove();
+            pExit(points);
         });
     
         d3.select("#map").on("click", function() {
@@ -123,12 +128,7 @@ d3.json(pth + "beck_station_connections.json").then(function(links) {
                 .attr("cx", function(d) { return xScale(d.geo_x); })
                 .attr("cy", function(d) { return yScale(d.geo_y); });
         
-            points.exit()
-                .transition()
-                .duration(2000)
-                .delay(250)
-                .attr("r",0)
-                .remove();
+            pExit(points);
         });
     });
 });
