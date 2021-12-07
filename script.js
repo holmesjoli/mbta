@@ -32,9 +32,11 @@ let pth = "./data/processed/";
 //     d3.json(path.join(pth, "geo_stations.json")).then(function(nodes) {
 d3.json(pth + "beck_station_connections.json").then(function(beck_links) {
     d3.json(pth + "stations.json").then(function(nodes) {
+        d3.csv(pth + "station_connections.csv").then(function(geo_links) {
 
-        console.log("beck_edges", beck_links);
+        console.log("beck_links", beck_links);
         console.log("nodes", nodes);
+        console.log("geo_links", geo_links)
 
         const width = 1000;
         const height = window.innerHeight;
@@ -93,38 +95,8 @@ d3.json(pth + "beck_station_connections.json").then(function(beck_links) {
                     .attr("r", 5);
 
         console.log(nodes);
-        let tooltip = d3.select("#chart")
-            .append("div")
-            .attr("class", "tooltip");
-        
-        //only selecting circles which have already be drawn for the first data join
-        function tt() {
-        svg.selectAll("circle").on("mouseover", function(e, d) {
-    
-        let cx = +d3.select(this).attr("cx")+20;
-        let cy = +d3.select(this).attr("cy")-10;
-    
-        tooltip.style("visibility","visible") 
-            .style("left", `${cx}px`)
-            .style("top", `${cy}px`)
-            .html(`<b>Id:</b> ${d.name}`);
-    
-        d3.select(this)
-            .attr("stroke","#F6C900")
-            .attr("stroke-width",2);
-    
-        }).on("mouseout", function() {
-    
-        tooltip.style("visibility","hidden");
-    
-        d3.select(this)
-            .attr("stroke","none")
-            .attr("stroke-width",0);
-                
-        });
-        };
 
-        tt();
+        });
 
     });
 });
