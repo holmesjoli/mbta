@@ -19,33 +19,28 @@ let pth = "./data/processed/";
 // d3.json(path.join(pth, "geo_station_connections.json")).then(function(edges) {
 //     d3.json(path.join(pth, "geo_stations.json")).then(function(nodes) {
 d3.json(pth + "beck_station_connections.json").then(function(beck_links) {
-    d3.json(pth + "stations.json").then(function(beck_nodes) {
+    d3.json(pth + "stations.json").then(function(nodes) {
 
         console.log("beck_edges", beck_links);
-        console.log("beck_nodes", beck_nodes);
+        console.log("nodes", nodes);
 
         const width = 1000;
         const height = window.innerHeight;
         const margin = {top: 100, left: 100, right: 200, bottom: 125};
 
         const beck = {
-            xmax: d3.max(beck_nodes, function(d) {return d.beck_x;}),
-            xmin: d3.min(beck_nodes, function(d) {return d.beck_x;}),
-            ymax: d3.max(beck_nodes, function(d) {return d.beck_y;}),
-            ymin: d3.min(beck_nodes, function(d) {return d.beck_y;})
+            xmax: d3.max(nodes, function(d) {return d.beck_x;}),
+            xmin: d3.min(nodes, function(d) {return d.beck_x;}),
+            ymax: d3.max(nodes, function(d) {return d.beck_y;}),
+            ymin: d3.min(nodes, function(d) {return d.beck_y;})
         }
 
-        // const x = {
-        //     beck_max: d3.max(beck_nodes, function(d) {return d.beck_x;}),
-        //     beck_min: d3.min(beck_nodes, function(d) {return d.beck_x;})
-        // };
-
-        // console.log(x);
-
-        // const y = {
-        //     beck_max: d3.max(beck_nodes, function(d) {return d.beck_y;}),
-        //     beck_min: d3.min(beck_nodes, function(d) {return d.beck_y;})
-        // };
+        const geo = {
+            xmax: d3.max(nodes, function(d) {return d.beck_x;}),
+            xmin: d3.min(nodes, function(d) {return d.beck_x;}),
+            ymax: d3.max(nodes, function(d) {return d.beck_y;}),
+            ymin: d3.min(nodes, function(d) {return d.beck_y;})
+        }
 
         const lines = unique_array(beck_links, "line");
 
@@ -81,14 +76,14 @@ d3.json(pth + "beck_station_connections.json").then(function(beck_links) {
                 .style("stroke-width", 3);
 
         svg.append("g").selectAll('circle')
-                    .data(beck_nodes)
+                    .data(nodes)
                     .enter()
                     .append("circle")
                     .attr("cx", function(d) {return xScale(d.beck_x);})
                     .attr("cy", function(d) {return yScale(d.beck_y);})
                     .attr("r", 5);
 
-        console.log(beck_nodes);
+        console.log(nodes);
         let tooltip = d3.select("#chart")
             .append("div")
             .attr("class", "tooltip");
