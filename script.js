@@ -30,12 +30,11 @@ let pth = "./data/processed/";
 
 // d3.json(path.join(pth, "geo_station_connections.json")).then(function(edges) {
 //     d3.json(path.join(pth, "geo_stations.json")).then(function(nodes) {
-d3.json(pth + "beck_station_connections.json").then(function(beck_links) {
+d3.json(pth + "beck_station_connections.json").then(function(links) {
     d3.json(pth + "stations.json").then(function(nodes) {
 
-        console.log("beck_links", beck_links);
+        console.log("links", links);
         console.log("nodes", nodes);
-        console.log("geo_links", geo_links)
 
         const height = window.innerHeight;
         const width = 1000;
@@ -57,7 +56,7 @@ d3.json(pth + "beck_station_connections.json").then(function(beck_links) {
 
         console.log(geo);
 
-        const lines = unique_array(beck_links, "line");
+        const lines = unique_array(links, "line");
 
         console.log(lines);
 
@@ -75,7 +74,7 @@ d3.json(pth + "beck_station_connections.json").then(function(beck_links) {
                 "#E87200", "#2F5DA6"]);
 
         // svg.append("g").selectAll("line")
-        //         .data(beck_links)
+        //         .data(links)
         //         .enter()
         //         .append("line")
         //         .attr("x1", function(d) {return xScale(d.beck_x1);})
