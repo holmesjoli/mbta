@@ -79,17 +79,6 @@ d3.json(pth + "beck_station_connections.json").then(function(links) {
         .range(["#018447", "#018447", "#018447", "#018447", "#018447", "#E12D27", 
                 "#E87200", "#2F5DA6"]);
 
-        // svg.append("g").selectAll("line")
-        //         .data(links)
-        //         .enter()
-        //         .append("line")
-        //         .attr("x1", function(d) {return xScale(d.beck_x1);})
-        //         .attr("x2", function(d) {return xScale(d.beck_x2);})
-        //         .attr("y1", function(d) {return yScale(d.beck_y1);})
-        //         .attr("y2", function(d) {return yScale(d.beck_y2);})
-        //         .style("stroke", function(d) {return colorScale(d.line);})
-        //         .style("stroke-width", 3);
-
         let points = svg.selectAll('circle')
                     .data(nodes)
                     .enter()
@@ -103,6 +92,20 @@ d3.json(pth + "beck_station_connections.json").then(function(links) {
             xScale.domain([beck.xmin, beck.xmax]);
             yScale.domain([beck.ymin, beck.ymax]);
 
+            svg.selectAll("line")
+                .data(links)
+                .enter()
+                .append("line")
+                .transition()
+                .duration(2000)
+                .delay(250)
+                .attr("x1", function(d) {return xScale(d.beck_x1);})
+                .attr("x2", function(d) {return xScale(d.beck_x2);})
+                .attr("y1", function(d) {return yScale(d.beck_y1);})
+                .attr("y2", function(d) {return yScale(d.beck_y2);})
+                .style("stroke", function(d) {return colorScale(d.line);})
+                .style("stroke-width", 5);
+
             points
                 .transition()
                 .duration(2000)
@@ -111,6 +114,7 @@ d3.json(pth + "beck_station_connections.json").then(function(links) {
                 .attr("cy", function(d) { return yScale(d.beck_y); });
         
             pExit(points);
+
         });
     
         d3.select("#map").on("click", function() {
