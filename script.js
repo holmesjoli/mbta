@@ -103,9 +103,6 @@ d3.json(pth + "beck_station_connections.json").then(function(links) {
             xScale.domain([beck.xmin, beck.xmax]);
             yScale.domain([beck.ymin, beck.ymax]);
 
-            console.log(points);
-            console.log(xScale.domain());
-
             points
                 .transition()
                 .duration(2000)
