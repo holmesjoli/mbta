@@ -132,7 +132,7 @@ d3.json(pth + "beck_station_connections.json").then(function(links) {
         d3.select("#diagram").on("click", function() {
             xScale.domain([beck.xmin, beck.xmax]);
             yScale.domain([beck.ymin, beck.ymax]);
-            yScale.range([margin.top, height-margin.bottom])
+            yScale.range([margin.top, height-margin.bottom]);
 
             points
                 .transition()
@@ -148,6 +148,7 @@ d3.json(pth + "beck_station_connections.json").then(function(links) {
     
             xScale.domain([geo.xmin, geo.xmax]);
             yScale.domain([geo.ymin, geo.ymax]);
+            yScale.range([height-margin.bottom, margin.top])
 
             points
                 .transition()
