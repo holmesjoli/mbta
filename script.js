@@ -51,7 +51,7 @@ d3.json(pth + "beck_station_connections.json").then(function(links) {
             ymax: d3.max(nodes, function(d) {return d.geo_y;}),
             ymin: d3.min(nodes, function(d) {return d.geo_y;})
         }
-
+        console.log(nodes);
         const lines = unique_array(links, "line");
 
         // Define SVG Canvas and attributes
@@ -80,7 +80,7 @@ d3.json(pth + "beck_station_connections.json").then(function(links) {
         //         .style("stroke", function(d) {return colorScale(d.line);})
         //         .style("stroke-width", 3);
 
-        svg.append("g").selectAll('circle')
+        let points = svg.selectAll('circle')
                     .data(nodes)
                     .enter()
                     .append("circle")
@@ -88,5 +88,47 @@ d3.json(pth + "beck_station_connections.json").then(function(links) {
                     .attr("cy", function(d) {return yScale(d.geo_y);})
                     .attr("r", 5);
 
+
+        d3.select("#diagram").on("click", function() {
+            xScale.domain([beck.xmin, beck.xmax]);
+            yScale.domain([beck.ymin, beck.ymax]);
+
+            console.log(points);
+            console.log(xScale.domain());
+
+            points
+                .transition()
+                .duration(2000)
+                .delay(250)
+                .attr("cx", function(d) { return xScale(d.beck_x); })
+                .attr("cy", function(d) { return yScale(d.beck_y); });
+        
+                points.exit()
+                .transition()
+                .duration(2000)
+                .delay(250)
+                .attr("r",0)
+                .remove();
+        });
+    
+        d3.select("#map").on("click", function() {
+    
+            xScale.domain([geo.xmin, geo.xmax]);
+            yScale.domain([geo.ymin, geo.ymax]);
+
+            points
+                .transition()
+                .duration(2000)
+                .delay(250)
+                .attr("cx", function(d) { return xScale(d.geo_x); })
+                .attr("cy", function(d) { return yScale(d.geo_y); });
+        
+            points.exit()
+                .transition()
+                .duration(2000)
+                .delay(250)
+                .attr("r",0)
+                .remove();
+        });
     });
 });
