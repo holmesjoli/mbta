@@ -75,16 +75,16 @@ d3.json(pth + "beck_station_connections.json").then(function(beck_links) {
         .range(["#018447", "#018447", "#018447", "#018447", "#018447", "#E12D27", 
                 "#E87200", "#2F5DA6"]);
 
-        svg.append("g").selectAll("line")
-                .data(beck_links)
-                .enter()
-                .append("line")
-                .attr("x1", function(d) {return xScale(d.beck_x1);})
-                .attr("x2", function(d) {return xScale(d.beck_x2);})
-                .attr("y1", function(d) {return yScale(d.beck_y1);})
-                .attr("y2", function(d) {return yScale(d.beck_y2);})
-                .style("stroke", function(d) {return colorScale(d.line);})
-                .style("stroke-width", 3);
+        // svg.append("g").selectAll("line")
+        //         .data(beck_links)
+        //         .enter()
+        //         .append("line")
+        //         .attr("x1", function(d) {return xScale(d.beck_x1);})
+        //         .attr("x2", function(d) {return xScale(d.beck_x2);})
+        //         .attr("y1", function(d) {return yScale(d.beck_y1);})
+        //         .attr("y2", function(d) {return yScale(d.beck_y2);})
+        //         .style("stroke", function(d) {return colorScale(d.line);})
+        //         .style("stroke-width", 3);
 
         svg.append("g").selectAll('circle')
                     .data(nodes)
