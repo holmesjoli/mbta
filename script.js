@@ -14,6 +14,18 @@ function unique_array(data, variable) {
     return u;
 };
 
+function createYScale(obj, height, margin) {
+    return d3.scaleLinear()
+        .domain([obj.ymin, obj.ymax])
+        .range([margin.top, height-margin.bottom]);
+};
+
+function createXScale(obj, width, margin) {
+    return d3.scaleLinear()
+    .domain([obj.xmin, obj.xmax])
+    .range([margin.left, width - margin.right]);
+};
+
 let pth = "./data/processed/";
 
 // d3.json(path.join(pth, "geo_station_connections.json")).then(function(edges) {
@@ -36,11 +48,13 @@ d3.json(pth + "beck_station_connections.json").then(function(beck_links) {
         }
 
         const geo = {
-            xmax: d3.max(nodes, function(d) {return d.beck_x;}),
-            xmin: d3.min(nodes, function(d) {return d.beck_x;}),
-            ymax: d3.max(nodes, function(d) {return d.beck_y;}),
-            ymin: d3.min(nodes, function(d) {return d.beck_y;})
+            xmax: d3.max(nodes, function(d) {return d.geo_x;}),
+            xmin: d3.min(nodes, function(d) {return d.geo_x;}),
+            ymax: d3.max(nodes, function(d) {return d.geo_y;}),
+            ymin: d3.min(nodes, function(d) {return d.geo_y;})
         }
+
+        console.log(geo);
 
         const lines = unique_array(beck_links, "line");
 
@@ -51,13 +65,8 @@ d3.json(pth + "beck_station_connections.json").then(function(beck_links) {
                     .attr("height", height)
                     .attr("width", width);
 
-        let yScale = d3.scaleLinear()
-                    .domain([beck.ymin, beck.ymax])
-                    .range([margin.top, height-margin.bottom]);
-
-        let xScale = d3.scaleLinear()
-                    .domain([beck.xmin, beck.xmax])
-                    .range([margin.left, width - margin.right]);
+        let yScale = createYScale(beck, height, margin);
+        let xScale = createXScale(beck, width, margin);
 
         let colorScale = d3.scaleOrdinal()
         .domain(lines)
