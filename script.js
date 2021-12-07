@@ -32,14 +32,13 @@ let pth = "./data/processed/";
 //     d3.json(path.join(pth, "geo_stations.json")).then(function(nodes) {
 d3.json(pth + "beck_station_connections.json").then(function(beck_links) {
     d3.json(pth + "stations.json").then(function(nodes) {
-        d3.csv(pth + "station_connections.csv").then(function(geo_links) {
 
         console.log("beck_links", beck_links);
         console.log("nodes", nodes);
         console.log("geo_links", geo_links)
 
-        const width = 1000;
         const height = window.innerHeight;
+        const width = 1000;
         const margin = {top: 100, left: 100, right: 200, bottom: 125};
 
         const beck = {
@@ -95,8 +94,6 @@ d3.json(pth + "beck_station_connections.json").then(function(beck_links) {
                     .attr("r", 5);
 
         console.log(nodes);
-
-        });
 
     });
 });
