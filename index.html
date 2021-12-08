@@ -6,14 +6,23 @@
         <script src="https://d3js.org/d3.v7.min.js"></script>
     </head>
     <body>
-        <h1>Beck's distortion</h1>
-        <p>Transportation maps have changed a lot over the last 100 years due to a man named Harry Beck.
-        </p>
         <div id="container">
-            <button id="map">Map</button>
-            <button id="diagram">Diagram</button>
-            <figure id="chart"></figure>
+            <div id="header">
+                <h1>Beck's distortion</h1>
+            </div>
+			<div id="body">
+				<div id="left">
+                    <div>
+                        <button id="map">Map</button>
+                        <button id="diagram">Diagram</button>
+                    </div>
+                    <figure id="chart"></figure>
+                </div>
+				<div id="right">
+                    <p>Transportation maps have changed a lot over the last 100 years due to a man named Harry Beck.</p>
+                </div>
+			</div>
+            <script src="./script.js"></script>
         </div>
-        <script src="./script.js"></script>
     </body>
 </html>
