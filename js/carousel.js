@@ -2,7 +2,7 @@ const img = document.getElementById('carousel');
 const rightBtn = document.getElementById('right-btn');
 const leftBtn = document.getElementById('left-btn');
 
-let pictures = ['./images/pre_beck_1933.jpg', './images/beck_1933.jpg'];
+let pictures = ['./images/pre_beck_1933.jpg', './images/beck_1933.jpg', 'images/boston_1905.jpg', 'images/boston_recent.jpg'];
 
 img.src = pictures[0];
 console.log(img.src);
