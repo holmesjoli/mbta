@@ -248,8 +248,7 @@ ggplot() +
 z <- lapply(geo, function(x) {
   if(length(x) == 1) {return(x)}
   else {return(NULL)}
-}
-) %>% plyr::compact()
+}) %>% plyr::compact()
 
 beck_id <- beck %>% purrr::transpose() %>% purrr::pluck("id") %>% plyr::compact() %>% unlist()
 geo_id <- geo %>% purrr::transpose() %>% purrr::pluck("id") %>% plyr::compact() %>% unlist()
