@@ -5,18 +5,24 @@
     font-family: sans-serif;
 }
 
-
-h1, h2 {
+h1, h2, h3 {
     font-family: p22-underground, sans-serif;
     font-style: normal;
     text-transform: uppercase;
+    text-align: center;
 }
 h1 {
     font-weight: 500;
+    font-size: 36pt;
 }
 
 h2 {
     font-weight: 300;
+    font-size: 26pt;
+}
+
+h3 {
+    font-size: 20pt;
 }
 
 div#container {
@@ -87,6 +93,15 @@ body {
     border-radius: 5;
     font-size: 20px;
     border: none;
+}
+
+a {
+    color: #f28482;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline #84a59d;
 }
 
 .buttons > button:hover {
