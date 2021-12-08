@@ -2,6 +2,7 @@
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
+    font-family: sans-serif;
 }
 
 div#container {
@@ -26,6 +27,10 @@ body {
 #header {
     flex: 1 0 5%;
     text-align: center;
+    background: #84a59d;
+    color: #f7ede2;
+    border-bottom: 2px solid  #f28482;
+    border-bottom: 5px dotted #f6bd60;
 }
 
 #body {
@@ -40,6 +45,7 @@ body {
 
 #right {
     flex: 1 0 35%;
+    background-color: #f5cac3;
 }
 
 .tooltip {
@@ -49,7 +55,30 @@ body {
     visibility: hidden;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14pt;
-    background-color:rgba(255, 255, 255, 0.5);
+    background-color:rgba(132, 165, 157, 0.75);
     padding: 2px;
     pointer-events: none;
+}
+
+.buttons {
+    text-align: center;
+}
+
+button {
+    background-color: #f5cac3;
+    padding: 10px;
+    margin: 10px;
+    color: black;
+    border-radius: 5;
+    font-size: 20px;
+    border: none;
+}
+
+button:hover {
+    background-color: #f28482;
+    color: white;
+}
+
+p {
+    margin: 20px;
 }
