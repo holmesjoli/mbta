@@ -1,3 +1,5 @@
+// /https://freefrontend.com/javascript-carousels/
+
 const img = document.getElementById('carousel');
 const title = document.getElementById('title');
 const source = document.getElementById('source');
