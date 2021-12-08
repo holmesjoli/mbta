@@ -41,6 +41,7 @@ body {
 
 #left {
     flex: 1 0 60%;
+    margin: 20px;
 }
 
 #right {
@@ -74,7 +75,7 @@ body {
     border: none;
 }
 
-button:hover {
+.buttons > button:hover {
     background-color: #f28482;
     color: white;
 }
@@ -83,15 +84,16 @@ p {
     margin: 20px;
 }
 
-.container {
-    width: 500px;
-    height: 500px;
+.img-container {
+    max-width: 900px;
+    padding: 20px;
     display: flex;
     justify-content: center;
 }
 
-.container img {
+.img-container img {
     width: 100%;
+    max-width: 900px;
     z-index: -2;
 }
 
@@ -99,19 +101,20 @@ button {
     height: 10%;
     border: none;
     outline: none;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0);
     cursor: pointer;
     padding: 1em;
     display: flex;
 }
 
 button .arrow {
-    border: solid #fff;
+    border: solid black;
     border-width: 0 4px 4px 0;
     display: inline-block;
     padding: 10px;
     transition: transform 0.3s ease-out;
     outline: none;
+    margin: 10px;
 }
 
 #right-btn {
