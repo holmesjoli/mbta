@@ -5,6 +5,20 @@
     font-family: sans-serif;
 }
 
+
+h1, h2 {
+    font-family: p22-underground, sans-serif;
+    font-style: normal;
+    text-transform: uppercase;
+}
+h1 {
+    font-weight: 500;
+}
+
+h2 {
+    font-weight: 300;
+}
+
 div#container {
     height: 200vh;
     max-height: 200vh;
