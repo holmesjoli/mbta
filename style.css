@@ -114,6 +114,7 @@ a:hover {
 p {
     margin: 20px;
     line-height: 1.3;
+    font-size: 14pt;
 }
 
 .img-container {
