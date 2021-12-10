@@ -67,8 +67,6 @@ function tt(svg, tooltip) {
 
 let pth = "./data/processed/";
 
-// d3.json(path.join(pth, "geo_station_connections.json")).then(function(edges) {
-//     d3.json(path.join(pth, "geo_stations.json")).then(function(nodes) {
 d3.json(pth + "beck_station_connections.json").then(function(links) {
     d3.json(pth + "stations.json").then(function(nodes) {
 
