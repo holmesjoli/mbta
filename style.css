@@ -5,11 +5,13 @@
     font-family: sans-serif;
 }
 
-h1, h2, h3 {
+h1, h2, h3,
+button {
     font-family: p22-underground, sans-serif;
     font-style: normal;
     text-transform: uppercase;
     text-align: center;
+    margin: 15px 0;
 }
 h1 {
     font-weight: 500;
@@ -21,7 +23,8 @@ h2 {
     font-size: 26pt;
 }
 
-h3 {
+h3,
+button {
     font-size: 20pt;
 }
 
@@ -61,7 +64,7 @@ body {
 
 #left {
     flex: 1 0 60%;
-    margin: 20px;
+    padding: 20px;
 }
 
 #right {
@@ -99,17 +102,23 @@ body {
 
 .active {
     font-weight: bold;
-    border: 4px solid #f5cac3!important;
+    border: 4px solid #f6bd60!important;
 }
 
-a {
-    color: #f28482;
+#source {
+    color: #84a59d;
     text-decoration: none;
+    font-size: 14pt;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 600;
+    display:block;
 }
 
-a:hover {
+#source:hover {
     text-decoration: underline #84a59d;
 }
+
 
 p {
     margin: 20px;
