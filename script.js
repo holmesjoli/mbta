@@ -74,8 +74,6 @@ d3.json(pth + "beck_station_connections.json").then(function(links) {
     d3.json(pth + "stations.json").then(function(nodes) {
         d3.csv(pth + "station_connections.csv").then(function(geoLinks) {
 
-            console.log(geoLinks);
-
             //Define constants
             const height = window.innerHeight;
             const width = height*1.3;
@@ -95,9 +93,6 @@ d3.json(pth + "beck_station_connections.json").then(function(links) {
                 ymin: d3.min(nodes, function(d) {return d.geo_y;})
             }
 
-            console.log(nodes);
-            console.log(links);
-
             // Define SVG Canvas and attributes
 
             let svg = d3.select("#chart")
@@ -114,21 +109,39 @@ d3.json(pth + "beck_station_connections.json").then(function(links) {
             .range(["#018447", "#018447", "#018447", "#018447", "#018447", "#E12D27", 
                     "#E87200", "#2F5DA6"]);
 
-            const geoLine = unique_array(geoLinks, "LINE");
-            console.log(geoLine);
+            // Generate the grouped color scale for the map
+            const uniqueGroup = unique_array(geoLinks, "group");    
+            const lineColors = [];
+
+            uniqueGroup.forEach(function(d) {
+                z = geoLinks.filter(function(i) {
+                    return i.group === d;
+                });
+                line = unique_array(z, "LINE")[0]
+                
+                if (line === "GREEN") {
+                    lineColors.push("#018447");
+                } else if (line === "RED") {
+                    lineColors.push("#E87200");
+                } else if (line === "ORANGE") {
+                    lineColors.push("#E12D27")
+                } else if (line === "BLUE") {
+                    lineColors.push("#2F5DA6")
+                }
+            });
 
             let geoColorScale = d3.scaleOrdinal()
-            .domain(geoLine)
-            .range(["#E12D27", "#018447", "#E87200", "#2F5DA6"]);
+            .domain(uniqueGroup)
+            .range(lineColors);
 
+            // Generate the lines for the map
             const geoLineGroup = d3.group(geoLinks, d => d.group);
-            console.log('sumstat', geoLineGroup);
 
             svg.selectAll(".line")
             .data(geoLineGroup)
             .join("path")
                 .attr("fill", "none")
-                .attr("stroke", function(d){ return geoColorScale(d[0]) })
+                .attr("stroke", function(d){ return geoColorScale(d[0]);})
                 .attr("stroke-width", 2)
                 .attr("d", function(d){
                 return d3.line()
