@@ -95,7 +95,7 @@ beck <- c(green_network$nodes, other_network$nodes)
 
 names(beck) <- beck %>% purrr::transpose() %>% purrr::pluck("id") %>% unlist()
 
-beck_names  <- beck %>%
+beck_names <- beck %>%
   purrr::transpose() %>%
   purrr::pluck("name") %>%
   tolower()
@@ -108,18 +108,22 @@ nodes <- sf::read_sf("./data/raw/MBTA_NODE.shp") %>%
 nodes <- nodes %>%
   sf::st_coordinates() %>%
   as.data.frame() %>%
-  dplyr::bind_cols(nodes)
+  dplyr::bind_cols(nodes) %>%
+  dplyr::mutate(id = paste(STATION, ROUTE, sep = "-"),
+                row = seq(1, dplyr::n(), 1))
 
-bb <- nodes %>% sf::st_bbox()
+# bb <- nodes %>% sf::st_bbox()
 
-nodes %>%
-  geojsonio::geojson_json() %>%
-  geojsonio::geojson_write(file = file.path(pth, "geo_stations.json"))
+# nodes %>%
+#   geojsonio::geojson_json() %>%
+#   geojsonio::geojson_write(file = file.path(pth, "geo_stations.json"))
 
-# geo <- list()
+geo <- lapply(1:length(nodes$STATION), function(j) {
 
-geo <- lapply(unique(nodes$STATION), function(x) {
-
+  x <- nodes %>% dplyr::slice(j) %>% dplyr::pull(STATION)
+  
+  id2 <- nodes %>% dplyr::slice(j) %>% dplyr::pull(id)
+  
   i <- grep(tolower(x), beck_names)
   
   if (length(i) == 1) {
@@ -128,7 +132,7 @@ geo <- lapply(unique(nodes$STATION), function(x) {
     
     if (x == "Harvard") {
       id <- "place-harsq"
-    } 
+    }
     
     if (x == "Haymarket") {
       id <- "place-haecl"
@@ -151,9 +155,14 @@ geo <- lapply(unique(nodes$STATION), function(x) {
     }
     
     if (x == "Saint Paul Street") {
-      id <- "place-stpul"
+
+      if (id2 == "Saint Paul Street-C - Cleveland Circle") {
+        id <- "place-stpul"
+      } else {
+        id <- "place-stplb"
+      }
     }
-    
+
     if (x == "Summit Ave/Winchester St") {
       id <- "place-sumav"
     }
@@ -161,9 +170,9 @@ geo <- lapply(unique(nodes$STATION), function(x) {
     if (x == "Saint Marys Street") {
       id <- "place-smary"
     }
-    
+
     if (x == "Fenway Park") {
-      geo$id <- "place-fenwy"
+      id <- "place-fenwy"
     }
     
     if (x == "Longwood") {
@@ -177,23 +186,37 @@ geo <- lapply(unique(nodes$STATION), function(x) {
     if (x == "North Station") {
       id <- "place-north"
     }
+    
+    if (x == "Assembly") {
+      id <- NULL
+    }
+
   }
 
   if(is.null(id)) return(NULL)
 
   l <- beck[[id]]
   l$station <- x
-  l$geo_x <- nodes %>% dplyr::filter(STATION == x) %>% dplyr::pull(X)
-  l$geo_y <- nodes %>% dplyr::filter(STATION == x) %>% dplyr::pull(Y)
-  
-  return(l) 
+  l$geo_x <- nodes %>% dplyr::filter(id == id2) %>% dplyr::pull(X)
+  l$geo_y <- nodes %>% dplyr::filter(id == id2) %>% dplyr::pull(Y)
 
-}) 
+  # if ()
+  
+  return(l)
+
+}) %>% plyr::compact()
 
 geo %>%
-  plyr::compact() %>%
   rjson::toJSON() %>%
   write(file.path(pth, "stations.json"))
+
+beck_id <- beck %>% purrr::transpose() %>% purrr::pluck("id") %>% plyr::compact() %>% unlist() %>% unique()
+geo_id <- geo %>% purrr::transpose() %>% purrr::pluck("id") %>% unlist()
+
+names(geo) <- geo_id
+
+setdiff(beck_id, geo_id)
+setdiff(geo_id, beck_id)
 
 lines <- sf::read_sf("./data/raw/MBTA_ARC.shp") %>%
   dplyr::filter(LINE != "SILVER") %>%
@@ -250,15 +273,7 @@ z <- lapply(geo, function(x) {
   else {return(NULL)}
 }) %>% plyr::compact()
 
-beck_id <- beck %>% purrr::transpose() %>% purrr::pluck("id") %>% plyr::compact() %>% unlist()
-geo_id <- geo %>% purrr::transpose() %>% purrr::pluck("id") %>% plyr::compact() %>% unlist()
-
-setdiff(beck_id, geo_id)
-setdiff(geo_id, beck_id)
-
 which(lapply(beck %>% purrr::transpose() %>% purrr::pluck("id"), 
        function(x) {return (x == "place-stpul")}) %>% unlist())
-
-
 
 beck <- c(green_network$nodes, other_network$nodes) 
