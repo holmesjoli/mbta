@@ -46,8 +46,6 @@ function tt(svg, tooltip) {
         let cx = +d3.select(this).attr("cx")+20;
         let cy = +d3.select(this).attr("cy")-10;
 
-        console.log([cx, cy]);
-
         tooltip.style("visibility","visible") 
             .style("left", `${cx}px`)
             .style("top", `${cy}px`)
@@ -70,9 +68,11 @@ function tt(svg, tooltip) {
 
 let pth = "./data/processed/";
 
-d3.json(pth + "beck_station_connections.json").then(function(links) {
+d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
     d3.json(pth + "stations.json").then(function(nodes) {
         d3.csv(pth + "station_connections.csv").then(function(geoLinks) {
+
+            console.log(beckLinks);
 
             //Define constants
             const height = window.innerHeight;
@@ -102,12 +102,6 @@ d3.json(pth + "beck_station_connections.json").then(function(links) {
 
             let yScale = createYScale(geo, height, margin);
             let xScale = createXScale(geo, width, margin);
-
-            const lines = unique_array(links, "line");
-            let colorScale = d3.scaleOrdinal()
-            .domain(lines)
-            .range(["#018447", "#018447", "#018447", "#018447", "#018447", "#E12D27", 
-                    "#E87200", "#2F5DA6"]);
 
             // Generate the grouped color scale for the map
             const uniqueGroup = unique_array(geoLinks, "group");    
@@ -169,19 +163,25 @@ d3.json(pth + "beck_station_connections.json").then(function(links) {
                 yScale.domain([beck.ymin, beck.ymax]);
                 yScale.range([margin.top, height-margin.bottom]);
 
-                svg.selectAll("line")
-                    .data(links)
-                    .enter()
-                    .append("line")
-                    .transition()
-                    .duration(2000)
-                    .delay(250)
-                    .attr("x1", function(d) {return xScale(d.beck_x1);})
-                    .attr("x2", function(d) {return xScale(d.beck_x2);})
-                    .attr("y1", function(d) {return yScale(d.beck_y1);})
-                    .attr("y2", function(d) {return yScale(d.beck_y2);})
-                    .style("stroke", function(d) {return colorScale(d.line);})
-                    .style("stroke-width", 5);
+                // let colorScale = d3.scaleOrdinal()
+                // .domain(unique_array(beckLinks, "line"))
+                // .range(["#018447", "#018447", "#018447", "#018447", "#018447", "#E12D27", 
+                //         "#E87200", "#2F5DA6"]);
+
+
+                // svg.selectAll("line")
+                //     .data(beckLinks)
+                //     .enter()
+                //     .append("line")
+                //     .transition()
+                //     .duration(2000)
+                //     .delay(250)
+                //     .attr("x1", function(d) {return xScale(d.beck_x1);})
+                //     .attr("x2", function(d) {return xScale(d.beck_x2);})
+                //     .attr("y1", function(d) {return yScale(d.beck_y1);})
+                //     .attr("y2", function(d) {return yScale(d.beck_y2);})
+                //     .style("stroke", function(d) {return colorScale(d.line);})
+                //     .style("stroke-width", 5);
 
                 points
                     .transition()
