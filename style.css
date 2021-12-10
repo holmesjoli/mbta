@@ -2,11 +2,37 @@
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+h1, h2, h3,
+button {
+    font-family: p22-underground, sans-serif;
+    font-style: normal;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 15px 0;
+}
+h1 {
+    font-weight: 500;
+    font-size: 36pt;
+}
+
+h2 {
+    font-weight: 300;
+    font-size: 26pt;
+}
+
+h3,
+button {
+    font-size: 20pt;
 }
 
 div#container {
     height: 200vh;
     max-height: 200vh;
+    display: flex;
+    flex-direction: column;
     /* overflow: hidden; */
 }
 
@@ -16,4 +42,136 @@ figure#chart {
     /* overflow: hidden; */
     padding: 0px;
     margin: 0px;
+    /* position: relative; */
+}
+
+body {
+    margin: 0;
+}
+#header {
+    flex: 1 0 5%;
+    text-align: center;
+    background: #84a59d;
+    color: black;
+    border-bottom: 2px solid  #f28482;
+    border-bottom: 5px dotted #f6bd60;
+}
+
+#body {
+    flex: 1 0 95%;
+    display: flex;
+    flex-direction: row;
+}
+
+#left {
+    flex: 1 0 60%;
+    padding: 20px;
+}
+
+#right {
+    flex: 1 0 25%;
+    background-color: #f5cac3;
+}
+
+.tooltip {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    visibility: hidden;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14pt;
+    background-color:rgba(132, 165, 157, 0.75);
+    padding: 2px;
+    pointer-events: none;
+}
+
+.buttons {
+    text-align: center;
+}
+
+.buttons > button {
+    background-color: #f28482;
+    padding: 10px;
+    margin: 10px;
+    color: white;
+    border: 4px solid #f28482;
+    border-radius: 5px;
+    font-size: 20px;
+    display: inline-block;
+    border-collapse: separate; 
+}
+
+.active {
+    font-weight: bold;
+    border: 4px solid #f6bd60!important;
+}
+
+#source {
+    color: #84a59d;
+    text-decoration: none;
+    font-size: 14pt;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 600;
+    display:block;
+}
+
+#source:hover {
+    text-decoration: underline #84a59d;
+}
+
+p {
+    margin: 20px;
+    line-height: 1.3;
+    font-size: 14pt;
+}
+
+.img-container {
+    max-width: 900px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.img-container img {
+    width: 100%;
+    max-width: 900px;
+    z-index: -2;
+}
+
+button {
+    height: 10%;
+    border: none;
+    outline: none;
+    background: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    padding: 1em;
+    display: flex;
+}
+
+button .arrow {
+    border: solid black;
+    border-width: 0 4px 4px 0;
+    display: inline-block;
+    padding: 15px;
+    transition: transform 0.3s ease-out;
+    outline: none;
+    margin: 15px;
+}
+
+#right-btn {
+    margin: auto 0 auto -2em;
+}
+
+#right-btn .arrow {
+    transform: rotate(-45deg);
+}
+
+#left-btn {
+    z-index: 0;
+    margin: auto -2em auto 0;
+}
+
+#left-btn .arrow {
+    transform: rotate(135deg);
 }

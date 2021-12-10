@@ -3,14 +3,46 @@
     <head>
         <title>Beck's Distortion</title>
         <link rel="stylesheet" href="./style.css">
+        <link rel="stylesheet" href="https://use.typekit.net/rid1dpd.css">
         <script src="https://d3js.org/d3.v7.min.js"></script>
+        <script>
+        </script>
     </head>
     <body>
         <div id="container">
-            <button id="map">Map</button>
-            <button id="diagram">Diagram</button>
-            <figure id="chart"></figure>
+            <div id="header">
+                <h1>Beck's distortion</h1>
+                <h2>Applied to the Boston MBTA</h2>
+            </div>
+			<div id="body">
+				<div id="left">
+                    <div class="chart-container">
+                        <div class="buttons">
+                            <button id="map" class="active">Map</button>
+                            <button id="diagram">Diagram</button>
+                        </div>
+                        <figure id="chart"></figure>
+                        <script src="./script.js"></script>
+                    </div>
+                    <div class="img-container">
+                        <button id="left-btn"><i class="arrow"></i></button>
+                        <div>
+                            <h3 id="title"></h3>
+                            <img id="carousel" src="" alt="">
+                            <a id="source" href="" target="_blank">Source</a>
+                        </div>
+                        <button id="right-btn"><i class="arrow"></i></button>
+                        <script src="./js/carousel.js"></script>
+                    </div>
+                </div>
+				<div id="right">
+                    <p>Transportation maps have changed a lot over the last 100 years due to a man named Harry Beck. Beck was a mechanical draughtsman who redesigned the London Underground Railroad Map in the 1930s.</p>
+                    <p>Up until this point in the time, the two primary marks used in most transportation diagrams, points and lines, encoded geographic information about where the stops were relative to the other stops. Position is often a powerful visual channel to convey quantitative information.</p>
+                    <p>However, what Beck realized was that from a functional perspective, most users of the diagram didn't actually need to know how far stops were from each other geographically. Users needed to know which stop was next and how they could transfer between trains to get to their final destination.</p>
+                    <p>Mapping the stations geographically led to crowding of information in the center of the map, resulting in ambiguity as to which stations the names belonged. Beck's approach was to organize the diagram as an abstract system. Each line was drawn at a 45-degree or 90-degree angle from every other stop. Additionally, Beck omitted other geographical information, except for the Thames river. Moreover, interchange, or transfer stations, were clearly demarcated with a different symbol.</p>
+                    <p>The result was a map which received widespread acclaim and most transit systems globally have adopted a similar system for their transit diagrams.</p>
+                </div>
+			</div>
         </div>
-        <script src="./script.js"></script>
     </body>
 </html>

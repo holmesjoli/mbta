@@ -17,7 +17,7 @@ function unique_array(data, variable) {
 function createYScale(obj, height, margin) {
     return d3.scaleLinear()
         .domain([obj.ymin, obj.ymax])
-        .range([margin.top, height-margin.bottom]);
+        .range([height-margin.bottom, margin.top]);
 };
 
 function createXScale(obj, width, margin) {
@@ -35,7 +35,6 @@ function pExit(points) {
                 .remove();
 }
 
-
 let pth = "./data/processed/";
 
 // d3.json(path.join(pth, "geo_station_connections.json")).then(function(edges) {
@@ -45,7 +44,7 @@ d3.json(pth + "beck_station_connections.json").then(function(links) {
 
         //Define constants
         const height = window.innerHeight;
-        const width = 1000;
+        const width = height*1.3;
         const margin = {top: 100, left: 100, right: 200, bottom: 125};
 
         const beck = {
@@ -62,6 +61,7 @@ d3.json(pth + "beck_station_connections.json").then(function(links) {
             ymin: d3.min(nodes, function(d) {return d.geo_y;})
         }
         console.log(nodes);
+        console.log(links);
         const lines = unique_array(links, "line");
 
         // Define SVG Canvas and attributes
@@ -87,10 +87,40 @@ d3.json(pth + "beck_station_connections.json").then(function(links) {
                     .attr("cy", function(d) {return yScale(d.geo_y);})
                     .attr("r", 5);
 
+        let tooltip = d3.select("#chart")
+                    .append("div")
+                    .attr("class", "tooltip");
+
+            svg.selectAll("circle").on("mouseover", function(e, d) {
+
+                let cx = +d3.select(this).attr("cx")+20;
+                let cy = +d3.select(this).attr("cy")-10;
+
+                console.log([cx, cy]);
+
+                tooltip.style("visibility","visible") 
+                    .style("left", `${cx}px`)
+                    .style("top", `${cy}px`)
+                    .html(`<b>${d.name}</b><br>${d.id}`);
+
+                d3.select(this)
+                    .attr("stroke","#F6C900")
+                    .attr("stroke-width",2);
+
+            }).on("mouseout", function() {
+
+                tooltip.style("visibility","hidden");
+
+                d3.select(this)
+                    .attr("stroke","none")
+                    .attr("stroke-width",0);
+                    
+            });
 
         d3.select("#diagram").on("click", function() {
             xScale.domain([beck.xmin, beck.xmax]);
             yScale.domain([beck.ymin, beck.ymax]);
+            yScale.range([margin.top, height-margin.bottom]);
 
             svg.selectAll("line")
                 .data(links)
@@ -115,12 +145,15 @@ d3.json(pth + "beck_station_connections.json").then(function(links) {
         
             pExit(points);
 
+            d3.select("#diagram").attr("class", "active");
+            document.getElementById("map").classList.remove("active");
         });
     
         d3.select("#map").on("click", function() {
     
             xScale.domain([geo.xmin, geo.xmax]);
             yScale.domain([geo.ymin, geo.ymax]);
+            yScale.range([height-margin.bottom, margin.top])
 
             points
                 .transition()
@@ -130,6 +163,9 @@ d3.json(pth + "beck_station_connections.json").then(function(links) {
                 .attr("cy", function(d) { return yScale(d.geo_y); });
         
             pExit(points);
+
+            document.getElementById("diagram").classList.remove("active");
+            d3.select("#map").attr("class", "active");
         });
     });
 });
