@@ -44,7 +44,7 @@ d3.json(pth + "beck_station_connections.json").then(function(links) {
 
         //Define constants
         const height = window.innerHeight;
-        const width = height*1.5;
+        const width = height*1.3;
         const margin = {top: 100, left: 100, right: 200, bottom: 125};
 
         const beck = {
@@ -61,6 +61,7 @@ d3.json(pth + "beck_station_connections.json").then(function(links) {
             ymin: d3.min(nodes, function(d) {return d.geo_y;})
         }
         console.log(nodes);
+        console.log(links);
         const lines = unique_array(links, "line");
 
         // Define SVG Canvas and attributes
