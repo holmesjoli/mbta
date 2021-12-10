@@ -44,7 +44,7 @@ d3.json(pth + "beck_station_connections.json").then(function(links) {
 
         //Define constants
         const height = window.innerHeight;
-        const width = 900;
+        const width = height*1.5;
         const margin = {top: 100, left: 100, right: 200, bottom: 125};
 
         const beck = {
