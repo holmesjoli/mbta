@@ -150,8 +150,6 @@ d3.json(pth + "beck_station_connections.json").then(function(links) {
 
             d3.select("#diagram").attr("class", "active");
             document.getElementById("map").classList.remove("active");
-
-            tt(svg, tooltip);
         });
     
         d3.select("#map").on("click", function() {
@@ -171,8 +169,6 @@ d3.json(pth + "beck_station_connections.json").then(function(links) {
 
             document.getElementById("diagram").classList.remove("active");
             d3.select("#map").attr("class", "active");
-
-            tt(svg, tooltip);
         });
     });
 });
