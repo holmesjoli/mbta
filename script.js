@@ -28,12 +28,42 @@ function createXScale(obj, width, margin) {
 
 function pExit(points) {
     points.exit()
-                .transition()
-                .duration(2000)
-                .delay(250)
-                .attr("r",0)
-                .remove();
+        .transition()
+        .duration(2000)
+        .delay(250)
+        .attr("r",0)
+        .remove();
 }
+
+//Title tooltip
+function tt(svg, tooltip) {
+
+    svg.selectAll("circle").on("mouseover", function(e, d) {
+
+        let cx = +d3.select(this).attr("cx")+20;
+        let cy = +d3.select(this).attr("cy")-10;
+
+        console.log([cx, cy]);
+
+        tooltip.style("visibility","visible") 
+            .style("left", `${cx}px`)
+            .style("top", `${cy}px`)
+            .html(`<b>${d.name}</b><br>`);
+
+        d3.select(this)
+            .attr("stroke","#F6C900")
+            .attr("stroke-width",2);
+
+    }).on("mouseout", function() {
+
+        tooltip.style("visibility","hidden");
+
+        d3.select(this)
+            .attr("stroke","none")
+            .attr("stroke-width",0);
+            
+    });
+};
 
 let pth = "./data/processed/";
 
@@ -91,31 +121,7 @@ d3.json(pth + "beck_station_connections.json").then(function(links) {
                     .append("div")
                     .attr("class", "tooltip");
 
-            svg.selectAll("circle").on("mouseover", function(e, d) {
-
-                let cx = +d3.select(this).attr("cx")+20;
-                let cy = +d3.select(this).attr("cy")-10;
-
-                console.log([cx, cy]);
-
-                tooltip.style("visibility","visible") 
-                    .style("left", `${cx}px`)
-                    .style("top", `${cy}px`)
-                    .html(`<b>${d.name}</b><br>${d.id}`);
-
-                d3.select(this)
-                    .attr("stroke","#F6C900")
-                    .attr("stroke-width",2);
-
-            }).on("mouseout", function() {
-
-                tooltip.style("visibility","hidden");
-
-                d3.select(this)
-                    .attr("stroke","none")
-                    .attr("stroke-width",0);
-                    
-            });
+        tt(svg, tooltip);
 
         d3.select("#diagram").on("click", function() {
             xScale.domain([beck.xmin, beck.xmax]);
