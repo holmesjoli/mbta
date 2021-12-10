@@ -14,18 +14,21 @@ function unique_array(data, variable) {
     return u;
 };
 
+//Title Create Y Scale
 function createYScale(obj, height, margin) {
     return d3.scaleLinear()
         .domain([obj.ymin, obj.ymax])
         .range([height-margin.bottom, margin.top]);
 };
 
+//Title Create X Scale
 function createXScale(obj, width, margin) {
     return d3.scaleLinear()
     .domain([obj.xmin, obj.xmax])
     .range([margin.left, width - margin.right]);
 };
 
+// Title Point Exit
 function pExit(points) {
     points.exit()
         .transition()
@@ -69,107 +72,135 @@ let pth = "./data/processed/";
 
 d3.json(pth + "beck_station_connections.json").then(function(links) {
     d3.json(pth + "stations.json").then(function(nodes) {
+        d3.csv(pth + "station_connections.csv").then(function(geoLinks) {
 
-        //Define constants
-        const height = window.innerHeight;
-        const width = height*1.3;
-        const margin = {top: 100, left: 100, right: 200, bottom: 125};
+            console.log(geoLinks);
 
-        const beck = {
-            xmax: d3.max(nodes, function(d) {return d.beck_x;}),
-            xmin: d3.min(nodes, function(d) {return d.beck_x;}),
-            ymax: d3.max(nodes, function(d) {return d.beck_y;}),
-            ymin: d3.min(nodes, function(d) {return d.beck_y;})
-        }
+            //Define constants
+            const height = window.innerHeight;
+            const width = height*1.3;
+            const margin = {top: 100, left: 100, right: 200, bottom: 125};
 
-        const geo = {
-            xmax: d3.max(nodes, function(d) {return d.geo_x;}),
-            xmin: d3.min(nodes, function(d) {return d.geo_x;}),
-            ymax: d3.max(nodes, function(d) {return d.geo_y;}),
-            ymin: d3.min(nodes, function(d) {return d.geo_y;})
-        }
-        console.log(nodes);
-        console.log(links);
-        const lines = unique_array(links, "line");
+            const beck = {
+                xmax: d3.max(nodes, function(d) {return d.beck_x;}),
+                xmin: d3.min(nodes, function(d) {return d.beck_x;}),
+                ymax: d3.max(nodes, function(d) {return d.beck_y;}),
+                ymin: d3.min(nodes, function(d) {return d.beck_y;})
+            }
 
-        // Define SVG Canvas and attributes
+            const geo = {
+                xmax: d3.max(nodes, function(d) {return d.geo_x;}),
+                xmin: d3.min(nodes, function(d) {return d.geo_x;}),
+                ymax: d3.max(nodes, function(d) {return d.geo_y;}),
+                ymin: d3.min(nodes, function(d) {return d.geo_y;})
+            }
 
-        let svg = d3.select("#chart")
-                    .append("svg")
-                    .attr("height", height)
-                    .attr("width", width);
+            console.log(nodes);
+            console.log(links);
 
-        let yScale = createYScale(geo, height, margin);
-        let xScale = createXScale(geo, width, margin);
+            // Define SVG Canvas and attributes
 
-        let colorScale = d3.scaleOrdinal()
-        .domain(lines)
-        .range(["#018447", "#018447", "#018447", "#018447", "#018447", "#E12D27", 
-                "#E87200", "#2F5DA6"]);
+            let svg = d3.select("#chart")
+                        .append("svg")
+                        .attr("height", height)
+                        .attr("width", width);
 
-        let points = svg.selectAll('circle')
-                    .data(nodes)
+            let yScale = createYScale(geo, height, margin);
+            let xScale = createXScale(geo, width, margin);
+
+            const lines = unique_array(links, "line");
+            let colorScale = d3.scaleOrdinal()
+            .domain(lines)
+            .range(["#018447", "#018447", "#018447", "#018447", "#018447", "#E12D27", 
+                    "#E87200", "#2F5DA6"]);
+
+            const geoLine = unique_array(geoLinks, "LINE");
+            console.log(geoLine);
+
+            let geoColorScale = d3.scaleOrdinal()
+            .domain(geoLine)
+            .range(["#E12D27", "#018447", "#E87200", "#2F5DA6"]);
+
+            const geoLineGroup = d3.group(geoLinks, d => d.group);
+            console.log('sumstat', geoLineGroup);
+
+            svg.selectAll(".line")
+            .data(geoLineGroup)
+            .join("path")
+                .attr("fill", "none")
+                .attr("stroke", function(d){ return geoColorScale(d[0]) })
+                .attr("stroke-width", 2)
+                .attr("d", function(d){
+                return d3.line()
+                    .x(function(d) { return xScale(+d.x_geo); })
+                    .y(function(d) { return yScale(+d.y_geo); })
+                    (d[1])
+                })
+
+            let points = svg.selectAll('circle')
+                        .data(nodes)
+                        .enter()
+                        .append("circle")
+                        .attr("cx", function(d) {return xScale(d.geo_x);})
+                        .attr("cy", function(d) {return yScale(d.geo_y);})
+                        .attr("r", 5);
+
+            let tooltip = d3.select("#chart")
+                        .append("div")
+                        .attr("class", "tooltip");
+
+            tt(svg, tooltip);
+
+            d3.select("#diagram").on("click", function() {
+                xScale.domain([beck.xmin, beck.xmax]);
+                yScale.domain([beck.ymin, beck.ymax]);
+                yScale.range([margin.top, height-margin.bottom]);
+
+                svg.selectAll("line")
+                    .data(links)
                     .enter()
-                    .append("circle")
-                    .attr("cx", function(d) {return xScale(d.geo_x);})
-                    .attr("cy", function(d) {return yScale(d.geo_y);})
-                    .attr("r", 5);
+                    .append("line")
+                    .transition()
+                    .duration(2000)
+                    .delay(250)
+                    .attr("x1", function(d) {return xScale(d.beck_x1);})
+                    .attr("x2", function(d) {return xScale(d.beck_x2);})
+                    .attr("y1", function(d) {return yScale(d.beck_y1);})
+                    .attr("y2", function(d) {return yScale(d.beck_y2);})
+                    .style("stroke", function(d) {return colorScale(d.line);})
+                    .style("stroke-width", 5);
 
-        let tooltip = d3.select("#chart")
-                    .append("div")
-                    .attr("class", "tooltip");
+                points
+                    .transition()
+                    .duration(2000)
+                    .delay(250)
+                    .attr("cx", function(d) { return xScale(d.beck_x); })
+                    .attr("cy", function(d) { return yScale(d.beck_y); });
+            
+                pExit(points);
 
-        tt(svg, tooltip);
-
-        d3.select("#diagram").on("click", function() {
-            xScale.domain([beck.xmin, beck.xmax]);
-            yScale.domain([beck.ymin, beck.ymax]);
-            yScale.range([margin.top, height-margin.bottom]);
-
-            svg.selectAll("line")
-                .data(links)
-                .enter()
-                .append("line")
-                .transition()
-                .duration(2000)
-                .delay(250)
-                .attr("x1", function(d) {return xScale(d.beck_x1);})
-                .attr("x2", function(d) {return xScale(d.beck_x2);})
-                .attr("y1", function(d) {return yScale(d.beck_y1);})
-                .attr("y2", function(d) {return yScale(d.beck_y2);})
-                .style("stroke", function(d) {return colorScale(d.line);})
-                .style("stroke-width", 5);
-
-            points
-                .transition()
-                .duration(2000)
-                .delay(250)
-                .attr("cx", function(d) { return xScale(d.beck_x); })
-                .attr("cy", function(d) { return yScale(d.beck_y); });
+                d3.select("#diagram").attr("class", "active");
+                document.getElementById("map").classList.remove("active");
+            });
         
-            pExit(points);
-
-            d3.select("#diagram").attr("class", "active");
-            document.getElementById("map").classList.remove("active");
-        });
-    
-        d3.select("#map").on("click", function() {
-    
-            xScale.domain([geo.xmin, geo.xmax]);
-            yScale.domain([geo.ymin, geo.ymax]);
-            yScale.range([height-margin.bottom, margin.top])
-
-            points
-                .transition()
-                .duration(2000)
-                .delay(250)
-                .attr("cx", function(d) { return xScale(d.geo_x); })
-                .attr("cy", function(d) { return yScale(d.geo_y); });
+            d3.select("#map").on("click", function() {
         
-            pExit(points);
+                xScale.domain([geo.xmin, geo.xmax]);
+                yScale.domain([geo.ymin, geo.ymax]);
+                yScale.range([height-margin.bottom, margin.top])
 
-            document.getElementById("diagram").classList.remove("active");
-            d3.select("#map").attr("class", "active");
+                points
+                    .transition()
+                    .duration(2000)
+                    .delay(250)
+                    .attr("cx", function(d) { return xScale(d.geo_x);})
+                    .attr("cy", function(d) { return yScale(d.geo_y);});
+            
+                pExit(points);
+
+                document.getElementById("diagram").classList.remove("active");
+                d3.select("#map").attr("class", "active");
+            });
         });
     });
 });
