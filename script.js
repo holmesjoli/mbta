@@ -97,9 +97,9 @@ function groupedColorScale(data) {
 
 let pth = "./data/processed/";
 
-// d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
+d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
     d3.json(pth + "stations.json").then(function(nodes) {
-        d3.csv(pth + "station_connections.csv").then(function(links) {
+        d3.csv(pth + "station_connections.csv").then(function(geoLinks) {
 
             //Define constants
             const height = window.innerHeight;
@@ -120,6 +120,7 @@ let pth = "./data/processed/";
                 ymin: d3.min(nodes, function(d) {return d.geo_y;})
             }
 
+            console.log(geoLinks);
             // Define SVG Canvas and attributes
 
             let svg = d3.select("#chart")
@@ -131,25 +132,25 @@ let pth = "./data/processed/";
             let xScale = createXScale(geo, width, margin);
 
             // Generate the grouped color scale for the map
-            let g = groupedColorScale(links);
+            let g = groupedColorScale(geoLinks);
 
-            let geoColorScale = d3.scaleOrdinal()
+            let colorScale = d3.scaleOrdinal()
             .domain(g["uniqueGroup"])
             .range(g["lineColors"]);
 
             // Generate the lines for the map
-            const lineGroup = d3.group(links, d => d.group);
+            const geoLineGroup = d3.group(geoLinks, d => d.group);
 
             let path = svg.selectAll(".line")
-            .data(lineGroup)
+            .data(geoLineGroup)
             .join("path")
                 .attr("fill", "none")
-                .attr("stroke", function(d){ return geoColorScale(d[0]);})
+                .attr("stroke", function(d){ return colorScale(d[0]);})
                 .attr("stroke-width", 2)
                 .attr("d", function(d){
                 return d3.line()
-                    .x(function(d) { return xScale(+d.x_geo); })
-                    .y(function(d) { return yScale(+d.y_geo); })
+                    .x(function(d) { return xScale(+d.x); })
+                    .y(function(d) { return yScale(+d.y); })
                     (d[1])
                 })
 
@@ -173,33 +174,33 @@ let pth = "./data/processed/";
                 yScale.domain([beck.ymin, beck.ymax]);
                 yScale.range([margin.top, height-margin.bottom]);
 
-        //         let g = groupedColorScale(beckLinks);
+                const beckLineGroup = d3.group(beckLinks, d => d.group);
 
-        //         let beckColorScale = d3.scaleOrdinal()
-        //         .domain(g["uniqueGroup"])
-        //         .range(g["lineColors"]);
+                let c = svg.selectAll("path")
+                .data(beckLineGroup, function(d) { return d.id; });
 
-        //         const beckLineGroup = d3.group(beckLinks, d => d.group);
+                c.enter().append("path")
+                    .attr("d", function(d) {
+                        return d3.line()
+                            .x(function(d) { return xScale(+d.x); })
+                            .y(function(d) { return yScale(+d.y); })
+                            (d[1])
+                    })
+                .merge(c)   
+                    .transition() // a transition makes the changes visible...
+                    .duration(2000)
+                    .delay(250)
+                    .attr("d", function(d){
+                                return d3.line()
+                                    .x(function(d) { return xScale(+d.x); })
+                                    .y(function(d) { return yScale(+d.y); })
+                                    (d[1])
+                                });
 
-        //         path.datum(vermontHoney)
-        // .transition()
-        // .duration(1500)
-        // .attr("d", function(d) { return line(d); });
-
-
-
-                // let path = svg.selectAll(".line")
-                // .data(beckLineGroup)
-                // .join("path")
-                //     .attr("fill", "none")
-                //     .attr("stroke", function(d){ return beckColorScale(d[0]);})
-                //     .attr("stroke-width", 2)
-                //     .attr("d", function(d){
-                //     return d3.line()
-                //         .x(function(d) { return xScale(+d.x); })
-                //         .y(function(d) { return yScale(+d.y); })
-                //         (d[1])
-                //     })
+                c.exit()
+                .transition()
+                .duration(1500)
+                .remove();
 
                 points
                     .transition()
@@ -220,6 +221,43 @@ let pth = "./data/processed/";
                 yScale.domain([geo.ymin, geo.ymax]);
                 yScale.range([height-margin.bottom, margin.top])
 
+                let c = svg.selectAll("path")
+                .data(geoLineGroup, function(d) { return d.id; });
+
+                c.enter().append("path")
+                    .attr("d", function(d) {
+                        return d3.line()
+                            .x(function(d) { return xScale(+d.x); })
+                            .y(function(d) { return yScale(+d.y); })
+                            (d[1])
+                    })
+                .merge(c)   
+                    .transition() // a transition makes the changes visible...
+                    .duration(2000)
+                    .delay(250)
+                    .attr("d", function(d){
+                                return d3.line()
+                                    .x(function(d) { return xScale(+d.x); })
+                                    .y(function(d) { return yScale(+d.y); })
+                                    (d[1])
+                                });
+
+                c.exit()
+                .transition()
+                .duration(1500)
+                .remove();
+
+                // path
+                //     .transition()
+                //     .duration(2000)
+                //     .delay(250)
+                //         .attr("d", function(d){
+                //         return d3.line()
+                //             .x(function(d) { return xScale(+d.x_geo); })
+                //             .y(function(d) { return yScale(+d.y_geo); })
+                //             (d[1])
+                //         })
+
                 points
                     .transition()
                     .duration(2000)
@@ -234,4 +272,4 @@ let pth = "./data/processed/";
             });
         });
     });
-// });
+});
