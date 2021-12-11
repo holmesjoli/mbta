@@ -66,6 +66,34 @@ function tt(svg, tooltip) {
     });
 };
 
+//
+function groupedColorScale(data) {
+
+    // Generate the grouped color scale for the map
+    const uniqueGroup = unique_array(data, "group");    
+    const lineColors = [];
+
+    uniqueGroup.forEach(function(d) {
+        z = data.filter(function(i) {
+            return i.group === d;
+        });
+        line = unique_array(z, "LINE")[0]
+        
+        if (line === "GREEN") {
+            lineColors.push("#018447");
+        } else if (line === "RED") {
+            lineColors.push("#E12D27");
+        } else if (line === "ORANGE") {
+            lineColors.push("#E87200")
+        } else if (line === "BLUE") {
+            lineColors.push("#2F5DA6")
+        }
+    });
+
+    return {uniqueGroup: uniqueGroup,
+            lineColors: lineColors};
+};
+
 let pth = "./data/processed/";
 
 d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
@@ -104,34 +132,16 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
             let xScale = createXScale(geo, width, margin);
 
             // Generate the grouped color scale for the map
-            const uniqueGroup = unique_array(geoLinks, "group");    
-            const lineColors = [];
-
-            uniqueGroup.forEach(function(d) {
-                z = geoLinks.filter(function(i) {
-                    return i.group === d;
-                });
-                line = unique_array(z, "LINE")[0]
-                
-                if (line === "GREEN") {
-                    lineColors.push("#018447");
-                } else if (line === "RED") {
-                    lineColors.push("#E87200");
-                } else if (line === "ORANGE") {
-                    lineColors.push("#E12D27")
-                } else if (line === "BLUE") {
-                    lineColors.push("#2F5DA6")
-                }
-            });
+            let g = groupedColorScale(geoLinks);
 
             let geoColorScale = d3.scaleOrdinal()
-            .domain(uniqueGroup)
-            .range(lineColors);
+            .domain(g["uniqueGroup"])
+            .range(g["lineColors"]);
 
             // Generate the lines for the map
             const geoLineGroup = d3.group(geoLinks, d => d.group);
 
-            svg.selectAll(".line")
+            let path = svg.selectAll(".line")
             .data(geoLineGroup)
             .join("path")
                 .attr("fill", "none")
@@ -159,29 +169,30 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
             tt(svg, tooltip);
 
             d3.select("#diagram").on("click", function() {
+
                 xScale.domain([beck.xmin, beck.xmax]);
                 yScale.domain([beck.ymin, beck.ymax]);
                 yScale.range([margin.top, height-margin.bottom]);
 
-                // let colorScale = d3.scaleOrdinal()
-                // .domain(unique_array(beckLinks, "line"))
-                // .range(["#018447", "#018447", "#018447", "#018447", "#018447", "#E12D27", 
-                //         "#E87200", "#2F5DA6"]);
+                let g = groupedColorScale(beckLinks);
 
+                let beckColorScale = d3.scaleOrdinal()
+                .domain(g["uniqueGroup"])
+                .range(g["lineColors"]);
 
-                // svg.selectAll("line")
-                //     .data(beckLinks)
-                //     .enter()
-                //     .append("line")
-                //     .transition()
-                //     .duration(2000)
-                //     .delay(250)
-                //     .attr("x1", function(d) {return xScale(d.beck_x1);})
-                //     .attr("x2", function(d) {return xScale(d.beck_x2);})
-                //     .attr("y1", function(d) {return yScale(d.beck_y1);})
-                //     .attr("y2", function(d) {return yScale(d.beck_y2);})
-                //     .style("stroke", function(d) {return colorScale(d.line);})
-                //     .style("stroke-width", 5);
+                const beckLineGroup = d3.group(beckLinks, d => d.group);
+                let path = svg.selectAll(".line")
+                .data(beckLineGroup)
+                .join("path")
+                    .attr("fill", "none")
+                    .attr("stroke", function(d){ return beckColorScale(d[0]);})
+                    .attr("stroke-width", 2)
+                    .attr("d", function(d){
+                    return d3.line()
+                        .x(function(d) { return xScale(+d.x); })
+                        .y(function(d) { return yScale(+d.y); })
+                        (d[1])
+                    })
 
                 points
                     .transition()
