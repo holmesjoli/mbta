@@ -49,7 +49,7 @@ function tt(svg, tooltip) {
         tooltip.style("visibility","visible") 
             .style("left", `${cx}px`)
             .style("top", `${cy}px`)
-            .html(`<b>${d.name}</b><br>`);
+            .html(`<b>${d.name}</b><br> ${d.id}`);
 
         d3.select(this)
             .attr("stroke","#F6C900")
@@ -77,6 +77,7 @@ function groupedColorScale(data) {
         z = data.filter(function(i) {
             return i.group === d;
         });
+
         line = unique_array(z, "LINE")[0]
         
         if (line === "GREEN") {
@@ -96,11 +97,9 @@ function groupedColorScale(data) {
 
 let pth = "./data/processed/";
 
-d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
+// d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
     d3.json(pth + "stations.json").then(function(nodes) {
-        d3.csv(pth + "station_connections.csv").then(function(geoLinks) {
-
-            console.log(beckLinks);
+        d3.csv(pth + "station_connections.csv").then(function(links) {
 
             //Define constants
             const height = window.innerHeight;
@@ -132,17 +131,17 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
             let xScale = createXScale(geo, width, margin);
 
             // Generate the grouped color scale for the map
-            let g = groupedColorScale(geoLinks);
+            let g = groupedColorScale(links);
 
             let geoColorScale = d3.scaleOrdinal()
             .domain(g["uniqueGroup"])
             .range(g["lineColors"]);
 
             // Generate the lines for the map
-            const geoLineGroup = d3.group(geoLinks, d => d.group);
+            const lineGroup = d3.group(links, d => d.group);
 
             let path = svg.selectAll(".line")
-            .data(geoLineGroup)
+            .data(lineGroup)
             .join("path")
                 .attr("fill", "none")
                 .attr("stroke", function(d){ return geoColorScale(d[0]);})
@@ -174,25 +173,33 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
                 yScale.domain([beck.ymin, beck.ymax]);
                 yScale.range([margin.top, height-margin.bottom]);
 
-                let g = groupedColorScale(beckLinks);
+        //         let g = groupedColorScale(beckLinks);
 
-                let beckColorScale = d3.scaleOrdinal()
-                .domain(g["uniqueGroup"])
-                .range(g["lineColors"]);
+        //         let beckColorScale = d3.scaleOrdinal()
+        //         .domain(g["uniqueGroup"])
+        //         .range(g["lineColors"]);
 
-                const beckLineGroup = d3.group(beckLinks, d => d.group);
-                let path = svg.selectAll(".line")
-                .data(beckLineGroup)
-                .join("path")
-                    .attr("fill", "none")
-                    .attr("stroke", function(d){ return beckColorScale(d[0]);})
-                    .attr("stroke-width", 2)
-                    .attr("d", function(d){
-                    return d3.line()
-                        .x(function(d) { return xScale(+d.x); })
-                        .y(function(d) { return yScale(+d.y); })
-                        (d[1])
-                    })
+        //         const beckLineGroup = d3.group(beckLinks, d => d.group);
+
+        //         path.datum(vermontHoney)
+        // .transition()
+        // .duration(1500)
+        // .attr("d", function(d) { return line(d); });
+
+
+
+                // let path = svg.selectAll(".line")
+                // .data(beckLineGroup)
+                // .join("path")
+                //     .attr("fill", "none")
+                //     .attr("stroke", function(d){ return beckColorScale(d[0]);})
+                //     .attr("stroke-width", 2)
+                //     .attr("d", function(d){
+                //     return d3.line()
+                //         .x(function(d) { return xScale(+d.x); })
+                //         .y(function(d) { return yScale(+d.y); })
+                //         (d[1])
+                //     })
 
                 points
                     .transition()
@@ -227,4 +234,4 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
             });
         });
     });
-});
+// });
