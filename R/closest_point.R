@@ -85,7 +85,9 @@ nodes <- nodes %>%
 
 lines <- sf::read_sf("./data/raw/MBTA_ARC.shp") %>%
   dplyr::filter(LINE != "SILVER") %>%
-  dplyr::filter(ROUTE != "Mattapan Trolley") %>%
+  dplyr::filter(ROUTE != "Mattapan Trolley") 
+
+lines <- rmapshaper::ms_simplify(input = as(lines, 'Spatial')) %>%
   sf::st_as_sf() %>%
   sf::st_coordinates() %>%
   as.data.frame()
