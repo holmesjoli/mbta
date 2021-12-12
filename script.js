@@ -130,8 +130,13 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
             .domain(g["uniqueGroup"])
             .range(g["lineColors"]);
 
+            console.log(g["uniqueGroup"]);
+            console.log(g["lineColors"]);
+
             // Generate the lines for the map
             const geoLineGroup = d3.group(geoLinks, d => d.group);
+
+            console.log(geoLineGroup);
 
             let path = svg.selectAll(".line")
             .data(geoLineGroup)
@@ -140,11 +145,10 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
                 .attr("stroke", function(d){ return colorScale(d[0]);})
                 .attr("stroke-width", 2)
                 .attr("d", function(d){
-                return d3.line()
+                    return d3.line()
                     .x(function(d) { return xScale(+d.x); })
                     .y(function(d) { return yScale(+d.y); })
-                    (d[1])
-                })
+                    (d[1])})
 
             let points = svg.selectAll('circle')
                         .data(nodes)
@@ -166,12 +170,15 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
                 yScale.domain([beck.ymin, beck.ymax]);
                 yScale.range([margin.top, height-margin.bottom]);
 
-                const beckLineGroup = d3.group(beckLinks, d => d.group);
+                const beckLineGroup = d3.group(beckLinks, d => d.line);
+                console.log(beckLineGroup);
 
                 let c = svg.selectAll("path")
                 .data(beckLineGroup, function(d) { return d.name; });
 
                 c.enter().append("path")
+                    .attr("fill", "none")
+                    .attr("stroke-width", 2)
                     .attr("d", function(d) {
                         return d3.line()
                             .x(function(d) { return xScale(+d.x); })
@@ -179,9 +186,11 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
                             (d[1])
                     })
                 .merge(c)   
-                    .transition() // a transition makes the changes visible...
+                    .transition()
                     .duration(2000)
                     .delay(250)
+                    .attr("fill", "none")
+                    .attr("stroke-width", 2)
                     .attr("d", function(d){
                                 return d3.line()
                                     .x(function(d) { return xScale(+d.x); })
@@ -206,15 +215,16 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
             });
         
             d3.select("#map").on("click", function() {
-        
                 xScale.domain([geo.xmin, geo.xmax]);
                 yScale.domain([geo.ymin, geo.ymax]);
                 yScale.range([height-margin.bottom, margin.top])
 
                 let c = svg.selectAll("path")
-                .data(geoLineGroup, function(d) { return d.name; });
+                .data(geoLineGroup, function(d) { return d.name;});
 
                 c.enter().append("path")
+                    .attr("fill", "none")
+                    .attr("stroke-width", 2)
                     .attr("d", function(d) {
                         return d3.line()
                             .x(function(d) { return xScale(+d.x); })
@@ -225,6 +235,9 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
                     .transition()
                     .duration(2000)
                     .delay(250)
+                    .attr("fill", "none")
+                    .attr("stroke-width", 2)
+                    .attr("stroke", function(d){ return colorScale(d[0]);})
                     .attr("d", function(d){
                                 return d3.line()
                                     .x(function(d) { return xScale(+d.x); })
