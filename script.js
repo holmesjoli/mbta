@@ -28,16 +28,6 @@ function createXScale(obj, width, margin) {
     .range([margin.left, width - margin.right]);
 };
 
-// Title Point Exit
-function pExit(points) {
-    points.exit()
-        .transition()
-        .duration(2000)
-        .delay(250)
-        .attr("r",0)
-        .remove();
-}
-
 //Title tooltip
 function tt(svg, tooltip) {
 
@@ -208,8 +198,6 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
                     .delay(250)
                     .attr("cx", function(d) { return xScale(d.beck_x); })
                     .attr("cy", function(d) { return yScale(d.beck_y); });
-            
-                pExit(points);
 
                 d3.select("#diagram").attr("class", "active");
                 document.getElementById("map").classList.remove("active");
@@ -264,8 +252,6 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
                     .delay(250)
                     .attr("cx", function(d) { return xScale(d.geo_x);})
                     .attr("cy", function(d) { return yScale(d.geo_y);});
-            
-                pExit(points);
 
                 document.getElementById("diagram").classList.remove("active");
                 d3.select("#map").attr("class", "active");
