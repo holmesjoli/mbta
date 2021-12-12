@@ -176,31 +176,31 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
 
                 const beckLineGroup = d3.group(beckLinks, d => d.group);
 
-                let c = svg.selectAll("path")
-                .data(beckLineGroup, function(d) { return d.id; });
+                // let c = svg.selectAll("path")
+                // .data(beckLineGroup, function(d) { return d.id; });
 
-                c.enter().append("path")
-                    .attr("d", function(d) {
-                        return d3.line()
-                            .x(function(d) { return xScale(+d.x); })
-                            .y(function(d) { return yScale(+d.y); })
-                            (d[1])
-                    })
-                .merge(c)   
-                    .transition() // a transition makes the changes visible...
-                    .duration(2000)
-                    .delay(250)
-                    .attr("d", function(d){
-                                return d3.line()
-                                    .x(function(d) { return xScale(+d.x); })
-                                    .y(function(d) { return yScale(+d.y); })
-                                    (d[1])
-                                });
+                // c.enter().append("path")
+                //     .attr("d", function(d) {
+                //         return d3.line()
+                //             .x(function(d) { return xScale(+d.x); })
+                //             .y(function(d) { return yScale(+d.y); })
+                //             (d[1])
+                //     })
+                // .merge(c)   
+                //     .transition() // a transition makes the changes visible...
+                //     .duration(2000)
+                //     .delay(250)
+                //     .attr("d", function(d){
+                //                 return d3.line()
+                //                     .x(function(d) { return xScale(+d.x); })
+                //                     .y(function(d) { return yScale(+d.y); })
+                //                     (d[1])
+                //                 });
 
-                c.exit()
-                .transition()
-                .duration(1500)
-                .remove();
+                // c.exit()
+                // .transition()
+                // .duration(1500)
+                // .remove();
 
                 points
                     .transition()
