@@ -91,12 +91,15 @@ function groupedLine(d, xScale, yScale) {
     .x(function(d) { return xScale(+d.x); })
     .y(function(d) { return yScale(+d.y); })
     (d[1])
-}
+};
 
-let pth = "./data/processed/";
+function groupedMerge() {
 
+};
 
 // grouped line chart https://www.d3-graph-gallery.com/graph/line_several_group.html
+
+let pth = "./data/processed/";
 
 d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
     d3.json(pth + "stations.json").then(function(nodes) {
@@ -177,10 +180,16 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
                 yScale.range([margin.top, height-margin.bottom]);
 
                 const beckLineGroup = d3.group(beckLinks, d => d[groupingVar]);
-                console.log(beckLineGroup);
+                console.log('beckLineGroup', beckLineGroup);
 
                 let c = svg.selectAll("path")
-                .data(beckLineGroup, function(d) { return d.name; });
+                .data(beckLineGroup, 
+                    beckLineGroup.forEach(function(i) {
+                        i.forEach(function(d) {
+                            return d.name;
+                            })
+                        })
+                    );
 
                 c.enter().append("path")
                     .attr("fill", "none")
@@ -222,7 +231,13 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
                 yScale.range([height-margin.bottom, margin.top])
 
                 let c = svg.selectAll("path")
-                .data(geoLineGroup, function(d) { return d.name;});
+                .data(geoLineGroup, 
+                    geoLineGroup.forEach(function(i) {
+                        i.forEach(function(d) {
+                            return d.name;
+                            })
+                        })
+                    );
 
                 c.enter().append("path")
                     .attr("fill", "none")
