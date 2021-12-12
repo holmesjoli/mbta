@@ -196,6 +196,7 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
                 c.enter().append("path")
                     .attr("fill", "none")
                     .attr("stroke-width", 2)
+                    .attr("stroke", function(d){ return colorScale(d[0]);})
                     .attr("d", function(d){return groupedLine(d, xScale, yScale);})
                 .merge(c)   
                     .transition()
@@ -203,6 +204,7 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
                     .delay(250)
                     .attr("fill", "none")
                     .attr("stroke-width", 2)
+                    .attr("stroke", function(d){ return colorScale(d[0]);})
                     .attr("d", function(d){return groupedLine(d, xScale, yScale);})
 
                 c.exit()
@@ -231,6 +233,7 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
                 c.enter().append("path")
                     .attr("fill", "none")
                     .attr("stroke-width", 2)
+                    .attr("stroke", function(d){ return colorScale(d[0]);})
                     .attr("d", function(d){return groupedLine(d, xScale, yScale);})
                 .merge(c)   
                     .transition()
