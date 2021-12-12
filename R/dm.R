@@ -227,8 +227,8 @@ lines <- lines %>%
   as.data.frame() %>%
   dplyr::mutate(order = seq(1, dplyr::n(), 1)) %>%
   dplyr::inner_join(lines %>% dplyr::mutate(L2 = seq(1, dplyr::n(), 1))) %>%
-  dplyr::rename(x_geo = X, y_geo = Y, group = L2) %>% 
-  dplyr::select(x_geo, y_geo, LINE, group, order) 
+  dplyr::rename(x = X, y = Y, group = L2) %>% 
+  dplyr::select(x, y, LINE, group, order) 
 
 lines %>%
   readr::write_csv(file.path(pth, "station_connections.csv"))
