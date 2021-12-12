@@ -201,12 +201,6 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
                     .delay(250)
                     .attr("fill", "none")
                     .attr("stroke-width", 2)
-                    // .attrTween('d', function (d) {
-                    //     var previous = d3.select(this).attr('d');
-                    //     console.log(d3.select(this).attr('d'))
-                    //     var current = groupedLine(d, xScale, yScale);
-                    //     return d3.interpolatePath(previous, current);
-                    // });
                     .attr("d", function(d){return groupedLine(d, xScale, yScale);})
 
                 c.exit()
@@ -224,7 +218,7 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
                 d3.select("#diagram").attr("class", "active");
                 document.getElementById("map").classList.remove("active");
             });
-        
+
             d3.select("#map").on("click", function() {
                 xScale.domain([geo.xmin, geo.xmax]);
                 yScale.domain([geo.ymin, geo.ymax]);
