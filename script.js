@@ -63,15 +63,12 @@ function groupedColorScale(data, group) {
     const uniqueGroup = unique_array(data, group);    
     const lineColors = [];
 
-    console.log(uniqueGroup);
-
     uniqueGroup.forEach(function(d) {
         z = data.filter(function(i) {
             return i[group] === d;
         });
 
         line = unique_array(z, "LINE")[0]
-        console.log(line);
         
         if (line === "GREEN") {
             lineColors.push("#018447");
@@ -143,9 +140,6 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
             let colorScale = d3.scaleOrdinal()
             .domain(g["uniqueGroup"])
             .range(g["lineColors"]);
-
-            console.log(g["uniqueGroup"]);
-            console.log(g["lineColors"]);
 
             // Generate the lines for the map
             const geoLineGroup = d3.group(geoLinks, d => d.group_name);
