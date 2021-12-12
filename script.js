@@ -93,8 +93,17 @@ function groupedLine(d, xScale, yScale) {
     (d[1])
 };
 
-function groupedMerge() {
+// Title grouped merge
+function groupedMerge(svg, groupedData) {
 
+    return svg.selectAll("path")
+                .data(groupedData, 
+                    groupedData.forEach(function(i) {
+                        i.forEach(function(d) {
+                            return d.name;
+                            })
+                        })
+                    );
 };
 
 // grouped line chart https://www.d3-graph-gallery.com/graph/line_several_group.html
@@ -182,14 +191,7 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
                 const beckLineGroup = d3.group(beckLinks, d => d[groupingVar]);
                 console.log('beckLineGroup', beckLineGroup);
 
-                let c = svg.selectAll("path")
-                .data(beckLineGroup, 
-                    beckLineGroup.forEach(function(i) {
-                        i.forEach(function(d) {
-                            return d.name;
-                            })
-                        })
-                    );
+                let c = groupedMerge(svg, beckLineGroup);
 
                 c.enter().append("path")
                     .attr("fill", "none")
@@ -224,14 +226,7 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
                 yScale.domain([geo.ymin, geo.ymax]);
                 yScale.range([height-margin.bottom, margin.top])
 
-                let c = svg.selectAll("path")
-                .data(geoLineGroup, 
-                    geoLineGroup.forEach(function(i) {
-                        i.forEach(function(d) {
-                            return d.name;
-                            })
-                        })
-                    );
+                let c = groupedMerge(svg, geoLineGroup);
 
                 c.enter().append("path")
                     .attr("fill", "none")
