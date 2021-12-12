@@ -81,16 +81,20 @@ geo <- sapply(1:nrow(nodes), function(j) {
 
 nodes <- nodes %>%
   dplyr::bind_cols(name = geo) %>%
-  dplyr::filter(!is.na(name))
+  dplyr::filter(!is.na(name)) %>%
+  dplyr::mutate(n = seq(1, dplyr::n(), 1))
 
-lines <- sf::read_sf("./data/raw/MBTA_ARC.shp") %>%
+lines1 <- sf::read_sf("./data/raw/MBTA_ARC.shp") %>%
   dplyr::filter(LINE != "SILVER") %>%
-  dplyr::filter(ROUTE != "Mattapan Trolley") 
+  dplyr::filter(ROUTE != "Mattapan Trolley")
 
-lines <- rmapshaper::ms_simplify(input = as(lines, 'Spatial')) %>%
-  sf::st_as_sf() %>%
+# lines <- rmapshaper::ms_simplify(input = as(lines, 'Spatial')) %>%
+#   sf::st_as_sf() 
+
+lines <- lines1 %>%
   sf::st_coordinates() %>%
-  as.data.frame()
+  as.data.frame() %>%
+  dplyr::mutate(n = seq(1, dplyr::n(), 1))
 
 sfc <- lapply(1:nrow(lines), function(i) {
   b <- lines %>%
@@ -120,33 +124,90 @@ close_stations <- lapply(1:113, function(j) {
     as.data.frame() %>% 
     dplyr::bind_cols(nodes %>%
                        dplyr::slice(j) %>%
-                       sf::st_drop_geometry())
+                       sf::st_drop_geometry()) %>%
+    dplyr::select(-n)
 
   l <- lines %>% dplyr::slice(i) %>%
-    dplyr::select(X, Y, L2) %>%
+    dplyr::select(X, Y, L2, n) %>%
     dplyr::rename(line_x = X, line_y = Y, group = L2) %>%
     sf::st_drop_geometry()
 
-  n %>% dplyr::bind_cols(l)
+  df <- n %>% dplyr::bind_cols(l)
 
+  row.names(df) <- NULL
+  df
 }) %>%
   dplyr::bind_rows()
 
-lines <- sf::read_sf("./data/raw/MBTA_ARC.shp") %>%
-  dplyr::filter(LINE != "SILVER") %>%
-  dplyr::filter(ROUTE != "Mattapan Trolley") 
-
 lines <- lines %>%
-  sf::st_coordinates() %>%
-  as.data.frame() %>%
-  dplyr::distinct() %>%
   dplyr::group_by(L2) %>%
   dplyr::mutate(order = seq(1, dplyr::n(), 1)) %>%
-  dplyr::inner_join(lines %>% dplyr::mutate(L2 = seq(1, dplyr::n(), 1))) %>%
+  dplyr::inner_join(lines1 %>% dplyr::mutate(L2 = seq(1, dplyr::n(), 1))) %>%
   dplyr::rename(x = X, y = Y, group = L2) %>% 
-  dplyr::select(x, y, LINE, group, order) %>%
+  dplyr::select(x, y, LINE, group, order, n) %>%
   dplyr::left_join(close_stations %>%
-                     dplyr::select(line_x, line_y, name) %>%
-                     dplyr::rename(x = line_x, y = line_y)) %>%
-  dplyr::filter(LINE %in% c("ORANGE", "BLUE")) %>%
+                     dplyr::select(n, name)) 
+
+lines %>%
   readr::write_csv(file.path(pth, "station_connections.csv"))
+
+# Blue order 31, 32, 33, 34, 35, 44
+# Orange order 2,5, 10, 12,13, 15, 46, 1, 40, 38, 36
+
+# Orageg extra 4,5,6,7,8,9,11,14,16,39,37
+
+# Red 26, 43, 47, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59
+
+# Red 26, 50, 49, 47, 56, 57
+
+# Red2 43, 47, 49
+
+orange_group <- data.frame(
+  group = c(2,5, 10, 12,13, 15, 46, 1, 40, 38, 36),
+  line = "orange") %>%
+  dplyr::mutate(group_order = seq(1, dplyr::n(), 1))
+
+blue_group <- data.frame(
+  group = c(31, 32, 33, 34, 35, 44),
+  line = "blue") %>%
+  dplyr::mutate(group_order = seq(1, dplyr::n(), 1))
+
+red_group <- data.frame(
+  group = c(57, 56, 47, 49, 50, 26),
+  line = "red") %>%
+  dplyr::mutate(group_order = seq(1, dplyr::n(), 1))
+
+red2_group <- data.frame(
+  group = c(43, 55, 54),
+  line = "red2") %>%
+  dplyr::mutate(group_order = seq(1, dplyr::n(), 1))
+
+orange_line <- lines %>%
+  dplyr::inner_join(orange_group) %>%
+  dplyr::arrange(group_order)
+
+blue_line <- lines %>%
+  dplyr::inner_join(blue_group) %>%
+  dplyr::arrange(group_order)
+
+red_line <- lines %>%
+  dplyr::inner_join(red_group) %>%
+  dplyr::arrange(group_order)
+
+red2_line <- lines %>%
+  dplyr::inner_join(red2_group) %>%
+  dplyr::arrange(group_order)
+
+orange_line %>%
+  dplyr::bind_rows(blue_line) %>%
+  dplyr::bind_rows(red_line) %>%
+  dplyr::bind_rows(red2_line) %>%
+  readr::write_csv(file.path(pth, "station_connections.csv"))
+
+df <- lines %>% 
+  dplyr::filter(!is.na(name))
+  
+df <- df[match(red2, df$name),] %>% 
+  tidyr::drop_na()
+
+
