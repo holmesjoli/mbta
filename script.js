@@ -57,18 +57,21 @@ function tt(svg, tooltip) {
 };
 
 //
-function groupedColorScale(data) {
+function groupedColorScale(data, group) {
 
     // Generate the grouped color scale for the map
-    const uniqueGroup = unique_array(data, "group");    
+    const uniqueGroup = unique_array(data, group);    
     const lineColors = [];
+
+    console.log(uniqueGroup);
 
     uniqueGroup.forEach(function(d) {
         z = data.filter(function(i) {
-            return i.group === d;
+            return i[group] === d;
         });
 
         line = unique_array(z, "LINE")[0]
+        console.log(line);
         
         if (line === "GREEN") {
             lineColors.push("#018447");
@@ -94,6 +97,9 @@ function groupedLine(d, xScale, yScale) {
 }
 
 let pth = "./data/processed/";
+
+
+// grouped line chart https://www.d3-graph-gallery.com/graph/line_several_group.html
 
 d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
     d3.json(pth + "stations.json").then(function(nodes) {
@@ -132,7 +138,7 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
             let xScale = createXScale(geo, width, margin);
 
             // Generate the grouped color scale for the map
-            let g = groupedColorScale(geoLinks);
+            let g = groupedColorScale(geoLinks, "group_name");
 
             let colorScale = d3.scaleOrdinal()
             .domain(g["uniqueGroup"])
@@ -142,7 +148,7 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
             console.log(g["lineColors"]);
 
             // Generate the lines for the map
-            const geoLineGroup = d3.group(geoLinks, d => d.group);
+            const geoLineGroup = d3.group(geoLinks, d => d.group_name);
 
             console.log(geoLineGroup);
 
@@ -190,6 +196,12 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
                     .delay(250)
                     .attr("fill", "none")
                     .attr("stroke-width", 2)
+                    // .attrTween('d', function (d) {
+                    //     var previous = d3.select(this).attr('d');
+                    //     console.log(d3.select(this).attr('d'))
+                    //     var current = groupedLine(d, xScale, yScale);
+                    //     return d3.interpolatePath(previous, current);
+                    // });
                     .attr("d", function(d){return groupedLine(d, xScale, yScale);})
 
                 c.exit()
