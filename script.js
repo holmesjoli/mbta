@@ -85,6 +85,14 @@ function groupedColorScale(data) {
             lineColors: lineColors};
 };
 
+function groupedLine(d, xScale, yScale) {
+
+    return d3.line()
+    .x(function(d) { return xScale(+d.x); })
+    .y(function(d) { return yScale(+d.y); })
+    (d[1])
+}
+
 let pth = "./data/processed/";
 
 d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
@@ -144,11 +152,7 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
                 .attr("fill", "none")
                 .attr("stroke", function(d){ return colorScale(d[0]);})
                 .attr("stroke-width", 2)
-                .attr("d", function(d){
-                    return d3.line()
-                    .x(function(d) { return xScale(+d.x); })
-                    .y(function(d) { return yScale(+d.y); })
-                    (d[1])})
+                .attr("d", function(d){return groupedLine(d, xScale, yScale);})
 
             let points = svg.selectAll('circle')
                         .data(nodes)
@@ -179,24 +183,14 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
                 c.enter().append("path")
                     .attr("fill", "none")
                     .attr("stroke-width", 2)
-                    .attr("d", function(d) {
-                        return d3.line()
-                            .x(function(d) { return xScale(+d.x); })
-                            .y(function(d) { return yScale(+d.y); })
-                            (d[1])
-                    })
+                    .attr("d", function(d){return groupedLine(d, xScale, yScale);})
                 .merge(c)   
                     .transition()
                     .duration(2000)
                     .delay(250)
                     .attr("fill", "none")
                     .attr("stroke-width", 2)
-                    .attr("d", function(d){
-                                return d3.line()
-                                    .x(function(d) { return xScale(+d.x); })
-                                    .y(function(d) { return yScale(+d.y); })
-                                    (d[1])
-                                });
+                    .attr("d", function(d){return groupedLine(d, xScale, yScale);})
 
                 c.exit()
                 .transition()
@@ -225,12 +219,7 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
                 c.enter().append("path")
                     .attr("fill", "none")
                     .attr("stroke-width", 2)
-                    .attr("d", function(d) {
-                        return d3.line()
-                            .x(function(d) { return xScale(+d.x); })
-                            .y(function(d) { return yScale(+d.y); })
-                            (d[1])
-                    })
+                    .attr("d", function(d){return groupedLine(d, xScale, yScale);})
                 .merge(c)   
                     .transition()
                     .duration(2000)
@@ -238,12 +227,7 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
                     .attr("fill", "none")
                     .attr("stroke-width", 2)
                     .attr("stroke", function(d){ return colorScale(d[0]);})
-                    .attr("d", function(d){
-                                return d3.line()
-                                    .x(function(d) { return xScale(+d.x); })
-                                    .y(function(d) { return yScale(+d.y); })
-                                    (d[1])
-                                });
+                    .attr("d", function(d){return groupedLine(d, xScale, yScale);})
 
                 c.exit()
                 .transition()
