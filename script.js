@@ -91,6 +91,8 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
     d3.json(pth + "stations.json").then(function(nodes) {
         d3.csv(pth + "station_connections.csv").then(function(geoLinks) {
 
+            console.log(beckLinks);
+
             //Define constants
             const height = window.innerHeight;
             const width = height*1.3;
@@ -166,51 +168,8 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
 
                 const beckLineGroup = d3.group(beckLinks, d => d.group);
 
-                // let c = svg.selectAll("path")
-                // .data(beckLineGroup, function(d) { return d.id; });
-
-                // c.enter().append("path")
-                //     .attr("d", function(d) {
-                //         return d3.line()
-                //             .x(function(d) { return xScale(+d.x); })
-                //             .y(function(d) { return yScale(+d.y); })
-                //             (d[1])
-                //     })
-                // .merge(c)   
-                //     .transition() // a transition makes the changes visible...
-                //     .duration(2000)
-                //     .delay(250)
-                //     .attr("d", function(d){
-                //                 return d3.line()
-                //                     .x(function(d) { return xScale(+d.x); })
-                //                     .y(function(d) { return yScale(+d.y); })
-                //                     (d[1])
-                //                 });
-
-                // c.exit()
-                // .transition()
-                // .duration(1500)
-                // .remove();
-
-                points
-                    .transition()
-                    .duration(2000)
-                    .delay(250)
-                    .attr("cx", function(d) { return xScale(d.beck_x); })
-                    .attr("cy", function(d) { return yScale(d.beck_y); });
-
-                d3.select("#diagram").attr("class", "active");
-                document.getElementById("map").classList.remove("active");
-            });
-        
-            d3.select("#map").on("click", function() {
-        
-                xScale.domain([geo.xmin, geo.xmax]);
-                yScale.domain([geo.ymin, geo.ymax]);
-                yScale.range([height-margin.bottom, margin.top])
-
                 let c = svg.selectAll("path")
-                .data(geoLineGroup, function(d) { return d.id; });
+                .data(beckLineGroup, function(d) { return d.name; });
 
                 c.enter().append("path")
                     .attr("d", function(d) {
@@ -235,16 +194,48 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
                 .duration(1500)
                 .remove();
 
-                // path
-                //     .transition()
-                //     .duration(2000)
-                //     .delay(250)
-                //         .attr("d", function(d){
-                //         return d3.line()
-                //             .x(function(d) { return xScale(+d.x_geo); })
-                //             .y(function(d) { return yScale(+d.y_geo); })
-                //             (d[1])
-                //         })
+                points
+                    .transition()
+                    .duration(2000)
+                    .delay(250)
+                    .attr("cx", function(d) { return xScale(d.beck_x); })
+                    .attr("cy", function(d) { return yScale(d.beck_y); });
+
+                d3.select("#diagram").attr("class", "active");
+                document.getElementById("map").classList.remove("active");
+            });
+        
+            d3.select("#map").on("click", function() {
+        
+                xScale.domain([geo.xmin, geo.xmax]);
+                yScale.domain([geo.ymin, geo.ymax]);
+                yScale.range([height-margin.bottom, margin.top])
+
+                let c = svg.selectAll("path")
+                .data(geoLineGroup, function(d) { return d.name; });
+
+                c.enter().append("path")
+                    .attr("d", function(d) {
+                        return d3.line()
+                            .x(function(d) { return xScale(+d.x); })
+                            .y(function(d) { return yScale(+d.y); })
+                            (d[1])
+                    })
+                .merge(c)   
+                    .transition()
+                    .duration(2000)
+                    .delay(250)
+                    .attr("d", function(d){
+                                return d3.line()
+                                    .x(function(d) { return xScale(+d.x); })
+                                    .y(function(d) { return yScale(+d.y); })
+                                    (d[1])
+                                });
+
+                c.exit()
+                .transition()
+                .duration(1500)
+                .remove();
 
                 points
                     .transition()
