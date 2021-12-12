@@ -123,6 +123,8 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
                 ymin: d3.min(nodes, function(d) {return d.geo_y;})
             }
 
+            const groupingVar = "line";
+
             console.log(geoLinks);
             // Define SVG Canvas and attributes
 
@@ -135,14 +137,14 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
             let xScale = createXScale(geo, width, margin);
 
             // Generate the grouped color scale for the map
-            let g = groupedColorScale(geoLinks, "group_name");
+            let g = groupedColorScale(geoLinks, groupingVar);
 
             let colorScale = d3.scaleOrdinal()
             .domain(g["uniqueGroup"])
             .range(g["lineColors"]);
 
             // Generate the lines for the map
-            const geoLineGroup = d3.group(geoLinks, d => d.group_name);
+            const geoLineGroup = d3.group(geoLinks, d => d[groupingVar]);
 
             console.log(geoLineGroup);
 
@@ -174,7 +176,7 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
                 yScale.domain([beck.ymin, beck.ymax]);
                 yScale.range([margin.top, height-margin.bottom]);
 
-                const beckLineGroup = d3.group(beckLinks, d => d.line);
+                const beckLineGroup = d3.group(beckLinks, d => d[groupingVar]);
                 console.log(beckLineGroup);
 
                 let c = svg.selectAll("path")
