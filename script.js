@@ -240,11 +240,6 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                 .style("font-weight", "bold")
                 .text("E line");
 
-            // let bAnn = addLineAnnotation(nodes, id = "place-lake", svg, xScale, yScale, txt = "B line")
-            // let cAnn = addLineAnnotation(nodes, id = "place-clmnl", svg, xScale, yScale, txt = "C line", yOffset = 7)
-            // let dAnn = addLineAnnotation(nodes, id = "place-river", svg, xScale, yScale, txt = "D line")
-            // let eAnn = addLineAnnotation(nodes, id = "place-hsmnl", svg, xScale, yScale, txt = "E line", yOffset = 12)
-
             d3.select("#diagram").on("click", function() {
 
                 xScale.domain([beck.xmin, beck.xmax]);
