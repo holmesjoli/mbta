@@ -45,8 +45,8 @@ function tt(svg, tooltip, points) {
 
         d3.select(this)
             .attr("fill", "#000000")
-            .attr("stroke","#84a59d")
-            .attr("stroke-width",2)
+            .attr("stroke","#628644")
+            .attr("r", 7)
             .attr("opacity", 1);
 
     }).on("mouseout", function() {
@@ -54,8 +54,9 @@ function tt(svg, tooltip, points) {
         tooltip.style("visibility","hidden");
 
         d3.select(this)
-            .attr("fill", "white")
-            .attr("stroke", "black")
+            .attr("fill", "#FFFFFF")
+            .attr("stroke", "#000000")
+            .attr("r", 5)
             .attr("stroke-width", 3);
         
         points.attr("opacity", 1);
