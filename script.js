@@ -92,8 +92,6 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
     d3.json(pth + "stations.json").then(function(nodes) {
         d3.csv(pth + "station_connections2.csv").then(function(geoLinks) {
 
-            console.log(beckLinks);
-
             //Define constants
             const height = window.innerHeight;
             const width = height*1.3;
@@ -115,14 +113,11 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
 
             const groupingVar = "line";
 
-            console.log(geoLinks);
-            // Define SVG Canvas and attributes
+            // Generate the lines groups for the map and diagram
+            const geoLineGroup = d3.groups(geoLinks, d => d[groupingVar]);
+            const beckLineGroup = d3.groups(beckLinks, d => d[groupingVar]);
 
-            let svg = d3.select("#chart")
-                        .append("svg")
-                        .attr("height", height)
-                        .attr("width", width);
-
+            // Define scales
             let yScale = createYScale(geo, height, margin);
             let xScale = createXScale(geo, width, margin);
 
@@ -133,13 +128,17 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
             .domain(g["uniqueGroup"])
             .range(g["lineColors"]);
 
+            // Define SVG Canvas and attributes
+
+            let svg = d3.select("#chart")
+                        .append("svg")
+                        .attr("height", height)
+                        .attr("width", width);
+
+            // Add the line
             let line = d3.line()
             .x(function(d) { return xScale(+d.x); })
             .y(function(d) { return yScale(+d.y); });
-
-            // Generate the lines for the map
-            const geoLineGroup = d3.groups(geoLinks, d => d[groupingVar]);
-            console.log('geoLineGroup', geoLineGroup);
 
             svg.selectAll(".line")
             .data(geoLineGroup)
@@ -149,6 +148,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                 .attr("stroke-width", 3)
                 .attr("d", function(d) { return line(d[1]); });
 
+            // Add the points
             let points = svg.selectAll('circle')
                         .data(nodes)
                         .enter()
@@ -160,6 +160,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                         .attr("stroke", "black")
                         .attr("stroke-width", 3);
 
+            // Add the tooltip
             let tooltip = d3.select("#chart")
                         .append("div")
                         .attr("class", "tooltip");
@@ -172,25 +173,15 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                 yScale.domain([beck.ymin, beck.ymax]);
                 yScale.range([margin.top, height-margin.bottom]);
 
-                const beckLineGroup = d3.groups(beckLinks, d => d[groupingVar]);
-                console.log('beckLineGroup', beckLineGroup);
-
                 c = svg.selectAll("path")
                 .data(beckLineGroup, function(d) {return d[0];})
 
                 c.enter().append("path")
-                    .attr("fill", "none")
-                    .attr("stroke-width", 3)
-                    .attr("stroke", function(d){ return colorScale(d[0]);})
-                    .attr("d", function(d) { return line(d[1]); })
                     .attr("opacity", 0)
                 .merge(c)   
                     .transition()
                     .duration(1500)
                     .delay(250)
-                    .attr("fill", "none")
-                    .attr("stroke-width", 3)
-                    .attr("stroke", function(d){ return colorScale(d[0]);})
                     .attr("opacity", 1)
                     .attrTween('d', function (d) {
                         var previous = d3.select(this).attr('d');
@@ -225,18 +216,11 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                 console.log(c);
 
                 c.enter().append("path")
-                    .attr("fill", "none")
-                    .attr("stroke-width", 3)
-                    .attr("stroke", function(d){ return colorScale(d[0]);})
-                    .attr("d", function(d) { return line(d[1]); })
                     .attr("opacity", 0)
                 .merge(c)   
                     .transition()
                     .duration(1500)
                     .delay(250)
-                    .attr("fill", "none")
-                    .attr("stroke-width", 3)
-                    .attr("stroke", function(d){ return colorScale(d[0]);})
                     .attr("opacity", 1)
                     .attrTween('d', function (d) {
                         var previous = d3.select(this).attr('d');
