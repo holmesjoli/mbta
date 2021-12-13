@@ -54,7 +54,7 @@ body {
     background: #84a59d;
     color: black;
     border-bottom: 2px solid  #f28482;
-    border-bottom: 5px dotted #f6bd60;
+    border-bottom: 5px dotted #000000;
 }
 
 #body {
@@ -90,11 +90,11 @@ body {
 }
 
 .buttons > button {
-    background-color: #f28482;
+    background-color: #ffffff;
     padding: 10px;
     margin: 10px;
-    color: white;
-    border: 4px solid #f28482;
+    color: #000000;
+    border: 2px solid #000000;
     border-radius: 5px;
     font-size: 20px;
     display: inline-block;
@@ -103,7 +103,9 @@ body {
 
 .active {
     font-weight: bold;
-    border: 4px solid #f6bd60!important;
+    border: 4px solid #000000!important;
+    background-color: #84a59d!important;
+    color: #000000!important;
 }
 
 #source {
