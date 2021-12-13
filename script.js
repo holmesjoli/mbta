@@ -145,7 +145,7 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
                 .attr("fill", "none")
                 .attr("stroke", function(d){ return colorScale(d[0]);})
                 .attr("stroke-width", 2)
-                .attr("d", function(d) { return line(d[1]); })s
+                .attr("d", function(d) { return line(d[1]); });
 
             let points = svg.selectAll('circle')
                         .data(nodes)
