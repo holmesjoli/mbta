@@ -39,10 +39,11 @@ function tt(svg, tooltip) {
         tooltip.style("visibility","visible") 
             .style("left", `${cx}px`)
             .style("top", `${cy}px`)
-            .html(`<b>${d.name}</b><br> ${d.id}`);
+            .html(`<b>${d.name}</b><br>`);
 
         d3.select(this)
-            .attr("stroke","#F6C900")
+            .attr("fill", "#000000")
+            .attr("stroke","#84a59d")
             .attr("stroke-width",2);
 
     }).on("mouseout", function() {
@@ -50,8 +51,9 @@ function tt(svg, tooltip) {
         tooltip.style("visibility","hidden");
 
         d3.select(this)
-            .attr("stroke","none")
-            .attr("stroke-width",0);
+            .attr("fill", "white")
+            .attr("stroke", "black")
+            .attr("stroke-width", 3);
             
     });
 };
@@ -153,7 +155,10 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                         .append("circle")
                         .attr("cx", function(d) {return xScale(d.geo_x);})
                         .attr("cy", function(d) {return yScale(d.geo_y);})
-                        .attr("r", 5);
+                        .attr("r", 5)
+                        .attr("fill", "white")
+                        .attr("stroke", "black")
+                        .attr("stroke-width", 3);
 
             let tooltip = d3.select("#chart")
                         .append("div")
