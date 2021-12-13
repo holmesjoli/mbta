@@ -85,6 +85,7 @@ function groupedColorScale(data, group) {
 };
 
 // Generate a grouped line
+// Code from https://www.d3-graph-gallery.com/graph/line_several_group.html
 function groupedLine(d, xScale, yScale) {
 
     return d3.line()
@@ -105,8 +106,6 @@ function groupedMerge(svg, groupedData) {
                         })
                     );
 };
-
-// grouped line chart https://www.d3-graph-gallery.com/graph/line_several_group.html
 
 let pth = "./data/processed/";
 
@@ -238,6 +237,8 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
                 yScale.range([height-margin.bottom, margin.top])
 
                 let c = groupedMerge(svg, geoLineGroup);
+
+                console.log(c);
 
                 // c = svg.selectAll("path")
                 // .data(geoLineGroup, function(d) {return d.name;})
