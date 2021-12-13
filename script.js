@@ -159,7 +159,7 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
             const geoLineGroup = d3.group(geoLinks, d => d[groupingVar]);
             console.log('geoLineGroup', geoLineGroup);
 
-            let path = svg.selectAll(".line")
+            svg.selectAll(".line")
             .data(geoLineGroup)
             .join("path")
                 .attr("fill", "none")
@@ -190,10 +190,10 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
                 const beckLineGroup = d3.group(beckLinks, d => d[groupingVar]);
                 console.log('beckLineGroup', beckLineGroup);
 
-                // let c = groupedMerge(svg, beckLineGroup);
+                let c = groupedMerge(svg, beckLineGroup);
 
-                c = svg.selectAll("path")
-                .data(beckLineGroup, function(d) {return d.name;})
+                // c = svg.selectAll("path")
+                // .data(beckLineGroup, function(d) {return d.name;})
 
                 console.log(c);
 
