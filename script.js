@@ -146,7 +146,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
             .join("path")
                 .attr("fill", "none")
                 .attr("stroke", function(d){ return colorScale(d[0]);})
-                .attr("stroke-width", 2)
+                .attr("stroke-width", 3)
                 .attr("d", function(d) { return line(d[1]); });
 
             let points = svg.selectAll('circle')
@@ -180,7 +180,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
 
                 c.enter().append("path")
                     .attr("fill", "none")
-                    .attr("stroke-width", 2)
+                    .attr("stroke-width", 3)
                     .attr("stroke", function(d){ return colorScale(d[0]);})
                     .attr("d", function(d) { return line(d[1]); })
                     .attr("opacity", 0)
@@ -189,7 +189,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .duration(1500)
                     .delay(250)
                     .attr("fill", "none")
-                    .attr("stroke-width", 2)
+                    .attr("stroke-width", 3)
                     .attr("stroke", function(d){ return colorScale(d[0]);})
                     .attr("opacity", 1)
                     .attrTween('d', function (d) {
@@ -226,7 +226,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
 
                 c.enter().append("path")
                     .attr("fill", "none")
-                    .attr("stroke-width", 2)
+                    .attr("stroke-width", 3)
                     .attr("stroke", function(d){ return colorScale(d[0]);})
                     .attr("d", function(d) { return line(d[1]); })
                     .attr("opacity", 0)
@@ -235,7 +235,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .duration(1500)
                     .delay(250)
                     .attr("fill", "none")
-                    .attr("stroke-width", 2)
+                    .attr("stroke-width", 3)
                     .attr("stroke", function(d){ return colorScale(d[0]);})
                     .attr("opacity", 1)
                     .attrTween('d', function (d) {
