@@ -39,15 +39,15 @@ function tt(svg, tooltip, points) {
         tooltip.style("visibility","visible") 
             .style("left", `${cx}px`)
             .style("top", `${cy}px`)
-            .html(`<b>${d.name}</b><br> ${d.id}`);
+            .html(`<b>${d.name}</b><br>`);
 
-        points.attr("opacity", 0.5);
+        points.attr("stroke-opacity", 0.5);
 
         d3.select(this)
             .attr("fill", "#000000")
             .attr("stroke","#628644")
             .attr("r", 7)
-            .attr("opacity", 1);
+            .attr("stroke-opacity", 1);
 
     }).on("mouseout", function() {
 
@@ -59,7 +59,7 @@ function tt(svg, tooltip, points) {
             .attr("r", 5)
             .attr("stroke-width", 3);
 
-        points.attr("opacity", 1);
+        points.attr("stroke-opacity", 1);
             
     });
 };
