@@ -56,10 +56,9 @@ function tt(svg, tooltip) {
     });
 };
 
-//
+// Generate the grouped color scale for the map/
 function groupedColorScale(data, group) {
 
-    // Generate the grouped color scale for the map
     const uniqueGroup = unique_array(data, group);    
     const lineColors = [];
 
@@ -85,6 +84,7 @@ function groupedColorScale(data, group) {
             lineColors: lineColors};
 };
 
+// Generate a grouped line
 function groupedLine(d, xScale, yScale) {
 
     return d3.line()
@@ -157,8 +157,7 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
 
             // Generate the lines for the map
             const geoLineGroup = d3.group(geoLinks, d => d[groupingVar]);
-
-            console.log(geoLineGroup);
+            console.log('geoLineGroup', geoLineGroup);
 
             let path = svg.selectAll(".line")
             .data(geoLineGroup)
@@ -191,7 +190,12 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
                 const beckLineGroup = d3.group(beckLinks, d => d[groupingVar]);
                 console.log('beckLineGroup', beckLineGroup);
 
-                let c = groupedMerge(svg, beckLineGroup);
+                // let c = groupedMerge(svg, beckLineGroup);
+
+                c = svg.selectAll("path")
+                .data(beckLineGroup, function(d) {return d.name;})
+
+                console.log(c);
 
                 c.enter().append("path")
                     .attr("fill", "none")
@@ -205,7 +209,12 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
                     .attr("fill", "none")
                     .attr("stroke-width", 2)
                     .attr("stroke", function(d){ return colorScale(d[0]);})
-                    .attr("d", function(d){return groupedLine(d, xScale, yScale);})
+                    // .attrTween('d', function (d) {
+                    //     var previous = d3.select(this).attr('d');
+                    //     var current = groupedLine(d, xScale, yScale);
+                    //     return d3.interpolatePath(previous, current);
+                    // });
+                    .attr("d", function(d){return groupedLine(d, xScale, yScale);});
 
                 c.exit()
                 .transition()
@@ -230,6 +239,9 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
 
                 let c = groupedMerge(svg, geoLineGroup);
 
+                // c = svg.selectAll("path")
+                // .data(geoLineGroup, function(d) {return d.name;})
+
                 c.enter().append("path")
                     .attr("fill", "none")
                     .attr("stroke-width", 2)
@@ -242,6 +254,11 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
                     .attr("fill", "none")
                     .attr("stroke-width", 2)
                     .attr("stroke", function(d){ return colorScale(d[0]);})
+                    // .attrTween('d', function (d) {
+                    //     var previous = d3.select(this).attr('d');
+                    //     var current = groupedLine(d, xScale, yScale);
+                    //     return d3.interpolatePath(previous, current);
+                    // });
                     .attr("d", function(d){return groupedLine(d, xScale, yScale);})
 
                 c.exit()
