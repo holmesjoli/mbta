@@ -86,9 +86,9 @@ function groupedColorScale(data, group) {
 
 let pth = "./data/processed/";
 
-d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
+d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
     d3.json(pth + "stations.json").then(function(nodes) {
-        d3.csv(pth + "station_connections.csv").then(function(geoLinks) {
+        d3.csv(pth + "station_connections2.csv").then(function(geoLinks) {
 
             console.log(beckLinks);
 
@@ -178,6 +178,7 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
                     .attr("stroke-width", 2)
                     .attr("stroke", function(d){ return colorScale(d[0]);})
                     .attr("d", function(d) { return line(d[1]); })
+                    .attr("opacity", 0)
                 .merge(c)   
                     .transition()
                     .duration(2000)
@@ -190,7 +191,7 @@ d3.csv(pth + "beck_lines.csv").then(function(beckLinks) {
                     //     var current = groupedLine(d, xScale, yScale);
                     //     return d3.interpolatePath(previous, current);
                     // });
-                    // .attr("d", function(d){return groupedLine(d, xScale, yScale);});
+                    .attr("opacity", 1)
                     .attr("d", function(d) { return line(d[1]); });
 
                 c.exit()
