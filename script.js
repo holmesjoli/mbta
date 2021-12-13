@@ -58,7 +58,7 @@ function tt(svg, tooltip, points) {
             .attr("stroke", "#000000")
             .attr("r", 5)
             .attr("stroke-width", 3);
-        
+
         points.attr("opacity", 1);
             
     });
