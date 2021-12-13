@@ -29,7 +29,7 @@ function createXScale(obj, width, margin) {
 };
 
 //Title tooltip
-function tt(svg, tooltip) {
+function tt(svg, tooltip, points) {
 
     svg.selectAll("circle").on("mouseover", function(e, d) {
 
@@ -41,10 +41,13 @@ function tt(svg, tooltip) {
             .style("top", `${cy}px`)
             .html(`<b>${d.name}</b><br>`);
 
+        points.attr("opacity", 0.5);
+
         d3.select(this)
             .attr("fill", "#000000")
             .attr("stroke","#84a59d")
-            .attr("stroke-width",2);
+            .attr("stroke-width",2)
+            .attr("opacity", 1);
 
     }).on("mouseout", function() {
 
@@ -54,6 +57,8 @@ function tt(svg, tooltip) {
             .attr("fill", "white")
             .attr("stroke", "black")
             .attr("stroke-width", 3);
+        
+        points.attr("opacity", 1);
             
     });
 };
@@ -165,7 +170,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                         .append("div")
                         .attr("class", "tooltip");
 
-            tt(svg, tooltip);
+            tt(svg, tooltip, points);
 
             d3.select("#diagram").on("click", function() {
 
