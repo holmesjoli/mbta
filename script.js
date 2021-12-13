@@ -181,7 +181,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .attr("opacity", 0)
                 .merge(c)   
                     .transition()
-                    .duration(2000)
+                    .duration(1500)
                     .delay(250)
                     .attr("fill", "none")
                     .attr("stroke-width", 2)
@@ -200,7 +200,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
 
                 points
                     .transition()
-                    .duration(2000)
+                    .duration(1500)
                     .delay(250)
                     .attr("cx", function(d) { return xScale(d.beck_x); })
                     .attr("cy", function(d) { return yScale(d.beck_y); });
@@ -227,7 +227,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .attr("opacity", 0)
                 .merge(c)   
                     .transition()
-                    .duration(2000)
+                    .duration(1500)
                     .delay(250)
                     .attr("fill", "none")
                     .attr("stroke-width", 2)
@@ -246,7 +246,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
 
                 points
                     .transition()
-                    .duration(2000)
+                    .duration(1500)
                     .delay(250)
                     .attr("cx", function(d) { return xScale(d.geo_x);})
                     .attr("cy", function(d) { return yScale(d.geo_y);});
