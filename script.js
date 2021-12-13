@@ -39,7 +39,7 @@ function tt(svg, tooltip, points) {
         tooltip.style("visibility","visible") 
             .style("left", `${cx}px`)
             .style("top", `${cy}px`)
-            .html(`<b>${d.name}</b><br>`);
+            .html(`<b>${d.name}</b><br> ${d.id}`);
 
         points.attr("opacity", 0.5);
 
@@ -90,6 +90,23 @@ function groupedColorScale(data, group) {
 
     return {uniqueGroup: uniqueGroup,
             lineColors: lineColors};
+};
+
+//Title Add Line Annotations
+function addLineAnnotation(nodes, id, svg, xScale, yScale, txt, yOffset = 3,
+                            x = "geo_x", y = "geo_y") {
+
+    let data = nodes.filter(function(d) {
+        return d.id == id;
+    })[0]
+
+    svg
+        .append("text")
+        .attr("x", xScale(data[x]) - 55)
+        .attr("y", yScale(data[y]) + yOffset)
+        .attr("fill", "black")
+        .style("font-weight", "bold")
+        .text(txt);
 };
 
 let pth = "./data/processed/";
@@ -173,18 +190,73 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
 
             tt(svg, tooltip, points);
 
+            // Annotations
+
+            let b = nodes.filter(function(d) {
+                return d.id == "place-lake";
+            })[0]
+        
+            let bAnn = svg
+                .append("text")
+                .attr("x", xScale(b.geo_x) - 55)
+                .attr("y", yScale(b.geo_y) + 3)
+                .attr("fill", "black")
+                .style("font-weight", "bold")
+                .text("B line");
+            
+            let c = nodes.filter(function(d) {
+                    return d.id == "place-clmnl";
+            })[0]
+            
+            let cAnn = svg
+                .append("text")
+                .attr("x", xScale(c.geo_x) - 55)
+                .attr("y", yScale(c.geo_y) + 7)
+                .attr("fill", "black")
+                .style("font-weight", "bold")
+                .text("C line");
+
+            let d = nodes.filter(function(d) {
+                    return d.id == "place-river";
+            })[0]
+            
+            let dAnn = svg
+                .append("text")
+                .attr("x", xScale(d.geo_x) - 55)
+                .attr("y", yScale(d.geo_y) + 3)
+                .attr("fill", "black")
+                .style("font-weight", "bold")
+                .text("D line");
+
+            let e = nodes.filter(function(d) {
+                    return d.id == "place-hsmnl";
+            })[0]
+            
+            let eAnn = svg
+                .append("text")
+                .attr("x", xScale(e.geo_x) - 55)
+                .attr("y", yScale(e.geo_y) + 12)
+                .attr("fill", "black")
+                .style("font-weight", "bold")
+                .text("E line");
+
+            // let bAnn = addLineAnnotation(nodes, id = "place-lake", svg, xScale, yScale, txt = "B line")
+            // let cAnn = addLineAnnotation(nodes, id = "place-clmnl", svg, xScale, yScale, txt = "C line", yOffset = 7)
+            // let dAnn = addLineAnnotation(nodes, id = "place-river", svg, xScale, yScale, txt = "D line")
+            // let eAnn = addLineAnnotation(nodes, id = "place-hsmnl", svg, xScale, yScale, txt = "E line", yOffset = 12)
+
             d3.select("#diagram").on("click", function() {
 
                 xScale.domain([beck.xmin, beck.xmax]);
                 yScale.domain([beck.ymin, beck.ymax]);
                 yScale.range([margin.top, height-margin.bottom]);
 
-                c = svg.selectAll("path")
+                u = svg.selectAll("path")
                 .data(beckLineGroup, function(d) {return d[0];})
 
-                c.enter().append("path")
+                u.enter().append("path")
                     .attr("opacity", 0)
-                .merge(c)   
+                .merge(u)   
                     .transition()
                     .duration(1500)
                     .delay(250)
@@ -195,7 +267,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                         return d3.interpolatePath(previous, current);
                     });
 
-                c.exit()
+                u.exit()
                 .transition()
                 .duration(1500)
                 .remove();
@@ -207,6 +279,34 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .attr("cx", function(d) { return xScale(d.beck_x); })
                     .attr("cy", function(d) { return yScale(d.beck_y); });
 
+                bAnn
+                    .transition()
+                    .duration(1500)
+                    .delay(250)
+                    .attr("x", xScale(b.beck_x) - 55)
+                    .attr("y", yScale(b.beck_y) + 3);
+
+                cAnn
+                    .transition()
+                    .duration(1500)
+                    .delay(250)
+                    .attr("x", xScale(c.beck_x) - 55)
+                    .attr("y", yScale(c.beck_y) + 3);
+                
+                dAnn
+                    .transition()
+                    .duration(1500)
+                    .delay(250)
+                    .attr("x", xScale(d.beck_x) - 55)
+                    .attr("y", yScale(d.beck_y) + 3);
+                
+                eAnn
+                    .transition()
+                    .duration(1500)
+                    .delay(250)
+                    .attr("x", xScale(e.beck_x) - 55)
+                    .attr("y", yScale(e.beck_y) + 3);
+
                 d3.select("#diagram").attr("class", "active");
                 document.getElementById("map").classList.remove("active");
             });
@@ -216,14 +316,12 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                 yScale.domain([geo.ymin, geo.ymax]);
                 yScale.range([height-margin.bottom, margin.top])
 
-                c = svg.selectAll("path")
+                u = svg.selectAll("path")
                 .data(geoLineGroup, function(d) {return d[0];})
 
-                console.log(c);
-
-                c.enter().append("path")
+                u.enter().append("path")
                     .attr("opacity", 0)
-                .merge(c)   
+                .merge(u)   
                     .transition()
                     .duration(1500)
                     .delay(250)
@@ -234,7 +332,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                         return d3.interpolatePath(previous, current);
                     });
 
-                c.exit()
+                u.exit()
                 .transition()
                 .duration(1500)
                 .remove();
@@ -245,6 +343,34 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .delay(250)
                     .attr("cx", function(d) { return xScale(d.geo_x);})
                     .attr("cy", function(d) { return yScale(d.geo_y);});
+
+                bAnn
+                    .transition()
+                    .duration(1500)
+                    .delay(250)
+                    .attr("x", xScale(b.geo_x) - 55)
+                    .attr("y", yScale(b.geo_y) + 3);
+
+                cAnn
+                    .transition()
+                    .duration(1500)
+                    .delay(250)
+                    .attr("x", xScale(c.geo_x) - 55)
+                    .attr("y", yScale(c.geo_y) + 7);
+
+                dAnn
+                    .transition()
+                    .duration(1500)
+                    .delay(250)
+                    .attr("x", xScale(d.geo_x) - 55)
+                    .attr("y", yScale(d.geo_y) + 3);
+
+                eAnn
+                    .transition()
+                    .duration(1500)
+                    .delay(250)
+                    .attr("x", xScale(e.geo_x) - 55)
+                    .attr("y", yScale(e.geo_y) + 12);
 
                 document.getElementById("diagram").classList.remove("active");
                 d3.select("#map").attr("class", "active");
