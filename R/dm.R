@@ -25,6 +25,15 @@ dm_nodes <- function(network, green= FALSE) {
       station$beck_x <- ll[1] - 12.24264
       station$beck_y <- ll[2] + 1.050253
       
+      # station$beck_x <- ifelse(station$id == "place-haecl", 8.49, station$beck_x)
+      # station$beck_y <- ifelse(station$id == "place-haecl", 6, station$beck_x)
+      # 
+      # station$beck_x <- ifelse(station$id == "place-north", 8.49, station$beck_x)
+      # station$beck_y <- ifelse(station$id == "place-north", 5, station$beck_y)
+      # 
+      # station$beck_x <- ifelse(station$id == "place-gover", 7.07, station$beck_x)
+      # station$beck_y <- ifelse(station$id == "place-gover", 6, station$beck_y)
+      
     } else {
       station$beck_x <- ll[1]
       station$beck_y <- ll[2]
@@ -62,49 +71,6 @@ dm_links <- function(network) {
   })
   
   return(network)
-}
-
-dm_lat_long <- function(network, green = FALSE) {
-  
-  df <- network$lat_long %>% do.call(rbind, .) %>%
-    as.data.frame() %>%
-    dplyr::rename(x = V1,
-                  y = V2) %>%
-    dplyr::mutate(name = names(network$lat_long))
-  
-  if (green) {
-    
-    df <- df %>%
-      dplyr::mutate(x = x - 12.24264,
-                    y = y + 1.050253
-      )
-    
-  } else {
-    
-    orange <- paste("place",
-                    c("forhl", "grnst", "sbmnl" ,"jaksn", "rcmnl", "rugg", "masta", 
-                      "bbsta", "tumnl", "chncl", "dwnxg", "state", "ccmnl", "sull",
-                      "welln", "mlmnl", "ogmnl"), sep="-")
-    
-    blue <- paste("place",
-                  c("wondl", "rbmnl", "bmmnl", "sdmnl", "orhte", "wimnl", "aport",
-                    "mvbcl", "aqucl", "state", "gover", "bomnl"), sep="-")
-    
-    ord <- c(paste0("orange-", orange), paste0("blue-", blue))
-    
-    df <- df %>%
-      dplyr::mutate(orange = name %in% orange,
-                    blue = name %in% blue) %>%
-      tidyr::pivot_longer(names_to = "group", values_to = "values", -c(x, y, name)) %>%
-      dplyr::filter(values) %>%
-      dplyr::select(-values) %>%
-      dplyr::mutate(order = paste(group, name, sep = "-"))
-    
-    df <- df[match(ord, df$order),]
-
-  }
-  
-  return(df)
 }
 
 
@@ -162,7 +128,7 @@ nodes <- nodes %>%
 #   geojsonio::geojson_json() %>%
 #   geojsonio::geojson_write(file = file.path(pth, "geo_stations.json"))
 
-geo <- lapply(1:length(nodes$STATION), function(j) {
+geo <- lapply(1:nrow(nodes), function(j) {
 
   x <- nodes %>% dplyr::slice(j) %>% dplyr::pull(STATION)
   
@@ -266,7 +232,9 @@ lines <- sf::read_sf("./data/raw/MBTA_ARC.shp") %>%
   dplyr::filter(LINE != "SILVER") %>%
   dplyr::filter(ROUTE != "Mattapan Trolley") 
 
-lines <- lines %>%
+lines <- 
+  # rmapshaper::ms_simplify(input = as(lines, 'Spatial')) %>%
+  # sf::st_as_sf() %>%
   sf::st_coordinates() %>%
   as.data.frame() %>%
   dplyr::group_by(L2) %>%
@@ -275,7 +243,10 @@ lines <- lines %>%
   dplyr::rename(x = X, y = Y, group = L2) %>% 
   dplyr::select(x, y, LINE, group, order) 
 
-lines %>%
+z <- lines %>%
+  dplyr::filter(LINE == "ORANGE") %>%
+  dplyr::filter(group %in% c(2, 3, 4, 5, 6, 7, 8, 9, 10, 11)) %>%
+  # dplyr::slice(2) %>%
   readr::write_csv(file.path(pth, "station_connections.csv"))
 
 parks <- get_geo.park("Boston, MA")

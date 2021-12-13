@@ -182,6 +182,31 @@ red2_group <- data.frame(
   line = "red2") %>%
   dplyr::mutate(group_order = seq(1, dplyr::n(), 1))
 
+green_group <- data.frame(
+  group = c(28, 25, 27, 42, 48),
+  line = "green") %>%
+  dplyr::mutate(group_order = seq(1, dplyr::n(), 1))
+
+green_e_group <- data.frame(
+  group = c(22, 23, 25),
+  line = "green_e") %>%
+  dplyr::mutate(group_order = seq(1, dplyr::n(), 1))
+
+green_d_group <- data.frame(
+  group = c(30, 17, 28),
+  line = "green_d") %>%
+  dplyr::mutate(group_order = seq(1, dplyr::n(), 1))
+
+green_c_group <- data.frame(
+  group = c(41, 28),
+  line = "green_c") %>%
+  dplyr::mutate(group_order = seq(1, dplyr::n(), 1))
+
+green_b_group <- data.frame(
+  group = c(29, 28),
+  line = "green_b") %>%
+  dplyr::mutate(group_order = seq(1, dplyr::n(), 1))
+
 orange_line <- lines %>%
   dplyr::inner_join(orange_group) %>%
   dplyr::arrange(group_order)
@@ -192,22 +217,66 @@ blue_line <- lines %>%
 
 red_line <- lines %>%
   dplyr::inner_join(red_group) %>%
-  dplyr::arrange(group_order)
+  dplyr::arrange(group_order) %>%
+  dplyr::ungroup() %>%
+  dplyr::mutate(order = seq(1, dplyr::n(), 1)) %>%
+  dplyr::arrange(desc(order))
 
 red2_line <- lines %>%
   dplyr::inner_join(red2_group) %>%
-  dplyr::arrange(group_order)
+  dplyr::arrange(group_order) %>%
+  dplyr::ungroup() %>%
+  dplyr::mutate(order = seq(1, dplyr::n(), 1)) %>%
+  dplyr::arrange(desc(order))
 
-orange_line %>%
-  dplyr::bind_rows(blue_line) %>%
-  dplyr::bind_rows(red_line) %>%
+green_line <- lines %>%
+  dplyr::inner_join(green_group) %>%
+  dplyr::arrange(group_order) #%>%
+  # dplyr::ungroup() %>%
+  # dplyr::mutate(order = seq(1, dplyr::n(), 1)) %>%
+  # dplyr::arrange(desc(order))
+
+green_e_line <- lines %>%
+  dplyr::inner_join(green_e_group) %>%
+  dplyr::arrange(group_order) #%>%
+  # dplyr::ungroup() %>%
+  # dplyr::mutate(order = seq(1, dplyr::n(), 1)) %>%
+  # dplyr::arrange(desc(order))
+
+green_d_line <- lines %>%
+  dplyr::inner_join(green_d_group) %>%
+  dplyr::arrange(group_order) #%>%
+  # dplyr::ungroup() %>%
+  # dplyr::mutate(order = seq(1, dplyr::n(), 1)) %>%
+  # dplyr::arrange(desc(order))
+
+green_c_line <- lines %>%
+  dplyr::inner_join(green_c_group) %>%
+  dplyr::arrange(group_order) #%>%
+  # dplyr::ungroup() %>%
+  # dplyr::mutate(order = seq(1, dplyr::n(), 1)) %>%
+  # dplyr::arrange(desc(order))
+
+green_b_line <- lines %>%
+  dplyr::inner_join(green_b_group) %>%
+  dplyr::arrange(group_order) #%>%
+  # dplyr::ungroup() %>%
+  # dplyr::mutate(order = seq(1, dplyr::n(), 1)) %>%
+  # dplyr::arrange(desc(order))
+
+red_line %>%
   dplyr::bind_rows(red2_line) %>%
-  readr::write_csv(file.path(pth, "station_connections.csv"))
+  dplyr::bind_rows(blue_line) %>%
+  dplyr::bind_rows(orange_line) %>%
+  dplyr::bind_rows(green_e_line) %>%
+  dplyr::bind_rows(green_d_line) %>%
+  dplyr::bind_rows(green_c_line) %>%
+  dplyr::bind_rows(green_b_line) %>%
+  dplyr::bind_rows(green_line) %>%
+  readr::write_csv(file.path(pth, "station_connections2.csv"))
 
 df <- lines %>% 
   dplyr::filter(!is.na(name))
   
-df <- df[match(red2, df$name),] %>% 
+df <- df[match(green_b, df$name),] %>% 
   tidyr::drop_na()
-
-
