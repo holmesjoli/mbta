@@ -186,13 +186,12 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .attr("fill", "none")
                     .attr("stroke-width", 2)
                     .attr("stroke", function(d){ return colorScale(d[0]);})
-                    // .attrTween('d', function (d) {
-                    //     var previous = d3.select(this).attr('d');
-                    //     var current = groupedLine(d, xScale, yScale);
-                    //     return d3.interpolatePath(previous, current);
-                    // });
                     .attr("opacity", 1)
-                    .attr("d", function(d) { return line(d[1]); });
+                    .attrTween('d', function (d) {
+                        var previous = d3.select(this).attr('d');
+                        var current = line(d[1]);
+                        return d3.interpolatePath(previous, current);
+                    });
 
                 c.exit()
                 .transition()
@@ -233,13 +232,12 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .attr("fill", "none")
                     .attr("stroke-width", 2)
                     .attr("stroke", function(d){ return colorScale(d[0]);})
-                    // .attrTween('d', function (d) {
-                    //     var previous = d3.select(this).attr('d');
-                    //     var current = groupedLine(d, xScale, yScale);
-                    //     return d3.interpolatePath(previous, current);
-                    // });
                     .attr("opacity", 1)
-                    .attr("d", function(d) { return line(d[1]); });
+                    .attrTween('d', function (d) {
+                        var previous = d3.select(this).attr('d');
+                        var current = line(d[1]);
+                        return d3.interpolatePath(previous, current);
+                    });
 
                 c.exit()
                 .transition()
