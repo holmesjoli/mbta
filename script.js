@@ -62,8 +62,7 @@ function ttPresent(svg, tooltip, points) {
         points.attr("stroke-opacity", 0.5);
 
         d3.select(this)
-            .attr("fill", "#FFFFFF")
-            .attr("r", 7)
+            .attr("fill", "grey")
             .attr("stroke", "#000000")
             .attr("stroke-weight", 2)
             .attr("stroke-opacity", 1);
@@ -72,10 +71,11 @@ function ttPresent(svg, tooltip, points) {
 
         tooltip.style("visibility","hidden");
 
+        // console.log(this);
         d3.select(this)
             .attr("fill", "#FFFFFF")
             .attr("stroke", "#000000")
-            .attr("r", 5)
+            // .attr("r", function(d) {return terminalScale(d.terminal);})
             .attr("stroke-width", 1);
 
         points.attr("stroke-opacity", 1);
@@ -167,11 +167,11 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
 
             let terminalScale = d3.scaleOrdinal()
             .domain(["terminal", "not-terminal"])
-            .range([7, 5]);
+            .range([10, 5]);
 
             let lineScale = d3.scaleOrdinal()
             .domain(["place-lake", "place-clmnl", "place-river", "place-hsmnl"])
-            .range(["B line", "C line", "D line", "E line"])
+            .range(["B", "C", "D", "E"])
 
             // Define SVG Canvas and attributes
 
@@ -222,8 +222,8 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                 .data(data)
                 .enter()
                 .append("text")
-                .attr("x", function(d) {return xScale(d.geo_x) - 55;})
-                .attr("y", function (d) {return yScale(d.geo_y) + 12;})
+                .attr("x", function(d) {return xScale(d.geo_x) - 20;})
+                .attr("y", function (d) {return yScale(d.geo_y) + 9;})
                 .attr("fill", "black")
                 .style("font-weight", "bold")
                 .text(function(d) {return lineScale(d.id);});
@@ -291,8 +291,8 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .transition()
                     .duration(1500)
                     .delay(250)
-                    .attr("x", function(d) {return xScale(d.beck_x) - 55;})
-                    .attr("y", function(d) {return yScale(d.beck_y) + 3;});
+                    .attr("x", function(d) {return xScale(d.beck_x) - 5;})
+                    .attr("y", function(d) {return yScale(d.beck_y) + 5;});
 
                 d3.select("#diagram").attr("class", "active");
                 document.getElementById("map").classList.remove("active");
@@ -340,9 +340,8 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .transition()
                     .duration(1500)
                     .delay(250)
-                    .attr("x", function(d) {return xScale(d.geo_x) - 55;})
-                    .attr("y", function(d) {return yScale(d.geo_y) + 12;});
-
+                    .attr("x", function(d) {return xScale(d.geo_x) - 20;})
+                    .attr("y", function(d) {return yScale(d.geo_y) + 9;});
 
                 // 
                 let angle = nodes.filter(function(d) {
