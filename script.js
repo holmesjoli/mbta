@@ -14,20 +14,6 @@ function unique_array(data, variable) {
     return u;
 };
 
-//Title Create Y Scale
-function createYScale(obj, height, margin) {
-    return d3.scaleLinear()
-        .domain([obj.ymin, obj.ymax])
-        .range([height-margin.bottom, margin.top]);
-};
-
-//Title Create X Scale
-function createXScale(obj, width, margin) {
-    return d3.scaleLinear()
-    .domain([obj.xmin, obj.xmax])
-    .range([margin.left, width - margin.right]);
-};
-
 //Title tooltip
 function tt(svg, tooltip, points) {
 
@@ -131,8 +117,13 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
             const beckLineGroup = d3.groups(beckLinks, d => d[groupingVar]);
 
             // Define scales
-            let yScale = createYScale(geo, height, margin);
-            let xScale = createXScale(geo, width, margin);
+            let yScale = d3.scaleLinear()
+                .domain([geo.ymin, geo.ymax])
+                .range([height-margin.bottom, margin.top]);
+
+            let xScale = d3.scaleLinear()
+                .domain([geo.xmin, geo.xmax])
+                .range([margin.left, width - margin.right]);
 
             // Generate the grouped color scale for the map
             let g = groupedColorScale(geoLinks, groupingVar);
