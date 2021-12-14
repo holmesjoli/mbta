@@ -14,8 +14,8 @@ function unique_array(data, variable) {
     return u;
 };
 
-//Title tooltip
-function tt(svg, tooltip, points) {
+//Title tooltip past
+function ttPast(svg, tooltip, points) {
 
     svg.selectAll("circle").on("mouseover", function(e, d) {
 
@@ -25,14 +25,47 @@ function tt(svg, tooltip, points) {
         tooltip.style("visibility","visible") 
             .style("left", `${cx}px`)
             .style("top", `${cy}px`)
-            .html(`<b>${d.name}</b><br> ${d.id}`);
+            .html(`<b>${d.name}</b><br>`);
 
         points.attr("stroke-opacity", 0.5);
 
         d3.select(this)
             .attr("fill", "#000000")
-            .attr("stroke","#628644")
+            .attr("r", 5)
+            .attr("stroke-opacity", 1);
+
+    }).on("mouseout", function() {
+
+        tooltip.style("visibility","hidden");
+
+        d3.select(this)
+            .attr("fill", "#000000")
+            .attr("r", 2);
+
+        points.attr("stroke-opacity", 1);
+    });
+};
+
+//Title tooltip present
+function ttPresent(svg, tooltip, points) {
+
+    svg.selectAll("circle").on("mouseover", function(e, d) {
+
+        let cx = +d3.select(this).attr("cx")+20;
+        let cy = +d3.select(this).attr("cy")-10;
+
+        tooltip.style("visibility","visible") 
+            .style("left", `${cx}px`)
+            .style("top", `${cy}px`)
+            .html(`<b>${d.name}</b><br>`);
+
+        points.attr("stroke-opacity", 0.5);
+
+        d3.select(this)
+            .attr("fill", "#FFFFFF")
             .attr("r", 7)
+            .attr("stroke", "#000000")
+            .attr("stroke-weight", 2)
             .attr("stroke-opacity", 1);
 
     }).on("mouseout", function() {
@@ -173,7 +206,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                         .append("div")
                         .attr("class", "tooltip");
 
-            tt(svg, tooltip, points);
+            ttPast(svg, tooltip, points);
 
             // Annotations
             let data = nodes.filter(function(d) {
@@ -259,6 +292,8 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
 
                 d3.select("#diagram").attr("class", "active");
                 document.getElementById("map").classList.remove("active");
+
+                ttPresent(svg, tooltip, points);
             });
 
             d3.select("#map").on("click", function() {
@@ -313,6 +348,8 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
 
                 document.getElementById("diagram").classList.remove("active");
                 d3.select("#map").attr("class", "active");
+
+                ttPast(svg, tooltip, points);
             });
         });
     });
