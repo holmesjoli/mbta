@@ -71,11 +71,9 @@ function ttPresent(svg, tooltip, points) {
 
         tooltip.style("visibility","hidden");
 
-        // console.log(this);
         d3.select(this)
             .attr("fill", "#FFFFFF")
             .attr("stroke", "#000000")
-            // .attr("r", function(d) {return terminalScale(d.terminal);})
             .attr("stroke-width", 1);
 
         points.attr("stroke-opacity", 1);
