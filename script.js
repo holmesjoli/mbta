@@ -43,7 +43,7 @@ function tt(svg, tooltip, points) {
             .attr("fill", "#FFFFFF")
             .attr("stroke", "#000000")
             .attr("r", 5)
-            .attr("stroke-width", 3);
+            .attr("stroke-width", 1);
 
         points.attr("stroke-opacity", 1);
             
@@ -153,7 +153,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
             .join("path")
                 .attr("fill", "none")
                 .attr("stroke", function(d){ return colorScale(d[0]);})
-                .attr("stroke-width", 3)
+                .attr("stroke-width", 5)
                 .attr("d", function(d) { return line(d[1]); });
 
             // Add the points
@@ -163,10 +163,10 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                         .append("circle")
                         .attr("cx", function(d) {return xScale(d.geo_x);})
                         .attr("cy", function(d) {return yScale(d.geo_y);})
-                        .attr("r", 5)
-                        .attr("fill", "white")
+                        .attr("r", 2)
+                        .attr("fill", "black")
                         .attr("stroke", "black")
-                        .attr("stroke-width", 3);
+                        .attr("stroke-width", 1);
 
             // Add the tooltip
             let tooltip = d3.select("#chart")
@@ -198,7 +198,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
             .enter()
             .append("rect")
                 .attr("width", 30)
-                .attr("height", 3)
+                .attr("height", 7)
                 .attr("x", 25)
                 .attr("y", function(d, i) {return 30*i + 40;})
                 .attr("fill", function(d) {return d.color});
@@ -228,6 +228,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .transition()
                     .duration(1500)
                     .delay(250)
+                    .attr("stroke-width", 10)
                     .attr("opacity", 1)
                     .attrTween('d', function (d) {
                         var previous = d3.select(this).attr('d');
@@ -244,6 +245,8 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .transition()
                     .duration(1500)
                     .delay(250)
+                    .attr("r", 5)
+                    .attr("fill", "white")
                     .attr("cx", function(d) { return xScale(d.beck_x); })
                     .attr("cy", function(d) { return yScale(d.beck_y); });
 
@@ -272,6 +275,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .transition()
                     .duration(1500)
                     .delay(250)
+                    .attr("stroke-width", 5)
                     .attr("opacity", 1)
                     .attrTween('d', function (d) {
                         var previous = d3.select(this).attr('d');
@@ -288,6 +292,8 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .transition()
                     .duration(1500)
                     .delay(250)
+                    .attr("r", 2)
+                    .attr("fill", "black")
                     .attr("cx", function(d) { return xScale(d.geo_x);})
                     .attr("cy", function(d) { return yScale(d.geo_y);});
 
