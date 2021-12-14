@@ -57,7 +57,7 @@ function ttPresent(svg, tooltip, points) {
         tooltip.style("visibility","visible") 
             .style("left", `${cx}px`)
             .style("top", `${cy}px`)
-            .html(`<b>${d.name}</b><br>`);
+            .html(`<b>${d.name}</b><br> ${d.id}`);
 
         points.attr("stroke-opacity", 0.5);
 
@@ -121,7 +121,7 @@ let trainLines = [
 ]
 
 d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
-    d3.json(pth + "stations.json").then(function(nodes) {
+    d3.json(pth + "stations2.json").then(function(nodes) {
         d3.csv(pth + "station_connections2.csv").then(function(geoLinks) {
 
             //Define constants
@@ -164,6 +164,10 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
             let colorScale = d3.scaleOrdinal()
             .domain(g["uniqueGroup"])
             .range(g["lineColors"]);
+
+            let terminalScale = d3.scaleOrdinal()
+            .domain(["terminal", "not-terminal"])
+            .range([7, 5]);
 
             let lineScale = d3.scaleOrdinal()
             .domain(["place-lake", "place-clmnl", "place-river", "place-hsmnl"])
@@ -278,7 +282,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .transition()
                     .duration(1500)
                     .delay(250)
-                    .attr("r", 5)
+                    .attr("r", function(d) {return terminalScale(d.terminal);})
                     .attr("fill", "white")
                     .attr("cx", function(d) { return xScale(d.beck_x); })
                     .attr("cy", function(d) { return yScale(d.beck_y); });
@@ -344,7 +348,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                 let angle = nodes.filter(function(d) {
                     return d.id === "place-mvbcl";
                 })
-
+                console.log(angle);
 
                 document.getElementById("diagram").classList.remove("active");
                 d3.select("#map").attr("class", "active");
