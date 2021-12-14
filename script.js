@@ -163,6 +163,9 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
             .domain(g["uniqueGroup"])
             .range(g["lineColors"]);
 
+            console.log(g["uniqueGroup"]);
+            console.log(g["lineColors"]);
+
             let terminalScale = d3.scaleOrdinal()
             .domain(["terminal", "not-terminal"])
             .range([10, 5]);
@@ -283,14 +286,15 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .attr("r", function(d) {return terminalScale(d.terminal);})
                     .attr("fill", "white")
                     .attr("cx", function(d) { return xScale(d.beck_x); })
-                    .attr("cy", function(d) { return yScale(d.beck_y); });
+                    .attr("cy", function(d) { return yScale(d.beck_y); })
+                    .attr("stroke", function(d) {return colorScale(d.line);});
 
                 ann
                     .transition()
                     .duration(1500)
                     .delay(250)
-                    .attr("x", function(d) {return xScale(d.beck_x) - 5;})
-                    .attr("y", function(d) {return yScale(d.beck_y) + 5;});
+                    .attr("x", function(d) {return xScale(d.beck_x) - 6;})
+                    .attr("y", function(d) {return yScale(d.beck_y) + 6;});
 
                 d3.select("#diagram").attr("class", "active");
                 document.getElementById("map").classList.remove("active");
@@ -331,6 +335,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .delay(250)
                     .attr("r", 2)
                     .attr("fill", "black")
+                    .attr("stroke", "black")
                     .attr("cx", function(d) { return xScale(d.geo_x);})
                     .attr("cy", function(d) { return yScale(d.geo_y);});
 
@@ -342,10 +347,10 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .attr("y", function(d) {return yScale(d.geo_y) + 9;});
 
                 // 
-                let angle = nodes.filter(function(d) {
-                    return d.id === "place-mvbcl";
-                })
-                console.log(angle);
+                // let angle = nodes.filter(function(d) {
+                //     return d.id === "place-mvbcl";
+                // })
+                // console.log(angle);
 
                 document.getElementById("diagram").classList.remove("active");
                 d3.select("#map").attr("class", "active");
