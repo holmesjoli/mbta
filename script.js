@@ -25,7 +25,7 @@ function tt(svg, tooltip, points) {
         tooltip.style("visibility","visible") 
             .style("left", `${cx}px`)
             .style("top", `${cy}px`)
-            .html(`<b>${d.name}</b><br>`);
+            .html(`<b>${d.name}</b><br> ${d.id}`);
 
         points.attr("stroke-opacity", 0.5);
 
@@ -94,7 +94,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
             //Define constants
             const height = window.innerHeight;
             const width = height*1.3;
-            const margin = {top: 25, left: 75, right: 25, bottom: 25};
+            const margin = {top: 25, left: 75, right: 100, bottom: 25};
 
             const beck = {
                 xmax: d3.max(nodes, function(d) {return d.beck_x;}),
@@ -192,7 +192,6 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                 .text(function(d) {return lineScale(d.id);});
 
             // Add legend
-            //(width - margin.top-margin.bottom)/2 + 30
 
             svg.selectAll("trainLegend")
             .data(trainLines)
@@ -200,7 +199,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
             .append("rect")
                 .attr("width", 30)
                 .attr("height", 3)
-                .attr("x", width-150)
+                .attr("x", 25)
                 .attr("y", function(d, i) {return 30*i + 40;})
                 .attr("fill", function(d) {return d.color});
 
@@ -208,7 +207,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                 .data(trainLines)
                 .enter()
                 .append("text")
-                .attr("x", width-110)
+                .attr("x", 65)
                 .attr("y", function(d, i) {return 30*i + 48;})
                 .text(function(d) {return d.line;})
                 .style("font-weight", "bold");
@@ -298,6 +297,13 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .delay(250)
                     .attr("x", function(d) {return xScale(d.geo_x) - 55;})
                     .attr("y", function(d) {return yScale(d.geo_y) + 12;});
+
+
+                // 
+                let angle = nodes.filter(function(d) {
+                    return d.id === "place-mvbcl";
+                })
+
 
                 document.getElementById("diagram").classList.remove("active");
                 d3.select("#map").attr("class", "active");
