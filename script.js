@@ -108,7 +108,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
             //Define constants
             const height = window.innerHeight;
             const width = height*1.3;
-            const margin = {top: 100, left: 100, right: 200, bottom: 125};
+            const margin = {top: 25, left: 75, right: 25, bottom: 25};
 
             const beck = {
                 xmax: d3.max(nodes, function(d) {return d.beck_x;}),
@@ -209,7 +209,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
             .append("rect")
                 .attr("width", 30)
                 .attr("height", 3)
-                .attr("x", width-120)
+                .attr("x", width-150)
                 .attr("y", function(d, i) {return 30*i + 40;})
                 .attr("fill", function(d) {return d.color});
 
@@ -217,7 +217,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                 .data(trainLines)
                 .enter()
                 .append("text")
-                .attr("x", width-80)
+                .attr("x", width-110)
                 .attr("y", function(d, i) {return 30*i + 48;})
                 .text(function(d) {return d.line;})
                 .style("font-weight", "bold");
