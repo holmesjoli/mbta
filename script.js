@@ -94,6 +94,13 @@ function groupedColorScale(data, group) {
 
 let pth = "./data/processed/";
 
+let trainLines = [
+            {line: "Green", color: "#018447"},
+            {line: "Red", color: "#E12D27"},
+            {line: "Orange", color: "#E87200"},
+            {line: "Blue", color: "#2F5DA6"}
+]
+
 d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
     d3.json(pth + "stations.json").then(function(nodes) {
         d3.csv(pth + "station_connections2.csv").then(function(geoLinks) {
@@ -192,6 +199,28 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                 .attr("fill", "black")
                 .style("font-weight", "bold")
                 .text(function(d) {return lineScale(d.id);});
+
+            // Add legend
+            //(width - margin.top-margin.bottom)/2 + 30
+
+            svg.selectAll("trainLegend")
+            .data(trainLines)
+            .enter()
+            .append("rect")
+                .attr("width", 30)
+                .attr("height", 3)
+                .attr("x", width-120)
+                .attr("y", function(d, i) {return 30*i + 40;})
+                .attr("fill", function(d) {return d.color});
+
+            svg.selectAll("trainLegend-text")
+                .data(trainLines)
+                .enter()
+                .append("text")
+                .attr("x", width-80)
+                .attr("y", function(d, i) {return 30*i + 48;})
+                .text(function(d) {return d.line;})
+                .style("font-weight", "bold");
 
             // Chart transitions
             d3.select("#diagram").on("click", function() {
