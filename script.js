@@ -109,6 +109,16 @@ function addLineAnnotation(nodes, id, svg, xScale, yScale, txt, yOffset = 3,
         .text(txt);
 };
 
+// Title transition annotation
+function transitionAnnotation(xScale, yScale, ann, data, x = "geo_x", y = "geo_y") {
+    ann
+        .transition()
+        .duration(1500)
+        .delay(250)
+        .attr("x", xScale(data[x]) - 55)
+        .attr("y", yScale(data[y]) + 3);
+}
+
 let pth = "./data/processed/";
 
 d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
@@ -274,33 +284,10 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .attr("cx", function(d) { return xScale(d.beck_x); })
                     .attr("cy", function(d) { return yScale(d.beck_y); });
 
-                bAnn
-                    .transition()
-                    .duration(1500)
-                    .delay(250)
-                    .attr("x", xScale(b.beck_x) - 55)
-                    .attr("y", yScale(b.beck_y) + 3);
-
-                cAnn
-                    .transition()
-                    .duration(1500)
-                    .delay(250)
-                    .attr("x", xScale(c.beck_x) - 55)
-                    .attr("y", yScale(c.beck_y) + 3);
-                
-                dAnn
-                    .transition()
-                    .duration(1500)
-                    .delay(250)
-                    .attr("x", xScale(d.beck_x) - 55)
-                    .attr("y", yScale(d.beck_y) + 3);
-                
-                eAnn
-                    .transition()
-                    .duration(1500)
-                    .delay(250)
-                    .attr("x", xScale(e.beck_x) - 55)
-                    .attr("y", yScale(e.beck_y) + 3);
+                transitionAnnotation(xScale, yScale, bAnn, b, x = "beck_x", y = "beck_y");
+                transitionAnnotation(xScale, yScale, cAnn, c, x = "beck_x", y = "beck_y");
+                transitionAnnotation(xScale, yScale, dAnn, d, x = "beck_x", y = "beck_y");
+                transitionAnnotation(xScale, yScale, eAnn, e, x = "beck_x", y = "beck_y");
 
                 d3.select("#diagram").attr("class", "active");
                 document.getElementById("map").classList.remove("active");
@@ -339,33 +326,10 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .attr("cx", function(d) { return xScale(d.geo_x);})
                     .attr("cy", function(d) { return yScale(d.geo_y);});
 
-                bAnn
-                    .transition()
-                    .duration(1500)
-                    .delay(250)
-                    .attr("x", xScale(b.geo_x) - 55)
-                    .attr("y", yScale(b.geo_y) + 3);
-
-                cAnn
-                    .transition()
-                    .duration(1500)
-                    .delay(250)
-                    .attr("x", xScale(c.geo_x) - 55)
-                    .attr("y", yScale(c.geo_y) + 7);
-
-                dAnn
-                    .transition()
-                    .duration(1500)
-                    .delay(250)
-                    .attr("x", xScale(d.geo_x) - 55)
-                    .attr("y", yScale(d.geo_y) + 3);
-
-                eAnn
-                    .transition()
-                    .duration(1500)
-                    .delay(250)
-                    .attr("x", xScale(e.geo_x) - 55)
-                    .attr("y", yScale(e.geo_y) + 12);
+                    transitionAnnotation(xScale, yScale, bAnn, b);
+                    transitionAnnotation(xScale, yScale, cAnn, c);
+                    transitionAnnotation(xScale, yScale, dAnn, d);
+                    transitionAnnotation(xScale, yScale, eAnn, e);
 
                 document.getElementById("diagram").classList.remove("active");
                 d3.select("#map").attr("class", "active");
