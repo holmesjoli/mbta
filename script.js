@@ -57,7 +57,7 @@ function ttPresent(svg, tooltip, points) {
         tooltip.style("visibility","visible") 
             .style("left", `${cx}px`)
             .style("top", `${cy}px`)
-            .html(`<b>${d.name}</b><br> ${d.id}`);
+            .html(`<b>${d.name}</b><br>`);
 
         points.attr("stroke-opacity", 0.5);
 
