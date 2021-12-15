@@ -346,12 +346,6 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .attr("x", function(d) {return xScale(d.geo_x) - 20;})
                     .attr("y", function(d) {return yScale(d.geo_y) + 9;});
 
-                // 
-                // let angle = nodes.filter(function(d) {
-                //     return d.id === "place-mvbcl";
-                // })
-                // console.log(angle);
-
                 document.getElementById("diagram").classList.remove("active");
                 d3.select("#map").attr("class", "active");
 
