@@ -224,7 +224,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                 .append("rect")
                 .attr("width", 120)
                 .attr("height", 60)
-                .attr("x", xStart - 10)
+                .attr("x", xStart)
                 .attr("y", yStart_mid -25)
                 .attr("fill", "none")
                 .attr("stroke", "#000000")
@@ -354,7 +354,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                         .duration(0)
                         .delay(1000)
                         .attr("opacity", 1)
-                        .attr("x", xStart)
+                        .attr("x", xStart + 10)
                         .attr("y", yStart_mid)
                         .text("legend")
                         .style("font-weight", "bold")
@@ -368,8 +368,8 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                         .attr("opacity", 1)
                         .attr("width", 10)
                         .attr("height", 10)
-                        .attr("y", yStart_mid + 10)
-                        .attr("x", function(d, i) {return 12*i + xStart;})
+                        .attr("y", yStart_mid + 20)
+                        .attr("x", function(d, i) {return 12*i + xStart + 10;})
                         .attr("fill", function(d) {return d.beckColor});
 
                     rtl_text
@@ -378,8 +378,8 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                         .duration(0)
                         .delay(1000)
                         .attr("opacity", 1)
-                        .attr("x", xStart + 12*trainLines.length)
-                        .attr("y", yStart_mid + 20)
+                        .attr("x", xStart + 12*trainLines.length + 15)
+                        .attr("y", yStart_mid + 27)
                         .text("Subway")
                         .style("font-size", "8pt")
                         .style("text-transform", "none");
