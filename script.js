@@ -102,7 +102,6 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
         d3.csv(pth + "station_connections2.csv").then(function(geoLinks) {
             d3.xml('./images/mbtaIcon.svg').then(function(mbtaIcon) {
 
-
                 //Define constants
                 const height = window.innerHeight;
                 const width = height*1.3;
