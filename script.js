@@ -238,7 +238,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                 .attr("width", 30)
                 .attr("height", 7)
                 .attr("x", 25)
-                .attr("y", function(d, i) {return 30*i + 40;})
+                .attr("y", function(d, i) {return 30*i + 600;})
                 .attr("fill", function(d) {return d.color});
 
             svg.selectAll("trainLegend-text")
@@ -246,7 +246,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                 .enter()
                 .append("text")
                 .attr("x", 65)
-                .attr("y", function(d, i) {return 30*i + 48;})
+                .attr("y", function(d, i) {return 30*i + 608;})
                 .text(function(d) {return d.line;})
                 .style("font-weight", "bold");
 
