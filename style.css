@@ -5,6 +5,10 @@
     font-family: sans-serif;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 h1, h2, h3,
 button {
     font-family: p22-underground, sans-serif;
@@ -48,6 +52,7 @@ div#container {
 body {
     margin: 0;
 }
+
 #header {
     flex: 1 0 5%;
     text-align: center;
@@ -57,9 +62,17 @@ body {
 }
 
 #body {
-    flex: 1 0 95%;
+    flex: 1 0 94%;
     display: flex;
     flex-direction: row;
+}
+
+#footer {
+    flex: 1 0 1%;
+    text-align: center;
+    background: #628644;
+    color: black;
+    border-top: 5px dotted #000000;
 }
 
 #left {
@@ -70,6 +83,9 @@ body {
 #right {
     flex: 1 0 25%;
     background-color: #FFEEDD;
+    position: sticky;
+    top: 0;
+    align-self: start;
 }
 
 .tooltip {
