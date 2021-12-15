@@ -215,6 +215,17 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
 
                 // Add legend
 
+                let legendRect = svg
+                .append("rect")
+                .attr("width", 120)
+                .attr("height", 60)
+                .attr("x", 25)
+                .attr("y", 570)
+                .attr("fill", "none")
+                .attr("stroke", "#000000")
+                .attr("stroke-weight", 2)
+                .attr("opacity", 0);
+
                 let rtl = svg.selectAll("trainLegend")
                 .data(trainLines)
                 .enter()
@@ -239,17 +250,6 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .text("key")
                     .style("font-weight", "bold")
                     .style("text-transform", "uppercase");
-
-                let legendRect = svg
-                    .append("rect")
-                    .attr("width", 120)
-                    .attr("height", 60)
-                    .attr("x", 25)
-                    .attr("y", 570)
-                    .attr("fill", "none")
-                    .attr("stroke", "#000000")
-                    .attr("stroke-weight", 2)
-                    .attr("opacity", 0);
 
                 // Add title and T-Icon
                 let title = svg
@@ -336,6 +336,13 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                         .attr("x", function(d) {return xScale(d.beck_x) - 6;})
                         .attr("y", function(d) {return yScale(d.beck_y) + 6;});
 
+                    legendRect
+                        .transition()
+                        .duration(0)
+                        .delay(1000)
+                        .attr("fill", "#FFFFFF")
+                        .attr("opacity", 1);
+
                     rtl
                         .attr("opacity", 0)
                         .transition()
@@ -371,12 +378,6 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                         .text("legend")
                         .style("font-weight", "bold")
                         .style("text-transform", "uppercase");
-
-                    legendRect
-                        .transition()
-                        .duration(0)
-                        .delay(1000)
-                        .attr("opacity", 1);
 
                     title
                         .attr("opacity", 0)
@@ -504,6 +505,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
 
                     legendRect
                         .transition()
+                        .attr("fill", "none")
                         .attr("opacity", 0);
 
                     title
