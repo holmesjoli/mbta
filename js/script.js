@@ -288,7 +288,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
 
                 let iconRect2 = svg
                     .append("rect")
-                    .attr("x", xStart + 31)
+                    .attr("x", xStart + 32)
                     .attr("y", yStart_mid - 20)
                     .attr("width", 12)
                     .attr("height", 45)
@@ -390,8 +390,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                         .duration(0)
                         .delay(1000)
                         .attr("opacity", 1)
-                        .attr("x", 100)
-                        .attr("y", function(d, i) {return i*20 + 20;})
+                        .attr("y", function(d, i) {return i*20 + 30;})
                         .text(function(d) {return d.beck;});
 
                     iconCircle
@@ -400,8 +399,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                         .duration(0)
                         .delay(1000)
                         .attr("opacity", 1)
-                        .attr("cx", 55)
-                        .attr("cy", 45);
+                        .attr("cy", 55);
 
                     iconRect1
                         .attr("opacity", 0)
@@ -409,8 +407,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                         .duration(0)
                         .delay(1000)
                         .attr("opacity", 1)
-                        .attr("x", 30)
-                        .attr("y", 25);
+                        .attr("y", 35);
 
                     iconRect2
                         .attr("opacity", 0)
@@ -418,8 +415,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                         .duration(0)
                         .delay(1000)
                         .attr("opacity", 1)
-                        .attr("x", 49.5)
-                        .attr("y", 25);
+                        .attr("y", 35);
 
                     d3.select("#diagram").attr("class", "active");
                     document.getElementById("map").classList.remove("active");
