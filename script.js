@@ -97,7 +97,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
             //Define constants
             const height = window.innerHeight;
             const width = height*1.3;
-            const margin = {top: 25, left: 75, right: 100, bottom: 25};
+            const margin = {top: 100, left: 75, right: 100, bottom: 25};
 
             const beck = {
                 xmax: d3.max(nodes, function(d) {return d.beck_x;}),
@@ -233,15 +233,51 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                 .style("text-transform", "uppercase");
 
             let legendRect = svg
-                    .append("rect")
-                    .attr("width", 120)
-                    .attr("height", 60)
-                    .attr("x", 25)
-                    .attr("y", 570)
-                    .attr("fill", "none")
-                    .attr("stroke", "#000000")
-                    .attr("stroke-weight", 2)
-                    .attr("opacity", 0);
+                .append("rect")
+                .attr("width", 120)
+                .attr("height", 60)
+                .attr("x", 25)
+                .attr("y", 570)
+                .attr("fill", "none")
+                .attr("stroke", "#000000")
+                .attr("stroke-weight", 2)
+                .attr("opacity", 0);
+
+            let title1 = svg
+                .append("text")
+                .attr("x", 25)
+                .attr("y", 600)
+                .text("Massachusetts")
+                .style("font-size", "14pt")
+                .style("font-weight", "bold")
+                .style("text-transform", "uppercase");
+
+            let title2 = svg
+                .append("text")
+                .attr("x", 25)
+                .attr("y", 620)
+                .text("Bay")
+                .style("font-size", "14pt")
+                .style("font-weight", "bold")
+                .style("text-transform", "uppercase");
+            
+            let title3 = svg
+                .append("text")
+                .attr("x", 25)
+                .attr("y", 640)
+                .text("Transportation")
+                .style("font-size", "14pt")
+                .style("font-weight", "bold")
+                .style("text-transform", "uppercase");
+
+            let title4 = svg
+                .append("text")
+                .attr("x", 25)
+                .attr("y", 660)
+                .text("Authority")
+                .style("font-size", "14pt")
+                .style("font-weight", "bold")
+                .style("text-transform", "uppercase");
 
             // Chart transitions
             d3.select("#diagram").on("click", function() {
