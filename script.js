@@ -244,6 +244,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .delay(250)
                     .attr("stroke-width", 10)
                     .attr("opacity", 1)
+                    .attr("stroke", function(d){ return beckColorScale(d[0]);})
                     .attrTween('d', function (d) {
                         var previous = d3.select(this).attr('d');
                         var current = line(d[1]);
@@ -294,6 +295,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .delay(250)
                     .attr("stroke-width", 5)
                     .attr("opacity", 1)
+                    .attr("stroke", function(d){ return geoColorScale(d[0]);})
                     .attrTween('d', function (d) {
                         var previous = d3.select(this).attr('d');
                         var current = line(d[1]);
