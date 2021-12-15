@@ -211,20 +211,20 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
             .data(trainLines)
             .enter()
             .append("rect")
-                .attr("width", 30)
-                .attr("height", 7)
+                .attr("width", 50)
+                .attr("height", 5)
                 .attr("x", 25)
-                .attr("y", function(d, i) {return 30*i + 600;})
+                .attr("y", function(d, i) {return 8*i + 40;})
                 .attr("fill", function(d) {return d.geoColor});
 
             svg.selectAll("trainLegend-text")
                 .data(trainLines)
                 .enter()
                 .append("text")
-                .attr("x", 65)
-                .attr("y", function(d, i) {return 30*i + 608;})
-                .text(function(d) {return d.line;})
-                .style("font-weight", "bold");
+                .attr("x", 25)
+                .attr("y", 85)
+                .text("Rapid transit lines")
+                .style("text-transform", "uppercase");
 
             // Chart transitions
             d3.select("#diagram").on("click", function() {
