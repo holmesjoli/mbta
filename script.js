@@ -217,14 +217,31 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                 .attr("y", function(d, i) {return 8*i + 40;})
                 .attr("fill", function(d) {return d.geoColor});
 
-            let rtl_text = svg.selectAll("trainLegend-text")
-                .data(trainLines)
-                .enter()
+            let rtl_text = svg
                 .append("text")
                 .attr("x", 25)
                 .attr("y", 85)
                 .text("Rapid transit lines")
                 .style("text-transform", "uppercase");
+
+            let rtl_title = svg
+                .append("text")
+                .attr("x", 25)
+                .attr("y", 25)
+                .text("key")
+                .style("font-weight", "bold")
+                .style("text-transform", "uppercase");
+
+            let legendRect = svg
+                    .append("rect")
+                    .attr("width", 120)
+                    .attr("height", 60)
+                    .attr("x", 25)
+                    .attr("y", 570)
+                    .attr("fill", "none")
+                    .attr("stroke", "#000000")
+                    .attr("stroke-weight", 2)
+                    .attr("opacity", 0);
 
             // Chart transitions
             d3.select("#diagram").on("click", function() {
@@ -274,9 +291,11 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .attr("y", function(d) {return yScale(d.beck_y) + 6;});
 
                 rtl
+                    .attr("opacity", 0)
                     .transition()
-                    .duration(1500)
-                    .delay(250)
+                    .duration(0)
+                    .delay(1000)
+                    .attr("opacity", 1)
                     .attr("width", 10)
                     .attr("height", 10)
                     .attr("y", 600)
@@ -284,13 +303,34 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .attr("fill", function(d) {return d.beckColor});
 
                 rtl_text 
+                    .attr("opacity", 0)
                     .transition()
-                    .duration(1500)
-                    .delay(250)
+                    .duration(0)
+                    .delay(1000)
+                    .attr("opacity", 1)
                     .attr("x", 95)
                     .attr("y", 610)
                     .text("Subway")
+                    .style("font-size", "8pt")
                     .style("text-transform", "none");
+
+                rtl_title 
+                    .attr("opacity", 0)
+                    .transition()
+                    .duration(0)
+                    .delay(1000)
+                    .attr("opacity", 1)
+                    .attr("x", 50)
+                    .attr("y", 590)
+                    .text("legend")
+                    .style("font-weight", "bold")
+                    .style("text-transform", "uppercase");
+
+                legendRect
+                    .transition()
+                    .duration(0)
+                    .delay(1000)
+                    .attr("opacity", 1);
 
                 d3.select("#diagram").attr("class", "active");
                 document.getElementById("map").classList.remove("active");
@@ -344,9 +384,11 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .attr("y", function(d) {return yScale(d.geo_y) + 9;});
 
                 rtl
+                    .attr("opacity", 0)
                     .transition()
-                    .duration(1500)
-                    .delay(250)
+                    .duration(0)
+                    .delay(1000)
+                    .attr("opacity", 1)
                     .attr("width", 50)
                     .attr("height", 5)
                     .attr("x", 25)
@@ -354,13 +396,32 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .attr("fill", function(d) {return d.geoColor});
 
                 rtl_text
+                    .attr("opacity", 0)
                     .transition()
-                    .duration(1500)
-                    .delay(250)
+                    .duration(0)
+                    .delay(1000)
+                    .attr("opacity", 1)
                     .attr("x", 25)
                     .attr("y", 85)
                     .text("Rapid transit lines")
+                    .style("font-size", "12pt")
                     .style("text-transform", "uppercase");
+
+                rtl_title 
+                    .attr("opacity", 0)
+                    .transition()
+                    .duration(0)
+                    .delay(1000)
+                    .attr("opacity", 1)
+                    .attr("x", 25)
+                    .attr("y", 25)
+                    .text("key")
+                    .style("font-weight", "bold")
+                    .style("text-transform", "uppercase");
+
+                legendRect
+                    .transition()
+                    .attr("opacity", 0);
                 
                 document.getElementById("diagram").classList.remove("active");
                 d3.select("#map").attr("class", "active");
