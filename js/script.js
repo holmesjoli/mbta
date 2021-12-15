@@ -47,7 +47,7 @@ function ttPast(svg, tooltip, points) {
 };
 
 //Title tooltip present
-function ttPresent(svg, tooltip, points) {
+function ttPresent(svg, tooltip, points, beckColorScale) {
 
     svg.selectAll("circle").on("mouseover", function(e, d) {
 
@@ -76,7 +76,9 @@ function ttPresent(svg, tooltip, points) {
             .attr("stroke", "#000000")
             .attr("stroke-width", 1);
 
-        points.attr("stroke-opacity", 1);
+        points
+            .attr("stroke-opacity", 1)
+            .attr("stroke", function(d) {return beckColorScale(d.line);});
             
     });
 };
@@ -420,7 +422,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     d3.select("#diagram").attr("class", "active");
                     document.getElementById("map").classList.remove("active");
 
-                    ttPresent(svg, tooltip, points);
+                    ttPresent(svg, tooltip, points, beckColorScale);
                 });
 
                 d3.select("#map").on("click", function() {
