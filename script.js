@@ -81,34 +81,6 @@ function ttPresent(svg, tooltip, points) {
     });
 };
 
-// Generate the grouped color scale for the map/
-function groupedColorScale(data, group) {
-
-    const uniqueGroup = unique_array(data, group);    
-    const lineColors = [];
-
-    uniqueGroup.forEach(function(d) {
-        z = data.filter(function(i) {
-            return i[group] === d;
-        });
-
-        line = unique_array(z, "LINE")[0]
-        
-        if (line === "GREEN") {
-            lineColors.push("#018447");
-        } else if (line === "RED") {
-            lineColors.push("#E12D27");
-        } else if (line === "ORANGE") {
-            lineColors.push("#E87200")
-        } else if (line === "BLUE") {
-            lineColors.push("#2F5DA6")
-        }
-    });
-
-    return {uniqueGroup: uniqueGroup,
-            lineColors: lineColors};
-};
-
 let pth = "./data/processed/";
 
 let trainLines = [
@@ -156,15 +128,15 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                 .domain([geo.xmin, geo.xmax])
                 .range([margin.left, width - margin.right]);
 
-            // Generate the grouped color scale for the map
-            let g = groupedColorScale(geoLinks, groupingVar);
+            const railColors = ["red", "red2", "blue", "orange", "green", "green_b", "green_c", "green_d", "green_e"];
+
+            const geoColors = ["#ef4850", "#ef4850", "#70c2d6", "#f57f4a", "#87c65b", "#87c65b", "#87c65b", "#87c65b", "#87c65b"];
+
+            const beckColors = ["#E12D27", "#E12D27", "#2F5DA6", "#E87200", "#018447", "#018447", "#018447", "#018447", "#018447"];
 
             let colorScale = d3.scaleOrdinal()
-            .domain(g["uniqueGroup"])
-            .range(g["lineColors"]);
-
-            console.log(g["uniqueGroup"]);
-            console.log(g["lineColors"]);
+            .domain(railColors)
+            .range(geoColors);
 
             let terminalScale = d3.scaleOrdinal()
             .domain(["terminal", "not-terminal"])
