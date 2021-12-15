@@ -217,7 +217,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                 .attr("y", function(d, i) {return 8*i + 40;})
                 .attr("fill", function(d) {return d.geoColor});
 
-            svg.selectAll("trainLegend-text")
+            let rtl_text = svg.selectAll("trainLegend-text")
                 .data(trainLines)
                 .enter()
                 .append("text")
@@ -283,6 +283,15 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .attr("x", function(d, i) {return 12*i + 40;})
                     .attr("fill", function(d) {return d.beckColor});
 
+                rtl_text 
+                    .transition()
+                    .duration(1500)
+                    .delay(250)
+                    .attr("x", 95)
+                    .attr("y", 610)
+                    .text("Subway")
+                    .style("text-transform", "none");
+
                 d3.select("#diagram").attr("class", "active");
                 document.getElementById("map").classList.remove("active");
 
@@ -343,6 +352,15 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .attr("x", 25)
                     .attr("y", function(d, i) {return 8*i + 40;})
                     .attr("fill", function(d) {return d.geoColor});
+
+                rtl_text
+                    .transition()
+                    .duration(1500)
+                    .delay(250)
+                    .attr("x", 25)
+                    .attr("y", 85)
+                    .text("Rapid transit lines")
+                    .style("text-transform", "uppercase");
                 
                 document.getElementById("diagram").classList.remove("active");
                 d3.select("#map").attr("class", "active");
