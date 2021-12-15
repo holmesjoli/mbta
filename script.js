@@ -368,6 +368,47 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .delay(1000)
                     .attr("opacity", 1);
 
+
+                title1
+                    .attr("opacity", 0)
+                    .transition()
+                    .duration(0)
+                    .delay(1000)
+                    .attr("opacity", 1)
+                    .attr("x", 100)
+                    .attr("y", 20)
+                    .text("Massachusetts Bay")
+
+                title2
+                    .attr("opacity", 0)
+                    .transition()
+                    .duration(0)
+                    .delay(1000)
+                    .attr("opacity", 1)
+                    .attr("x", 100)
+                    .attr("y", 40)
+                    .text("Transportation Authority")
+
+                title3
+                    .attr("opacity", 0)
+                    .transition()
+                    .duration(0)
+                    .delay(1000)
+                    .attr("opacity", 1)
+                    .attr("x", 100)
+                    .attr("y", 60)
+                    .text("Rapid Transit/")
+
+                title4
+                    .attr("opacity", 0)
+                    .transition()
+                    .duration(0)
+                    .delay(1000)
+                    .attr("opacity", 1)
+                    .attr("x", 100)
+                    .attr("y", 80)
+                    .text("Key Bus Routes Map")
+
                 d3.select("#diagram").attr("class", "active");
                 document.getElementById("map").classList.remove("active");
 
@@ -458,6 +499,47 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                 legendRect
                     .transition()
                     .attr("opacity", 0);
+
+
+                title1
+                    .attr("opacity", 0)
+                    .transition()
+                    .duration(0)
+                    .delay(1000)
+                    .attr("opacity", 1)
+                    .attr("x", 25)
+                    .attr("y", 600)
+                    .text("Massachusetts");
+    
+                title2
+                    .attr("opacity", 0)
+                    .transition()
+                    .duration(0)
+                    .delay(1000)
+                    .attr("opacity", 1)
+                    .attr("x", 25)
+                    .attr("y", 620)
+                    .text("Bay");
+                
+                title3 
+                    .attr("opacity", 0)
+                    .transition()
+                    .duration(0)
+                    .delay(1000)
+                    .attr("opacity", 1)
+                    .attr("x", 25)
+                    .attr("y", 640)
+                    .text("Transportation");
+    
+                title4
+                    .attr("opacity", 0)
+                    .transition()
+                    .duration(0)
+                    .delay(1000)
+                    .attr("opacity", 1)
+                    .attr("x", 25)
+                    .attr("y", 660)
+                    .text("Authority");
                 
                 document.getElementById("diagram").classList.remove("active");
                 d3.select("#map").attr("class", "active");
