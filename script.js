@@ -30,8 +30,8 @@ function ttPast(svg, tooltip, points) {
         points.attr("stroke-opacity", 0.5);
 
         d3.select(this)
-            .attr("fill", "#000000")
-            .attr("r", 5)
+            .attr("fill", "grey")
+            .attr("r", 4)
             .attr("stroke-opacity", 1);
 
     }).on("mouseout", function() {
@@ -40,7 +40,7 @@ function ttPast(svg, tooltip, points) {
 
         d3.select(this)
             .attr("fill", "#000000")
-            .attr("r", 2);
+            .attr("r", 1);
 
         points.attr("stroke-opacity", 1);
     });
@@ -177,7 +177,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                         .append("circle")
                         .attr("cx", function(d) {return xScale(d.geo_x);})
                         .attr("cy", function(d) {return yScale(d.geo_y);})
-                        .attr("r", 2)
+                        .attr("r", 1)
                         .attr("fill", "black")
                         .attr("stroke", "black")
                         .attr("stroke-width", 1);
@@ -311,7 +311,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .transition()
                     .duration(1500)
                     .delay(250)
-                    .attr("r", 2)
+                    .attr("r", 1)
                     .attr("fill", "black")
                     .attr("stroke", "black")
                     .attr("cx", function(d) { return xScale(d.geo_x);})
