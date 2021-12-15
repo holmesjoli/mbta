@@ -75,13 +75,13 @@ body {
     border-top: 5px dotted #000000;
 }
 
-#left {
+#right {
     flex: 1 0 60%;
     padding: 20px;
     background-color: #FFEEDD;
 }
 
-#right {
+#left {
     flex: 1 0 25%;
     background-color: #FFEEDD;
     position: sticky;
