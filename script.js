@@ -134,7 +134,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
 
             const beckColors = ["#E12D27", "#E12D27", "#2F5DA6", "#E87200", "#018447", "#018447", "#018447", "#018447", "#018447"];
 
-            let colorScale = d3.scaleOrdinal()
+            let geoColorScale = d3.scaleOrdinal()
             .domain(railColors)
             .range(geoColors);
 
@@ -162,7 +162,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
             .data(geoLineGroup)
             .join("path")
                 .attr("fill", "none")
-                .attr("stroke", function(d){ return colorScale(d[0]);})
+                .attr("stroke", function(d){ return geoColorScale(d[0]);})
                 .attr("stroke-width", 5)
                 .attr("d", function(d) { return line(d[1]); });
 
@@ -259,7 +259,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .attr("fill", "white")
                     .attr("cx", function(d) { return xScale(d.beck_x); })
                     .attr("cy", function(d) { return yScale(d.beck_y); })
-                    .attr("stroke", function(d) {return colorScale(d.line);});
+                    .attr("stroke", function(d) {return geoColorScale(d.line);});
 
                 ann
                     .transition()
