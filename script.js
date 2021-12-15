@@ -207,7 +207,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
 
             // Add legend
 
-            svg.selectAll("trainLegend")
+            let rtl = svg.selectAll("trainLegend")
             .data(trainLines)
             .enter()
             .append("rect")
@@ -273,6 +273,16 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .attr("x", function(d) {return xScale(d.beck_x) - 6;})
                     .attr("y", function(d) {return yScale(d.beck_y) + 6;});
 
+                rtl
+                    .transition()
+                    .duration(1500)
+                    .delay(250)
+                    .attr("width", 10)
+                    .attr("height", 10)
+                    .attr("y", 600)
+                    .attr("x", function(d, i) {return 12*i + 40;})
+                    .attr("fill", function(d) {return d.beckColor});
+
                 d3.select("#diagram").attr("class", "active");
                 document.getElementById("map").classList.remove("active");
 
@@ -324,6 +334,16 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .attr("x", function(d) {return xScale(d.geo_x) - 20;})
                     .attr("y", function(d) {return yScale(d.geo_y) + 9;});
 
+                rtl
+                    .transition()
+                    .duration(1500)
+                    .delay(250)
+                    .attr("width", 50)
+                    .attr("height", 5)
+                    .attr("x", 25)
+                    .attr("y", function(d, i) {return 8*i + 40;})
+                    .attr("fill", function(d) {return d.geoColor});
+                
                 document.getElementById("diagram").classList.remove("active");
                 d3.select("#map").attr("class", "active");
 
