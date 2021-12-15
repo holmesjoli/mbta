@@ -81,14 +81,21 @@ function ttPresent(svg, tooltip, points) {
     });
 };
 
-let pth = "./data/processed/";
+const pth = "./data/processed/";
 
-let trainLines = [
+const trainLines = [
             {line: "Green", beckColor: "#018447", geoColor: "#87c65b"},
             {line: "Red", beckColor: "#E12D27", geoColor: "#ef4850"},
             {line: "Orange", beckColor: "#E87200", geoColor: "#f57f4a"},
             {line: "Blue", beckColor: "#2F5DA6", geoColor: "#70c2d6"}
-]
+];
+
+const titleData = [
+            {geo: "Massachusetts", beck: "Massachusetts Bay"},
+            {geo: "Bay", beck: "Transportation Authority"},
+            {geo: "Trans", beck: "Rapid Transit/"},
+            {geo: "Authority", beck: "Key Bus Routes Map"}
+];
 
 d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
     d3.json(pth + "stations2.json").then(function(nodes) {
@@ -245,38 +252,15 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .attr("stroke-weight", 2)
                     .attr("opacity", 0);
 
-                let title1 = svg
+                // Add title and T-Icon
+                let title = svg
+                    .selectAll("title-text")
+                    .data(titleData)
+                    .enter()
                     .append("text")
                     .attr("x", 100)
-                    .attr("y", 600)
-                    .text("Massachusetts")
-                    .style("font-size", "14pt")
-                    .style("font-weight", "bold")
-                    .style("text-transform", "uppercase");
-
-                let title2 = svg
-                    .append("text")
-                    .attr("x", 100)
-                    .attr("y", 620)
-                    .text("Bay")
-                    .style("font-size", "14pt")
-                    .style("font-weight", "bold")
-                    .style("text-transform", "uppercase");
-                
-                let title3 = svg
-                    .append("text")
-                    .attr("x", 100)
-                    .attr("y", 640)
-                    .text("Transportation")
-                    .style("font-size", "14pt")
-                    .style("font-weight", "bold")
-                    .style("text-transform", "uppercase");
-
-                let title4 = svg
-                    .append("text")
-                    .attr("x", 100)
-                    .attr("y", 660)
-                    .text("Authority")
+                    .attr("y", function(d, i) {return i*20 + 600;})
+                    .text(function(d) {return d.geo;})
                     .style("font-size", "14pt")
                     .style("font-weight", "bold")
                     .style("text-transform", "uppercase");
@@ -395,46 +379,15 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                         .delay(1000)
                         .attr("opacity", 1);
 
-
-                    title1
+                    title
                         .attr("opacity", 0)
                         .transition()
                         .duration(0)
                         .delay(1000)
                         .attr("opacity", 1)
                         .attr("x", 100)
-                        .attr("y", 20)
-                        .text("Massachusetts Bay")
-
-                    title2
-                        .attr("opacity", 0)
-                        .transition()
-                        .duration(0)
-                        .delay(1000)
-                        .attr("opacity", 1)
-                        .attr("x", 100)
-                        .attr("y", 40)
-                        .text("Transportation Authority")
-
-                    title3
-                        .attr("opacity", 0)
-                        .transition()
-                        .duration(0)
-                        .delay(1000)
-                        .attr("opacity", 1)
-                        .attr("x", 100)
-                        .attr("y", 60)
-                        .text("Rapid Transit/")
-
-                    title4
-                        .attr("opacity", 0)
-                        .transition()
-                        .duration(0)
-                        .delay(1000)
-                        .attr("opacity", 1)
-                        .attr("x", 100)
-                        .attr("y", 80)
-                        .text("Key Bus Routes Map")
+                        .attr("y", function(d, i) {return i*20 + 20;})
+                        .text(function(d) {return d.beck;});
 
                     iconCircle
                         .attr("opacity", 0)
@@ -554,46 +507,15 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                         .transition()
                         .attr("opacity", 0);
 
-
-                    title1
+                    title
                         .attr("opacity", 0)
                         .transition()
                         .duration(0)
                         .delay(1000)
                         .attr("opacity", 1)
                         .attr("x", 100)
-                        .attr("y", 600)
-                        .text("Massachusetts");
-        
-                    title2
-                        .attr("opacity", 0)
-                        .transition()
-                        .duration(0)
-                        .delay(1000)
-                        .attr("opacity", 1)
-                        .attr("x", 100)
-                        .attr("y", 620)
-                        .text("Bay");
-                    
-                    title3 
-                        .attr("opacity", 0)
-                        .transition()
-                        .duration(0)
-                        .delay(1000)
-                        .attr("opacity", 1)
-                        .attr("x", 100)
-                        .attr("y", 640)
-                        .text("Transportation");
-        
-                    title4
-                        .attr("opacity", 0)
-                        .transition()
-                        .duration(0)
-                        .delay(1000)
-                        .attr("opacity", 1)
-                        .attr("x", 100)
-                        .attr("y", 660)
-                        .text("Authority");
+                        .attr("y", function(d, i) {return i*20 + 600;})
+                        .text(function(d) {return d.geo;});
 
                     iconCircle.attr("opacity", 0)
                         .transition()
@@ -602,7 +524,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                         .attr("opacity", 1)
                         .attr("cx", 50)
                         .attr("cy", 625);
-    
+
                     iconRect1
                         .attr("opacity", 0)
                         .transition()
@@ -611,7 +533,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                         .attr("opacity", 1)
                         .attr("x", 25)
                         .attr("y", 609);
-    
+
                     iconRect2 
                         .attr("opacity", 0)
                         .transition()
@@ -620,7 +542,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                         .attr("opacity", 1)
                         .attr("x", 44.5)
                         .attr("y", 610);
-                    
+
                     document.getElementById("diagram").classList.remove("active");
                     d3.select("#map").attr("class", "active");
 
