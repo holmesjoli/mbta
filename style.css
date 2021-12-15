@@ -78,6 +78,7 @@ body {
 #left {
     flex: 1 0 60%;
     padding: 20px;
+    background-color: #FFEEDD;
 }
 
 #right {
@@ -189,4 +190,10 @@ button .arrow {
 
 #left-btn .arrow {
     transform: rotate(135deg);
+}
+
+svg {
+    border: 1px solid black;
+    background-color: #FFEEDD;
+    border-radius: 5px;
 }
