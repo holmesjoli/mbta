@@ -131,10 +131,11 @@ body {
     text-transform: uppercase;
     font-weight: 600;
     display:block;
+    color:#000000;
 }
 
 #source:hover {
-    text-decoration: underline #628644;
+    text-decoration: underline #000000;
 }
 
 p {
@@ -144,16 +145,21 @@ p {
 }
 
 .img-container {
-    max-width: 900px;
+    /* max-width: 900px; */
     padding: 20px;
     display: flex;
     justify-content: center;
+    align-items: center;
+    justify-content: center;
+    max-height: 600px;
+    margin: 50px;
 }
 
 .img-container img {
     width: 100%;
-    max-width: 900px;
+    max-width: 800px;
     z-index: -2;
+    max-height: 600px;
 }
 
 button {
