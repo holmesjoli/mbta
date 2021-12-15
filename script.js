@@ -84,10 +84,10 @@ function ttPresent(svg, tooltip, points) {
 let pth = "./data/processed/";
 
 let trainLines = [
-            {line: "Green", color: "#018447"},
-            {line: "Red", color: "#E12D27"},
-            {line: "Orange", color: "#E87200"},
-            {line: "Blue", color: "#2F5DA6"}
+            {line: "Green", beckColor: "#018447", geoColor: "#87c65b"},
+            {line: "Red", beckColor: "#E12D27", geoColor: "#ef4850"},
+            {line: "Orange", beckColor: "#E87200", geoColor: "#f57f4a"},
+            {line: "Blue", beckColor: "#2F5DA6", geoColor: "#70c2d6"}
 ]
 
 d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
@@ -215,7 +215,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                 .attr("height", 7)
                 .attr("x", 25)
                 .attr("y", function(d, i) {return 30*i + 600;})
-                .attr("fill", function(d) {return d.color});
+                .attr("fill", function(d) {return d.geoColor});
 
             svg.selectAll("trainLegend-text")
                 .data(trainLines)
