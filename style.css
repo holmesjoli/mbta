@@ -183,23 +183,6 @@ button .arrow {
     margin: 15px;
 }
 
-#right-btn {
-    margin: auto 0 auto -2em;
-}
-
-#right-btn .arrow {
-    transform: rotate(-45deg);
-}
-
-#left-btn {
-    z-index: 0;
-    margin: auto -2em auto 0;
-}
-
-#left-btn .arrow {
-    transform: rotate(135deg);
-}
-
 svg {
     border: 1px solid black;
     background-color: #FFF5EB;
