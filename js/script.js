@@ -297,7 +297,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .attr("fill", "#000000");
 
                 // Chart transitions
-                d3.select("#diagram").on("click", function() {
+                d3.select("#present").on("click", function() {
 
                     xScale.domain([beck.xmin, beck.xmax]);
                     yScale.domain([beck.ymin, beck.ymax]);
@@ -419,13 +419,13 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                         .attr("opacity", 1)
                         .attr("y", 35);
 
-                    d3.select("#diagram").attr("class", "active");
-                    document.getElementById("map").classList.remove("active");
+                    d3.select("#present").attr("class", "active");
+                    document.getElementById("past").classList.remove("active");
 
                     ttPresent(svg, tooltip, points, beckColorScale);
                 });
 
-                d3.select("#map").on("click", function() {
+                d3.select("#past").on("click", function() {
                     xScale.domain([geo.xmin, geo.xmax]);
                     yScale.domain([geo.ymin, geo.ymax]);
                     yScale.range([height-margin.bottom, margin.top])
@@ -547,8 +547,8 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                         .attr("x", xStart + 31)
                         .attr("y", yStart_mid - 20);
 
-                    document.getElementById("diagram").classList.remove("active");
-                    d3.select("#map").attr("class", "active");
+                    document.getElementById("present").classList.remove("active");
+                    d3.select("#past").attr("class", "active");
 
                     ttPast(svg, tooltip, points);
                 });
