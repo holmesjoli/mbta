@@ -40,15 +40,6 @@ div#container {
     /* overflow: hidden; */
 }
 
-#chart {
-    height: 100vh;
-    max-height: 100vh;
-    /* overflow: hidden; */
-    padding: 0px;
-    margin: 0px;
-    position: relative;
-}
-
 body {
     margin: 0;
 }
@@ -115,7 +106,8 @@ body {
     border-radius: 5px;
     font-size: 20px;
     display: inline-block;
-    border-collapse: separate; 
+    border-collapse: separate;
+    margin-top: 0;
 }
 
 .active {
@@ -160,6 +152,15 @@ p {
     max-width: 800px;
     z-index: -2;
     max-height: 600px;
+}
+
+#chart {
+    /* height: 50vh; */
+    /* max-height: 50vh; */
+    /* overflow: hidden; */
+    padding: 0px;
+    margin: 0px;
+    position: relative;
 }
 
 button {
