@@ -95,7 +95,7 @@ const trainLines = [
 const titleData = [
             {geo: "Massachusetts", beck: "Massachusetts Bay"},
             {geo: "Bay", beck: "Transportation Authority"},
-            {geo: "Trans", beck: "Rapid Transit/"},
+            {geo: "Transportation", beck: "Rapid Transit/"},
             {geo: "Authority", beck: "Key Bus Routes Map"}
 ];
 
@@ -105,7 +105,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
             d3.xml('./images/mbtaIcon.svg').then(function(mbtaIcon) {
 
                 //Define constants
-                const height = window.innerHeight;
+                const height = window.innerHeight*.75;
                 const width = height*1.3;
                 const margin = {top: 100, left: 75, right: 100, bottom: 25};
 
