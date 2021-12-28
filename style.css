@@ -32,16 +32,17 @@ button {
     font-size: 20pt;
 }
 
+body {
+    margin: 0;
+    background-color: #FFEEDD;
+}
+
 div#container {
-    height: 200vh;
-    max-height: 200vh;
+    /* height: 200vh;
+    max-height: 200vh; */
     display: flex;
     flex-direction: column;
     /* overflow: hidden; */
-}
-
-body {
-    margin: 0;
 }
 
 #header {
@@ -53,11 +54,10 @@ body {
 }
 
 #body {
-    flex: 1 0 94%;
-    display: flex;
-    flex-direction: row;
-    padding-top: 10px;
-    background-color: #FFEEDD;
+    /* flex: 1 0 94%; */
+    /* display: flex; */
+    /* flex-direction: row; */
+    /* padding-top: 10px; */
 }
 
 #footer {
@@ -68,18 +68,29 @@ body {
     border-top: 5px dotted #000000;
 }
 
-#right {
-    flex: 1 0 60%;
+.section {
     padding: 20px;
-    /* background-color: #FFEEDD; */
+    display: flex;
+    flex-direction: row;
 }
 
-#left {
-    flex: 1 0 25%;
-    /* background-color: #FFEEDD; */
+.right {
+    flex: 1 0 60%;
+}
+
+.left {
     position: sticky;
     top: 0;
     align-self: start;
+    background:#FFF5EB;
+    box-shadow: 10px 10px #ffdbb6;
+    padding: 20px;
+    margin: 45px 55px 0 10%;
+}
+
+.right,
+.left {
+    margin-top: 45px;
 }
 
 .tooltip {
