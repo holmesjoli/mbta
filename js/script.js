@@ -219,7 +219,8 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
 
                 const xStart = margin.left/2;
                 const yStart = margin.top/2
-                const yStart_mid = (height - margin.bottom - margin.top)*.75
+                const yStart_midPast = (height - margin.bottom - margin.top)*.9
+                const yStart_midPresent = (height - margin.bottom - margin.top)*.75
                 const r = 35;
 
                 let legendRect = svg
@@ -227,7 +228,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                 .attr("width", 120)
                 .attr("height", 60)
                 .attr("x", xStart)
-                .attr("y", yStart_mid -25)
+                .attr("y", yStart_midPresent -25)
                 .attr("fill", "none")
                 .attr("stroke", "#000000")
                 .attr("stroke-weight", 2)
@@ -265,7 +266,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                     .enter()
                     .append("text")
                     .attr("x", xStart + r*2 + 10)
-                    .attr("y", function(d, i) {return i*20 + yStart_mid - 25;})
+                    .attr("y", function(d, i) {return i*20 + yStart_midPast - 25;})
                     .text(function(d) {return d.geo;})
                     .style("font-size", "14pt")
                     .style("font-weight", "bold")
@@ -274,7 +275,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                 let iconCircle = svg
                     .append("circle")
                     .attr("cx", xStart*2)
-                    .attr("cy", yStart_mid)
+                    .attr("cy", yStart_midPast)
                     .attr("r", r)
                     .attr("fill", "#FFFFFF")
                     .attr("stroke", "#000000")
@@ -283,7 +284,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                 let iconRect1 = svg
                     .append("rect")
                     .attr("x", xStart + 13)
-                    .attr("y", yStart_mid - 20)
+                    .attr("y", yStart_midPast - 20)
                     .attr("width", 50)
                     .attr("height", 12)
                     .attr("fill", "#000000");
@@ -291,7 +292,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                 let iconRect2 = svg
                     .append("rect")
                     .attr("x", xStart + 32)
-                    .attr("y", yStart_mid - 20)
+                    .attr("y", yStart_midPast - 20)
                     .attr("width", 12)
                     .attr("height", 45)
                     .attr("fill", "#000000");
@@ -357,7 +358,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                         .delay(1000)
                         .attr("opacity", 1)
                         .attr("x", xStart + 10)
-                        .attr("y", yStart_mid)
+                        .attr("y", yStart_midPresent)
                         .text("legend")
                         .style("font-weight", "bold")
                         .style("text-transform", "uppercase");
@@ -370,7 +371,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                         .attr("opacity", 1)
                         .attr("width", 10)
                         .attr("height", 10)
-                        .attr("y", yStart_mid + 20)
+                        .attr("y", yStart_midPresent + 20)
                         .attr("x", function(d, i) {return 12*i + xStart + 10;})
                         .attr("fill", function(d) {return d.beckColor});
 
@@ -381,7 +382,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                         .delay(1000)
                         .attr("opacity", 1)
                         .attr("x", xStart + 12*trainLines.length + 15)
-                        .attr("y", yStart_mid + 27)
+                        .attr("y", yStart_midPresent + 27)
                         .text("Subway")
                         .style("font-size", "8pt")
                         .style("text-transform", "none");
@@ -518,7 +519,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                         .delay(1000)
                         .attr("opacity", 1)
                         .attr("x", xStart + r*2 + 10)
-                        .attr("y", function(d, i) {return i*20 + yStart_mid - 25;})
+                        .attr("y", function(d, i) {return i*20 + yStart_midPast - 25;})
                         .text(function(d) {return d.geo;});
 
                     iconCircle.attr("opacity", 0)
@@ -527,7 +528,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                         .delay(1000)
                         .attr("opacity", 1)
                         .attr("cx", xStart*2)
-                        .attr("cy", yStart_mid);
+                        .attr("cy", yStart_midPast);
 
                     iconRect1
                         .attr("opacity", 0)
@@ -536,7 +537,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                         .delay(1000)
                         .attr("opacity", 1)
                         .attr("x", xStart + 13)
-                        .attr("y", yStart_mid - 20);
+                        .attr("y", yStart_midPast - 20);
 
                     iconRect2 
                         .attr("opacity", 0)
@@ -545,7 +546,7 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                         .delay(1000)
                         .attr("opacity", 1)
                         .attr("x", xStart + 31)
-                        .attr("y", yStart_mid - 20);
+                        .attr("y", yStart_midPast - 20);
 
                     document.getElementById("present").classList.remove("active");
                     d3.select("#past").attr("class", "active");
