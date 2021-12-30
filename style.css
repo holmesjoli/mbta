@@ -100,6 +100,7 @@ div#container {
 
 .buttons {
     text-align: center;
+    padding-bottom: 0;
 }
 
 .buttons > button {
@@ -146,6 +147,7 @@ p {
     align-items: center;
     text-align: center;
     max-height: 500px;
+    display: inline-block;
 }
 
 .img-container img {
@@ -183,10 +185,10 @@ button .arrow {
 
 svg {
     /* border: 1px solid black; */
-    background-color: #FFF5EB;
+    background-color: #FFFFFF;
     /* border-radius: 5px; */
     /* background:#FFF5EB; */
-    box-shadow: 10px 10px #ffdbb6;
+    /* box-shadow: 10px 10px #ffdbb6; */
 }
 
 #T-img {
