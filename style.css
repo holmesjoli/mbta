@@ -66,7 +66,7 @@ div#container {
 }
 
 .right {
-    flex: 1 0 60%;
+    flex: 1 0 55%;
 }
 
 .left {
@@ -194,10 +194,10 @@ svg {
 #T-img {
     height: 30px;
     margin-left: 20px;
-    /* margin-top: 10px; */
+    margin-top: 10px;
     z-index: 0;
     position: absolute;
-    margin-top: -10px;
+    /* margin-top: -10px; */
 }
 
 .tab {
