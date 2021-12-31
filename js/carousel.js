@@ -19,21 +19,18 @@ const present = [{
 img.src = past[0].src;
 title.textContent = past[0].title;
 source.href = past[0].href;
-let position = 0;
 
 const showPast = () => {
 
     img.src = past[0].src;
     title.textContent = past[0].title;
     source.href = past[0].href;
-    // let position = 0;
 };
 
 const showPresent = () => {
     img.src = present[0].src;
     title.textContent = present[0].title;
     source.href = present[0].href;
-    // let position = 0;
 };
 
 presentBtn.addEventListener("click", showPresent);
