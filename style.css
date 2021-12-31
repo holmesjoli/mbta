@@ -34,7 +34,7 @@ button {
 
 body {
     margin: 0;
-    background-color: #FFEEDD;
+    background-color: #eee0d6;
 }
 
 div#container {
@@ -42,20 +42,13 @@ div#container {
     flex-direction: column;
 }
 
-#header {
+#header,
+#footer {
     flex: 1 0 5%;
     text-align: center;
-    background: #70749b;
-    color: black;
-    border-bottom: 5px dotted #000000;
-}
-
-#footer {
-    flex: 1 0 2%;
-    text-align: center;
-    background: #70749b;
-    color: black;
-    border-top: 5px dotted #000000;
+    background: #685969;
+    color: #FFF5EB;
+    border-bottom: 5px dotted #FFF5EB;
 }
 
 .section {
@@ -78,7 +71,7 @@ div#container {
     top: 0;
     align-self: start;
     background:#FFF5EB;
-    box-shadow: 10px 10px #ffdbb6;
+    box-shadow: 10px 10px #6e5577;
     padding: 20px;
 }
 
@@ -107,8 +100,8 @@ div#container {
     background-color: #ffffff;
     padding: 10px;
     margin: 10px;
-    color: #000000;
-    border: 2px solid #000000;
+    color: #685969;
+    border: 2px solid #685969;
     border-radius: 5px;
     font-size: 20px;
     display: inline-block;
@@ -118,8 +111,8 @@ div#container {
 
 .active {
     font-weight: bold;
-    border: 4px solid #000000!important;
-    color: #000000!important;
+    border: 4px solid #685969!important;
+    color: #685969!important;
 }
 
 #source {
