@@ -50,7 +50,7 @@ div#container {
     text-align: center;
     background: #576B9C;
     color: #fffef1;
-    border-bottom: 5px dotted #fffef1;
+    border-bottom: 5px dotted #F07A6A;
 }
 
 .section {
@@ -128,7 +128,7 @@ div#container {
 }
 
 #source:hover {
-    text-decoration: underline #576B9C;
+    text-decoration: underline #F07A6A;
 }
 
 p {
@@ -159,7 +159,7 @@ p {
 }
 
 svg {
-    /* border: 1px solid black; */
+    border: 2px solid #576B9C;
     background-color: #FFFFFF;
     /* border-radius: 5px; */
     /* background:#FFF5EB; */
