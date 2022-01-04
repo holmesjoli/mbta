@@ -7,6 +7,7 @@
 
 html {
     scroll-behavior: smooth;
+    font-family: Helvetica, Arial, sans-serif;
 }
 
 h1, h2, h3,
@@ -30,11 +31,12 @@ h2 {
 h3,
 button {
     font-size: 20pt;
+    color: #576B9C;
 }
 
 body {
     margin: 0;
-    background-color: #eee0d6;
+    background-color: #c3c7d2;
 }
 
 div#container {
@@ -46,9 +48,9 @@ div#container {
 #footer {
     flex: 1 0 5%;
     text-align: center;
-    background: #685969;
-    color: #FFF5EB;
-    border-bottom: 5px dotted #FFF5EB;
+    background: #576B9C;
+    color: #fffef1;
+    border-bottom: 5px dotted #fffef1;
 }
 
 .section {
@@ -70,8 +72,8 @@ div#container {
     position: sticky;
     top: 0;
     align-self: start;
-    background:#FFF5EB;
-    box-shadow: 10px 10px #6e5577;
+    background:#fffef1;
+    box-shadow: 10px 10px #576B9C;
     padding: 20px;
 }
 
@@ -85,7 +87,7 @@ div#container {
     left: 0px;
     top: 0px;
     visibility: hidden;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: Helvetica, Arial, sans-serif;
     font-size: 14pt;
     padding: 5px;
     pointer-events: none;
@@ -100,8 +102,8 @@ div#container {
     background-color: #ffffff;
     padding: 10px;
     margin: 10px;
-    color: #685969;
-    border: 2px solid #685969;
+    color: #576B9C;
+    border: 2px solid #576B9C;
     border-radius: 5px;
     font-size: 20px;
     display: inline-block;
@@ -111,8 +113,8 @@ div#container {
 
 .active {
     font-weight: bold;
-    border: 4px solid #685969!important;
-    color: #685969!important;
+    border: 4px solid #576B9C!important;
+    color: #576B9C!important;
 }
 
 #source {
@@ -122,11 +124,11 @@ div#container {
     text-transform: uppercase;
     font-weight: 600;
     display:block;
-    color:#000000;
+    color: #576B9C;
 }
 
 #source:hover {
-    text-decoration: underline #000000;
+    text-decoration: underline #576B9C;
 }
 
 p {
@@ -154,26 +156,6 @@ p {
     padding: 0px;
     margin: 0px;
     position: relative;
-}
-
-button {
-    height: 10%;
-    border: none;
-    outline: none;
-    background: rgba(0, 0, 0, 0);
-    cursor: pointer;
-    padding: 1em;
-    display: flex;
-}
-
-button .arrow {
-    border: solid black;
-    border-width: 0 4px 4px 0;
-    display: inline-block;
-    padding: 15px;
-    transition: transform 0.3s ease-out;
-    outline: none;
-    margin: 15px;
 }
 
 svg {
