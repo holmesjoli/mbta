@@ -36,7 +36,7 @@ button {
 
 body {
     margin: 0;
-    background-color: #c3c7d2;
+    background-color: #fff;
 }
 
 div#container {
@@ -50,7 +50,7 @@ div#container {
     text-align: center;
     background: #576B9C;
     color: #fffef1;
-    border-bottom: 5px dotted #F07A6A;
+    /* border-bottom: 5px dotted #F07A6A; */
 }
 
 .section {
@@ -72,7 +72,7 @@ div#container {
     position: sticky;
     top: 0;
     align-self: start;
-    background:#fffef1;
+    background: #c3c7d2;
     box-shadow: 10px 10px #576B9C;
     padding: 20px;
 }
@@ -162,7 +162,7 @@ svg {
     border: 2px solid #576B9C;
     background-color: #FFFFFF;
     /* border-radius: 5px; */
-    /* background:#FFF5EB; */
+    /* background:#fffef1; */
     /* box-shadow: 10px 10px #ffdbb6; */
 }
 

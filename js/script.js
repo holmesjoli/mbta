@@ -165,7 +165,8 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                 let svg = d3.select("#chart")
                             .append("svg")
                             .attr("height", height)
-                            .attr("width", width);
+                            .attr("width", width)
+                            .style("background", "#fffef1");
 
                 // Add the line
                 let line = d3.line()
@@ -420,6 +421,13 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                         .attr("opacity", 1)
                         .attr("y", 35);
 
+                    svg
+                        .style("background", "#fffef1")
+                        .transition()
+                        .duration(0)
+                        .delay(1000)
+                        .style("background", "#ffffff");
+
                     d3.select("#present").attr("class", "active");
                     document.getElementById("past").classList.remove("active");
 
@@ -547,6 +555,13 @@ d3.csv(pth + "beck_lines2.csv").then(function(beckLinks) {
                         .attr("opacity", 1)
                         .attr("x", xStart + 31)
                         .attr("y", yStart_midPast - 20);
+
+                    svg
+                        .style("background", "#ffffff")
+                        .transition()
+                        .duration(0)
+                        .delay(1000)
+                        .style("background", "#fffef1");
 
                     document.getElementById("present").classList.remove("active");
                     d3.select("#past").attr("class", "active");
