@@ -54,7 +54,7 @@ div#container {
 }
 
 .section {
-    padding: 50px;
+    padding: 0 50px;
     display: flex;
     flex-direction: row;
     /* margin: 0 50px; */

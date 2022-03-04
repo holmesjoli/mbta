@@ -8,68 +8,23 @@
         <script src="https://unpkg.com/d3-interpolate-path/build/d3-interpolate-path.min.js"></script>
     </head>
     <body>
-        <div id="container">
-            <div id="header">
-                <h1>Beck's <i>distortion</i></h1>
-                <h2>Applied to the Boston MBTA Transportation Map</h2>
+        <div class="container" style="margin-top:15px">
+            <div class="buttons">
+                <button id="past" class="active">Past</button>
+                <button id="present">Present</button>
             </div>
-			<div id="body">
-                <div class="section">
-                    <div class="left">
-                        <div class="paragraph">
-                            <img id ="T-img" src="images/mbtaIcon.svg">
-                                <p><span class="tab">ransportation </span> maps have changed a lot over the last 100 years due to Harry Beck. Beck was a mechanical draughtsman who redesigned the London Underground Railroad Map in the 1930s. Until that time, the two primary marks used in most transportation diagrams, points, and lines, encoded geographic information about where the stops were relative to the other stops. Position is often a powerful visual variable used to communicate quantitative information.</p>
-                                <p>However, Beck realized that from a functional perspective, most diagram users didn't need to know how far stops were from each other geographically. Users needed to know which stop was next and how they could transfer between trains to get to their final destination. Mapping the stations geographically led to crowding information in the center of the map, resulting in ambiguity as to which stations the names belonged.</p>
-                        </div>
-                    </div>
-                    <div class="right">
-                        <div class="img-container">
-                            <img src="images/pre_beck_1933.jpg" alt="">
-                            <h3 id="title" style="margin-bottom: 5px">London Underground Railroad design</h3>
-                            <a id="source" href="https://en.wikipedia.org/wiki/Harry_Beck#/media/File:Tube_map_1908-2.jpg" target="_blank" style="margin-bottom: 5px">Source</a>
-                        </div>
+            <div class="section" style="padding-top:0;">
+                <div class="left">
+                    <div class="img-container">
+                        <img id="carousel" src='./images/boston_1967.jpg' alt="">
                     </div>
                 </div>
-                <div class="section">
-                    <div class="left">
-                        <div class="paragraph">
-                            <p>Beck's approach was to organize the diagram as an abstract system. Each line was drawn at a 45-degree or 90-degree angle from every other stop. Additionally, Beck omitted additional geographical information, except for the Thames River. Moreover, interchange, or transfer stations, were demarcated with a different symbol.</p>
-                            <p>The result was a map that received widespread acclaim, and most transit systems globally have adopted a similar approach for their transit diagrams.</p>
-                        </div>
-                    </div>
-                    <div class="right">
-                        <div class="img-container">
-                            <img src='./images/beck_1933.jpg' alt="">
-                            <h3 id="title" style="margin-bottom: 5px">Beck's London Underground Railroad redesign</h3>
-                            <a id="source" href="https://londonist.com/london/transport/modern-tube-map-harry-beck-1931-1933" target="_blank" style="margin-bottom: 5px">Source</a>
-                        </div>
-                    </div>
+                <div class="right">
+                    <figure id="chart"></figure>
+                    <script src="./js/script.js"></script>
+                    <script src="./js/carousel.js"></script>
                 </div>
-                <div style="margin-left: 5%">
-                    <div class="paragraph" style="position: relative;margin: 45px;">
-                        <p>The visualization to the right shows how the Boston MBTA map has changed from 1967 to 2013. The most recent design has incorporated many similar distortions that Beck used in his London Underground Railroad system map in 1931.</p>
-                    </div>
-                </div>
-                <div class="buttons">
-                    <button id="past" class="active">Past</button>
-                    <button id="present">Present</button>
-                </div>
-                <div class="section" style="padding-top:0;">
-                    <div class="left">
-                        <div class="img-container">
-                            <img id="carousel" src='./images/boston_1967.jpg' alt="">
-                            <h3 id="title" style="margin-bottom: 5px">Boston MBTA 1967</h3>
-                            <a id="source" href="https://www.flickr.com/photos/vanshnookenraggen/3186247755/in/album-72157594460286528/" target="_blank" style="margin-bottom: 5px">Source</a>
-                        </div>
-                    </div>
-                    <div class="right">
-                        <figure id="chart"></figure>
-                        <script src="./js/script.js"></script>
-                        <script src="./js/carousel.js"></script>
-                    </div>
-                </div>
-			</div>
-            <div id="footer"></div>
+            </div>
         </div>
     </body>
 </html>
